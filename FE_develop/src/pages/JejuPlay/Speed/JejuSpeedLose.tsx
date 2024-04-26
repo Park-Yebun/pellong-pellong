@@ -1,12 +1,11 @@
-// JejuSpeedLose.tsx
-
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const JejuSpeedLose = () => {
   return (
     <div>
-      <h1>Jeju Speed Lose</h1>
-      <p>This is the content of Jeju Speed Lose Page.</p>
+      <h1>스피드 퀴즈 탈락</h1>
+      <p>목숨 3개 다 날렸을때 오는 페이지. 결과를 보여주기.</p>
     </div>
   );
 };
