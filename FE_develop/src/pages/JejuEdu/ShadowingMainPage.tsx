@@ -1,10 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const ShadowingMainPage = () => {
   return (
     <div>
-      <h1>ShadowingMainPage</h1>
-      <p>This is the content of ShadowingMainPage Page.</p>
+      <h1>사투리 배움터</h1>
+      <p>사투리 쉐도잉 페이지이여요</p>
+      <div>
+        <Link to="/jeju-edu/play-page">쉐도잉 플레이</Link>
+      </div>
     </div>
   );
 };

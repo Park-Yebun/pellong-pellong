@@ -1,12 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const SocialLoginPage = () => {
+const MyPage = () => {
   return (
     <div>
-      <h1>Social Login Page</h1>
-      <p>This is the social login page content.</p>
+      <h1>마이페이지</h1>
+      <p>마이페이지 작업 합시다</p>
     </div>
   );
 };
 
-export default SocialLoginPage;
+export default MyPage;

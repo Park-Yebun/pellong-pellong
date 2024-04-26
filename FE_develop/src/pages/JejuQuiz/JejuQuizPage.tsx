@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
 
 // 레벨에 대한 게임 유형 배열
 const gameTypes = ["게임 유형 1", "게임 유형 2", "게임 유형 3", "게임 유형 4"];

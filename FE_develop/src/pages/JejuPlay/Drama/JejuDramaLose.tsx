@@ -1,6 +1,5 @@
-// JejuDramaLose.tsx
-
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const JejuDramaLose = () => {
   return (
