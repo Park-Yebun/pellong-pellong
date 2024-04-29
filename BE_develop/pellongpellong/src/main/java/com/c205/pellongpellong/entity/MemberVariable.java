@@ -11,12 +11,12 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class MemberVarient {
+public class MemberVariable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "memberVarientId", updatable = false)
-    private Long memberVarientId;
+    @Column(name = "memberVariableId", updatable = false)
+    private Long memberVariableId;
 
     @OneToOne
     @JoinColumn(name = "memberId")
@@ -41,8 +41,8 @@ public class MemberVarient {
     private LocalDateTime loginedAt;
 
     @Builder
-    public MemberVarient(Long memberVarientId, Member member, String tier, int rank, int accDailyQuest, int accLark, int accOwl, LocalDateTime loginedAt) {
-        this.memberVarientId = memberVarientId;
+    public MemberVariable(Long memberVariableId, Member member, String tier, int rank, int accDailyQuest, int accLark, int accOwl, LocalDateTime loginedAt) {
+        this.memberVariableId = memberVariableId;
         this.member = member;
         this.tier = tier;
         this.rank = rank;

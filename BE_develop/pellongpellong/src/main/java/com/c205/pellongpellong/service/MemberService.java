@@ -1,5 +1,6 @@
 package com.c205.pellongpellong.service;
 
+import com.c205.pellongpellong.dto.MyInfoMemberDTO;
 import com.c205.pellongpellong.entity.Member;
 import com.c205.pellongpellong.dto.AddMemberRequest;
 import com.c205.pellongpellong.repository.MemberRepository;
@@ -19,5 +20,12 @@ public class MemberService {
     public Member findById(long memberId) {
         return memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("not found: " + memberId));
+    }
+
+    public MyInfoMemberDTO getMyInfoMember(long memberId){
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new RuntimeException("User not found"));
+        return new MyInfoMemberDTO(member.getEmail(), member.getNickname(), member.getProfileImg());
+
+
     }
 }
