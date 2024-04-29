@@ -27,6 +27,9 @@ public class Exp {
     @Column(name = "expAt",  nullable = false)
     private LocalDateTime expAt;
 
+    @ManyToOne
+    @JoinColumn(name = "memberId")
+    private Member member;
     @Builder
     public Exp(int exp, String expName, LocalDateTime expAt) {
         this.exp = exp;
