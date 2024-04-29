@@ -1,4 +1,4 @@
-package com.c205.pellongpellong.domain;
+package com.c205.pellongpellong.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;

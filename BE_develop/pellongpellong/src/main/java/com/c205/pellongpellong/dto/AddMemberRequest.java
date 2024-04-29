@@ -1,7 +1,7 @@
 package com.c205.pellongpellong.dto;
 
 
-import com.c205.pellongpellong.domain.Member;
+import com.c205.pellongpellong.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

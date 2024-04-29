@@ -1,6 +1,6 @@
 package com.c205.pellongpellong.service;
 
-import com.c205.pellongpellong.domain.Member;
+import com.c205.pellongpellong.entity.Member;
 import com.c205.pellongpellong.dto.AddMemberRequest;
 import com.c205.pellongpellong.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
