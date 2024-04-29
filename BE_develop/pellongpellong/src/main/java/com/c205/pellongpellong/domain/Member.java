@@ -1,4 +1,4 @@
-package com.c205.pellongpellong.entity;
+package com.c205.pellongpellong.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -9,27 +9,26 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class User {
+public class Member {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    @Column(name = "memberId", updatable = false)
+    private Long memberId;
 
-    @Column(length = 100)
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(length = 100)
+    @Column(name = "nickname", nullable = false)
     private String nickname;
 
-    @Column(length = 255)
+    @Column(name = "profileImg", nullable = true)
     private String profileImg;
 
     @Builder
-    public User(Long userId, String email, String nickname, String profileImg) {
-        this.userId = userId;
+    public Member(String email, String nickname, String profileImg) {
         this.email = email;
         this.nickname = nickname;
         this.profileImg = profileImg;
     }
-
-
 }
