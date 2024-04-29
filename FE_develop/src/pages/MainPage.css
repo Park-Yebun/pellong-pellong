@@ -1,0 +1,113 @@
+@keyframes scrollBackground {
+    0% {
+      background-position: 0 100%;
+    }
+    100% {
+      background-position: 100% 0;
+    }
+  }
+  
+  .main-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('../assets/main-background.png');
+    background-size: cover;
+    background-position: center;
+    animation: scrollBackground 6s infinite alternate;
+  }
+
+  .main-container.night-mode {
+    background-image: url('../assets/city-background.png'); /* 야간 배경 이미지 */
+  }
+  
+  .top-right-links {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+  }
+  
+  .top-right-links a {
+    margin-left: 10px;
+  }
+  
+  .image-link img {
+    width: 30px;
+    cursor: pointer;
+  }
+  
+  .jeju-image-container {
+    position: relative;
+    z-index: 0;
+  }
+  
+  .jeju-image {
+    max-width: 340px;
+    border-radius: 50%;
+  }
+  
+  .cloud-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: auto;
+  }
+  
+  .quiz-links .rect-link {
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    padding: 10px;
+    text-align: center;
+    color: black;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .top-right { top: 10%; right: 10%; transform: translate(0, 0); }
+  .top-left { top: 10%; left: 10%; transform: translate(0, 0); }
+  .bottom-right { bottom: 10%; right: 10%; transform: translate(0, 0); }
+  .bottom-left { bottom: 10%; left: 10%; transform: translate(0, 0); }
+  
+  .quiz-links .rect-link:hover {
+    transform: translate(-50%, -50%) scale(5.3);
+  }
+  
+  .mainpage-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+  }
+  
+  .mainpage-modal {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  }
+  
+  .mainpage-close {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 30px;
+    right: 30px;
+    cursor: pointer;
+    border-radius: 20px;
+    background-color: white;
+  }
+  
