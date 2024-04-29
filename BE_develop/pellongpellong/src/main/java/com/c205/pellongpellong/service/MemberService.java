@@ -16,8 +16,8 @@ public class MemberService {
         return memberRepository.save(request.toEntity());
     }
 
-//    public User findById(long userId) {
-//        return userRepository.findById(userId)
-//                .orElseThrow(() -> new IllegalArgumentException("not found: " + userId));
-//    }
+    public Member findById(long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("not found: " + memberId));
+    }
 }

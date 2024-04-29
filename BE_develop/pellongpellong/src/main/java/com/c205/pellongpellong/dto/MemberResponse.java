@@ -4,16 +4,16 @@ import com.c205.pellongpellong.domain.Member;
 import lombok.Getter;
 
 @Getter
-public class UserResponse {
+public class MemberResponse {
 
     private final String email;
     private final String nickname;
     private final String profileImg;
 
-    public UserResponse(Member user) {
-        this.email = user.getEmail();
-        this.nickname = user.getNickname();
-        this.profileImg = user.getProfileImg();
+    public MemberResponse(Member member) {
+        this.email = member.getEmail();
+        this.nickname = member.getNickname();
+        this.profileImg = member.getProfileImg();
     }
 
 }
