@@ -1,4 +1,4 @@
-FROM node:20.12 AS build
+FROM node:20.11.1 AS build
 
 RUN mkdir /app
 
