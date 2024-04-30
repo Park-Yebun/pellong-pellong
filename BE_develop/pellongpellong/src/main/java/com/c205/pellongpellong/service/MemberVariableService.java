@@ -7,6 +7,8 @@ import com.c205.pellongpellong.repository.MemberVariableRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class MemberVariableService {
@@ -21,5 +23,11 @@ public class MemberVariableService {
     public ProfileMemberVarDTO getProfileMemberVar(long memberId){
         MemberVariable memberVariable = memberVariableRepository.findById(memberId).orElseThrow(() -> new RuntimeException("User not found"));
         return new ProfileMemberVarDTO(memberVariable.getTier());
+    }
+
+    public LocalDateTime getLoginedAtByMemberId(long memberId) {
+        MemberVariable memberVariable = memberVariableRepository.findById(memberId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return memberVariable.getLoginedAt();
     }
 }

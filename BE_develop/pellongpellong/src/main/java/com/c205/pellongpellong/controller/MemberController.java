@@ -2,7 +2,6 @@ package com.c205.pellongpellong.controller;
 
 import com.c205.pellongpellong.dto.*;
 import com.c205.pellongpellong.entity.Member;
-import com.c205.pellongpellong.entity.MemberBadge;
 import com.c205.pellongpellong.service.MemberBadgeService;
 import com.c205.pellongpellong.service.MemberService;
 import com.c205.pellongpellong.service.MemberVariableService;
@@ -56,4 +55,6 @@ public class MemberController {
         List<ProfileMemberBadgeDTO> badgeArray = memberBadgeService.getMemberBadges(memberId);
         return new ProfileDTO(profileMemberDTO.getNickname(), profileMemberDTO.getProfileImg(), profileMemberVarDTO.getTier(), profileRankDTO.getSumExp(), badgeArray);
     }
+
+
 }
