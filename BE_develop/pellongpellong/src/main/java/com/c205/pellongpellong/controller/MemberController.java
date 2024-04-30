@@ -2,6 +2,7 @@ package com.c205.pellongpellong.controller;
 
 import com.c205.pellongpellong.dto.*;
 import com.c205.pellongpellong.entity.Member;
+import com.c205.pellongpellong.entity.MemberBadge;
 import com.c205.pellongpellong.service.MemberBadgeService;
 import com.c205.pellongpellong.service.MemberService;
 import com.c205.pellongpellong.service.MemberVariableService;
@@ -10,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 //import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -43,5 +46,14 @@ public class MemberController {
         Long representativeBadgeId = memberBadgeService.getRepresentativeBadgeId(memberId);
 //        log.info("Email: {}", myInfoMemberDTO.getEmail());
         return new MyInfoDTO(myInfoMemberDTO.getEmail(), myInfoMemberDTO.getNickname(), myInfoMemberDTO.getProfileImg(), myInfoVarDTO.getTier(), myInfoVarDTO.getRank(), myInfoRankDTO.getSumExp(), representativeBadgeId);
+    }
+
+    @GetMapping("/profiles/{memberId}")
+    public ProfileDTO getProfile(@PathVariable long memberId) {
+        ProfileMemberDTO profileMemberDTO = memberService.getProfileMember(memberId);
+        ProfileMemberVarDTO profileMemberVarDTO = memberVariableService.getProfileMemberVar(memberId);
+        ProfileRankDTO profileRankDTO = rankService.getProfileRank(memberId);
+        List<ProfileMemberBadgeDTO> badgeArray = memberBadgeService.getMemberBadges(memberId);
+        return new ProfileDTO(profileMemberDTO.getNickname(), profileMemberDTO.getProfileImg(), profileMemberVarDTO.getTier(), profileRankDTO.getSumExp(), badgeArray);
     }
 }

@@ -1,6 +1,7 @@
 package com.c205.pellongpellong.service;
 
 import com.c205.pellongpellong.dto.MyInfoRankDTO;
+import com.c205.pellongpellong.dto.ProfileRankDTO;
 import com.c205.pellongpellong.entity.Rank;
 import com.c205.pellongpellong.repository.RankRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,11 @@ public class RankService {
         Rank rank = rankRepository.findById(memberId).orElseThrow(() -> new RuntimeException("User not found"));
         return new MyInfoRankDTO(rank.getSumExp());
 
+    }
+
+    public ProfileRankDTO getProfileRank(long memberId){
+        Rank rank = rankRepository.findById(memberId).orElseThrow(() -> new RuntimeException("User not found"));
+        return new ProfileRankDTO(rank.getSumExp());
     }
 
 }

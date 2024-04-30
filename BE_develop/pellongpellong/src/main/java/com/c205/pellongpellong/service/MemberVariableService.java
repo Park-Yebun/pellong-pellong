@@ -1,6 +1,7 @@
 package com.c205.pellongpellong.service;
 
 import com.c205.pellongpellong.dto.MyInfoVarDTO;
+import com.c205.pellongpellong.dto.ProfileMemberVarDTO;
 import com.c205.pellongpellong.entity.MemberVariable;
 import com.c205.pellongpellong.repository.MemberVariableRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,5 +16,10 @@ public class MemberVariableService {
     public MyInfoVarDTO getMyInfoVar(long memberId) {
         MemberVariable memberVariable = memberVariableRepository.findById(memberId).orElseThrow(() -> new RuntimeException("User not found"));
         return new MyInfoVarDTO(memberVariable.getTier(), memberVariable.getRank());
+    }
+
+    public ProfileMemberVarDTO getProfileMemberVar(long memberId){
+        MemberVariable memberVariable = memberVariableRepository.findById(memberId).orElseThrow(() -> new RuntimeException("User not found"));
+        return new ProfileMemberVarDTO(memberVariable.getTier());
     }
 }
