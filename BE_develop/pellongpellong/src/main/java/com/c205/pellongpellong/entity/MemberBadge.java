@@ -3,11 +3,13 @@ package com.c205.pellongpellong.entity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberBadge {
 
@@ -38,4 +40,9 @@ public class MemberBadge {
         this.isAcquired = isAcquired;
         this.isRepresentative = isRepresentative;
     }
+
+    public Long getBadgeId() {
+        return badge.getBadgeId(); // 이렇게 수정해야할 수 있음
+    }
+
 }

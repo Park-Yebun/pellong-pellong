@@ -3,8 +3,10 @@ package com.c205.pellongpellong.entity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Badge {
@@ -26,5 +28,10 @@ public class Badge {
         this.badgeName = badgeName;
         this.content = content;
     }
+
+//    public Long getId() {
+//        return badgeId;
+//    }
+
 
 }

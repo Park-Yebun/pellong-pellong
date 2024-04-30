@@ -14,14 +14,16 @@ public class MyInfoDTO {
     private String tier;
     private int rank;
     private int sumExp;
+    private Long representativeBadgeId;
 
-    public MyInfoDTO(String email, String nickname, String profileImg, String tier, int rank, int sumExp) {
+    public MyInfoDTO(String email, String nickname, String profileImg, String tier, int rank, int sumExp, Long representativeBadgeId) {
         this.email = email;
         this.nickname = nickname;
         this.profileImg = profileImg;
         this.tier = tier;
         this.rank = rank;
         this.sumExp = sumExp;
+        this.representativeBadgeId = representativeBadgeId;
 
     }
 
