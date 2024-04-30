@@ -36,4 +36,8 @@ public class Exp {
         this.expName = expName;
         this.expAt = expAt;
     }
+
+    public Long getMemberId() {
+        return member != null ? member.getMemberId() : null;
+    }
 }
