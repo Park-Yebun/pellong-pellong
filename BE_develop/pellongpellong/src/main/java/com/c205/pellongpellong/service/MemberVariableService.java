@@ -30,4 +30,11 @@ public class MemberVariableService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         return memberVariable.getLoginedAt();
     }
+
+    public void updateLoginedAt(long memberId, LocalDateTime loginedAt)  {
+        MemberVariable memberVariable = memberVariableRepository.findById(memberId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        memberVariable.setLoginedAt(loginedAt);
+        memberVariableRepository.save(memberVariable);
+    }
 }
