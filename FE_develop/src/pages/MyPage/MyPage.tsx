@@ -6,7 +6,7 @@ import UserProfile from '../../components/MyPage/UserProfile';
 import UserRank from '../../components/MyPage/UserRank'
 import UserBadge from '../../components/MyPage/UserBadge'
 
-import BackArrow from '../../assets/back-arrow.png'
+import BackButton from '../../components/BackButton';
 
 const MyPage: React.FC = () => {
   const username = "빵빵이";
@@ -31,9 +31,7 @@ const MyPage: React.FC = () => {
 
   return (
     <div className='mypage-container'>
-      <a onClick={goBack} className="btn-go-back">
-        <img src={BackArrow} alt="" />
-      </a>
+      <BackButton />
       <UserProfile />
       <UserRank username={username} tier={tier} />
       <div className="profile-edit-button">
