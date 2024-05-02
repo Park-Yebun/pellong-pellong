@@ -1,11 +1,31 @@
+// RankPage.tsx
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Slider from 'react-slick';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
-const RankPage = () => {
+import BackButton from '../../components/BackButton';
+import RankIcon from '../../components/RankIcon';
+import ranks from '../../data/ranks';
+
+const settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1
+};
+
+const RankPage: React.FC = () => {
   return (
     <div>
+      <BackButton />
       <h1>랭크 페이지</h1>
-      <p>랭크 페이지 작업합시다</p>
+      <Slider {...settings}>
+        {ranks.map((rank, index) => (
+          <RankIcon key={index} rank={rank.title} iconUrl={rank.imageUrl} />
+        ))}
+      </Slider>
     </div>
   );
 };

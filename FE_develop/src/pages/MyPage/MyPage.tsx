@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 import './MyPage.css'
 
 import UserProfile from '../../components/MyPage/UserProfile';
 import UserRank from '../../components/MyPage/UserRank'
 import UserBadge from '../../components/MyPage/UserBadge'
 
+import BackArrow from '../../assets/back-arrow.png'
+
 const MyPage: React.FC = () => {
   const username = "빵빵이";
   const tier = "Platinum";
+  const navigate = useNavigate();
 
   const [badges] = useState([
     { id: 1, title: "First Win", description: "Won your first match.", imageUrl: "../../assets/badges/b1.jpg" },
@@ -22,8 +25,15 @@ const MyPage: React.FC = () => {
     // 추가 뱃지 데이터
   ]);
 
+  const goBack = () => {
+    navigate(-1); // 이전 페이지로 이동
+  };
+
   return (
     <div className='mypage-container'>
+      <a onClick={goBack} className="btn-go-back">
+        <img src={BackArrow} alt="" />
+      </a>
       <UserProfile />
       <UserRank username={username} tier={tier} />
       <div className="profile-edit-button">

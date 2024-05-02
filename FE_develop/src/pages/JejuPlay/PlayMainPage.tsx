@@ -1,9 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import BackButton from '../../components/BackButton'
+
 
 const PlayMainPage = () => {
   return (
     <div>
+      <BackButton />
       <h1>사투리 놀이터</h1>
       <p>여기에서 스피드 퀴즈, 드라마, 대사로 나눠져 진입 가능합니다</p>
       <div>
