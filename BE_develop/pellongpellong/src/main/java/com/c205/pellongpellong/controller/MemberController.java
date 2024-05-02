@@ -56,5 +56,11 @@ public class MemberController {
         return new ProfileDTO(profileMemberDTO.getNickname(), profileMemberDTO.getProfileImg(), profileMemberVarDTO.getTier(), profileRankDTO.getSumExp(), badgeArray);
     }
 
+    @DeleteMapping("/members/{memberId}")
+    public ResponseEntity<Void> deleteMember(@PathVariable long memberId) {
+        memberService.delete(memberId);
 
+        return ResponseEntity.ok()
+                .build();
+    }
 }

@@ -35,5 +35,7 @@ public class MemberService {
         return new ProfileMemberDTO(member.getNickname(), member.getProfileImg());
     }
 
-
+    public void delete(long memberId) {
+        memberRepository.deleteById(memberId);
+    }
 }
