@@ -57,10 +57,11 @@ public class MemberController {
     }
 
     @DeleteMapping("/members/{memberId}")
-    public ResponseEntity<Void> deleteMember(@PathVariable long memberId) {
+    public ResponseEntity<String> deleteMember(@PathVariable long memberId) {
         memberService.delete(memberId);
 
+        String message = String.format("회원 %d번이 삭제되었습니다.", memberId);
         return ResponseEntity.ok()
-                .build();
+                .body(message);
     }
 }
