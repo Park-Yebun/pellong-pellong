@@ -15,7 +15,7 @@ public class MemberBadge {
     @Column(name = "memberBadgeId", updatable = false)
     private Long memberBadgeId;
 
-    @ManyToOne
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
     @JoinColumn(name = "memberId")
     private Member member;
 

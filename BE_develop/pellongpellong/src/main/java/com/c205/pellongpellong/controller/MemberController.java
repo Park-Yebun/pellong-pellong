@@ -9,6 +9,7 @@ import com.c205.pellongpellong.service.MemberService;
 import com.c205.pellongpellong.service.MemberVariableService;
 import com.c205.pellongpellong.service.RankService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,11 @@ public class MemberController {
     private final MemberBadgeService memberBadgeService;
 
     private MemberBadgeRepository memberBadgeRepository;
+
+    @Autowired
+    public void setMemberBadgeRepository(MemberBadgeRepository memberBadgeRepository) {
+        this.memberBadgeRepository = memberBadgeRepository;
+    }
 
     @PostMapping("/members")
     public ResponseEntity<Member> addMember(@RequestBody AddMemberRequest request) {
@@ -69,7 +75,7 @@ public class MemberController {
                 .body(message);
     }
 
-    @PatchMapping("/profiles/{memberId}/badges/{bedgeId}")
+    @PatchMapping("/profiles/{memberId}/badges/{badgeId}")
     public String updateRepresentativeBadge(@PathVariable long memberId, @PathVariable long badgeId) {
         // memberId에 해당하는 모든 MemberBadge 엔티티 조회
         List<MemberBadge> memberBadges = memberBadgeRepository.findByMemberMemberId(memberId);
