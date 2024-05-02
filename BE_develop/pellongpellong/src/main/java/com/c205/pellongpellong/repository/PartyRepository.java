@@ -16,5 +16,5 @@ public interface PartyRepository extends JpaRepository<Party, Long> {
     List<Party> findByKind(int kind);
 
     // 특정 회원이 생성한 파티 검색
-    Optional<Party> findByMemberId(Long memberId);
+    Optional<Party> findByMemberMemberId(Long memberId);
 }

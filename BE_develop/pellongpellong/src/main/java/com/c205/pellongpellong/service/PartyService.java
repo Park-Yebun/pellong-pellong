@@ -29,7 +29,7 @@ public class PartyService {
     //생성
     public Party createParty(Party party, Long memberId) {
         // 사용자가 이미 파티를 가지고 있는지 확인
-        Optional<Party> existingParty = partyRepository.findByMemberId(memberId);
+        Optional<Party> existingParty = partyRepository.findByMemberMemberId(memberId);
         if (existingParty.isPresent()) {
             throw new IllegalStateException("이미 파티를 생성하셨습니다.");
         }
