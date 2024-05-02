@@ -2,6 +2,8 @@ package com.c205.pellongpellong.controller;
 
 import com.c205.pellongpellong.dto.*;
 import com.c205.pellongpellong.entity.Member;
+import com.c205.pellongpellong.entity.MemberBadge;
+import com.c205.pellongpellong.repository.MemberBadgeRepository;
 import com.c205.pellongpellong.service.MemberBadgeService;
 import com.c205.pellongpellong.service.MemberService;
 import com.c205.pellongpellong.service.MemberVariableService;
@@ -27,6 +29,8 @@ public class MemberController {
     private final RankService rankService;
 
     private final MemberBadgeService memberBadgeService;
+
+    private MemberBadgeRepository memberBadgeRepository;
 
     @PostMapping("/members")
     public ResponseEntity<Member> addMember(@RequestBody AddMemberRequest request) {
@@ -63,5 +67,23 @@ public class MemberController {
         String message = String.format("회원 %d번이 삭제되었습니다.", memberId);
         return ResponseEntity.ok()
                 .body(message);
+    }
+
+    @PatchMapping("/profiles/{memberId}/badges/{bedgeId}")
+    public String updateRepresentativeBadge(@PathVariable long memberId, @PathVariable long badgeId) {
+        // memberId에 해당하는 모든 MemberBadge 엔티티 조회
+        List<MemberBadge> memberBadges = memberBadgeRepository.findByMemberMemberId(memberId);
+
+        // memberId에 해당하는 뱃지 중 대표 뱃지로 설정할 뱃지를 찾음
+        for (MemberBadge memberBadge : memberBadges) {
+            if (memberBadge.getBadgeId() == badgeId) {
+                memberBadge.setRepresentative(true); // 대표 뱃지로 설정
+            } else {
+                memberBadge.setRepresentative(false); // 다른 뱃지들은 대표 뱃지가 아님
+            }
+            memberBadgeRepository.save(memberBadge); // 변경 사항 저장
+        }
+
+        return String.format("대표 뱃지가 %d번으로 변경되었습니다.", badgeId);
     }
 }

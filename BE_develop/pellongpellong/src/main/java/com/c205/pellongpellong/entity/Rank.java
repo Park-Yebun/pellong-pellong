@@ -27,8 +27,7 @@ public class Rank {
     private String nickname;
 
     @Builder
-    public Rank(Long rankId, Member member, int sumExp, String nickname) {
-        this.rankId = rankId;
+    public Rank(Member member, int sumExp, String nickname) {
         this.member = member;
         this.sumExp = sumExp;
         this.nickname = nickname;
