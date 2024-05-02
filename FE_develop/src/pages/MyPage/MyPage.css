@@ -1,0 +1,28 @@
+.btn-edit-profile {
+    padding: 6px 70px;
+    margin-top: 10px;
+    background-color: #348dec;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.btn-edit-profile:hover {
+    background-color: #0056b3;
+}
+
+.btn-go-back {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    padding-top: 5px;
+    margin-left: 5px;
+}
+
+.btn-go-back img {
+    width: 30px;
+    height: 30px;
+  }

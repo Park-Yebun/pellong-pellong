@@ -1,0 +1,43 @@
+.badge-grid {
+  margin-top: 20px;
+  display: grid;
+  justify-items: center;
+  grid-template-columns: repeat(3, 1fr); /* 3열 그리드 */
+}
+
+.badge {
+  width: 80px;
+  height: 75px;
+  margin: 10px;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 50%; /* 원형 모양을 만들기 위한 속성 */
+  overflow: hidden; /* 원형 모양을 만들기 위해 테두리를 자르도록 설정 */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
+}
+
+.badge img {
+  width: 100%; /* 이미지 크기 */
+  height: 100%; /* 이미지 크기 */
+}
+
+.badge-description {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border-top: 1px solid gray;
+  padding: 20px;
+  text-align: center;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+      transform: translateY(100%);
+  }
+  to {
+      transform: translateY(0);
+  }
+}
