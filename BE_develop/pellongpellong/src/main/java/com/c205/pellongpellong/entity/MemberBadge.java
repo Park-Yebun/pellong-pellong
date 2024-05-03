@@ -19,7 +19,7 @@ public class MemberBadge {
     @JoinColumn(name = "memberId")
     private Member member;
 
-    @ManyToOne
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
     @JoinColumn(name = "badgeId")
     private Badge badge;
 
