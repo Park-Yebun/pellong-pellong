@@ -4,8 +4,8 @@ import lombok.Getter;
 
 @Getter
 public class LifeQuoteDTO {
-    private Long lifeQuoteId;
-    private String lifeQuoteContent;
+    private final Long lifeQuoteId;
+    private final String lifeQuoteContent;
 
     public LifeQuoteDTO(Long lifeQuoteId, String lifeQuoteContent) {
         this.lifeQuoteId = lifeQuoteId;
