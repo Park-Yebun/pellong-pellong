@@ -17,8 +17,10 @@ public class LifeQuoteController {
     private final LifeQuoteService lifeQuoteService;
 
     @GetMapping("/life-quotes/{lifeQuoteId}")
-    public LifeQuoteDTO getLifeQuoteById(@PathVariable Long lifeQuoteId) {
-        LifeQuoteDTO lifeQuoteDTO = lifeQuoteService.getLifeQuoteById(lifeQuoteId);
-        return ResponseEntity.ok(lifeQuote);
+    public int getLifeQuoteById(@PathVariable Long lifeQuoteId) {
+//    public LifeQuoteDTO getLifeQuoteById(@PathVariable Long lifeQuoteId) {
+//        LifeQuoteDTO lifeQuoteDTO = lifeQuoteService.getLifeQuoteById(lifeQuoteId);
+//        return ResponseEntity.ok(lifeQuote);
+        return 1;
     }
 }
