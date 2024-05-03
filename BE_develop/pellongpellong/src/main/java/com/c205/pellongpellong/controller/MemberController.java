@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 //import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -23,6 +24,7 @@ import java.util.List;
 
 public class MemberController {
 
+    @Autowired
     private final MemberService memberService;
 
     private final MemberVariableService memberVariableService;
@@ -38,13 +40,21 @@ public class MemberController {
         this.memberBadgeRepository = memberBadgeRepository;
     }
 
-    @PostMapping("/members")
-    public ResponseEntity<Member> addMember(@RequestBody AddMemberRequest request) {
-        Member savedMember = memberService.save(request);
+//    @PostMapping("/members")
+//    public ResponseEntity<Member> addMember(@RequestBody AddMemberRequest request) {
+//        Member savedMember = memberService.save(request);
+//
+//        return ResponseEntity.status(HttpStatus.CREATED)
+//                .body(savedMember);
+//    }
+//    이건 옛날 버전
 
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(savedMember);
+    @PostMapping("members")
+    public Member addMember(@RequestBody Member member) { return memberService.saveMember(member); }
 
+    @PatchMapping("members/{memberId}")
+    public Member updateMemberFields(@PathVariable Long memberId, @RequestBody Map<String, Object> fields){
+        return memberService.updateMemberByFields(memberId, fields);
     }
 
     @GetMapping("/members/{memberId}")

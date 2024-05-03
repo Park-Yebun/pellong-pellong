@@ -1,14 +1,12 @@
 package com.c205.pellongpellong.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Data
 public class Member {
 
     @Id
@@ -25,8 +23,8 @@ public class Member {
     @Column(name = "profileImg", nullable = true)
     private String profileImg;
 
-    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
-    private Party party;
+//    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
+//    private Party party;
 
     @Builder
     public Member(String email, String nickname, String profileImg) {
