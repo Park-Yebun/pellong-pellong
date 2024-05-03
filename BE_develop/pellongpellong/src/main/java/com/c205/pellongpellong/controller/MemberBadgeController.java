@@ -47,7 +47,7 @@ public class MemberBadgeController {
         // MemberBadge 엔티티를 저장
         memberBadgeRepository.save(memberBadge);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("MemberBadge 테이블에 memberId " + memberId + "의 가 추가되었습니다.");
+        return ResponseEntity.status(HttpStatus.CREATED).body(memberId + "번 회원이 팰롱팰롱 뱃지를 획득했습니다.");
     }
 
 }
