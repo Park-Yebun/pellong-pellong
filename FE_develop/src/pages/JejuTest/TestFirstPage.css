@@ -1,0 +1,44 @@
+.test-first-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+  
+  .test-title {
+    color: #333;
+  }
+  
+  .examImage {
+    max-width: 100%;
+    height: auto;
+    margin-top: 20px;
+  }
+  
+  .descri-container {
+    max-width: 300px;
+    margin: 20px auto;
+  }
+  
+  .descri {
+    color: #666;
+    line-height: 1.5;
+  }
+  
+  .startButton {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+  
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
+  
