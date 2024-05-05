@@ -16,18 +16,11 @@ import ShadowingMainPage from './pages/JejuEdu/ShadowingMainPage';
 import ShadowingPlayPage from './pages/JejuEdu/ShadowingPlayPage';
 import ShadowingResultPage from './pages/JejuEdu/ShadowingResultPage';
 import PlayMainPage from './pages/JejuPlay/PlayMainPage';
-import JejuDramaReady from './pages/JejuPlay/Drama/JejuDramaReady';
-import JejuDramaPlay from './pages/JejuPlay/Drama/JejuDramaPlay';
-import JejuDramaLose from './pages/JejuPlay/Drama/JejuDramaLose';
-import JejuDramaResult from './pages/JejuPlay/Drama/JejuDramaResult';
-import JejuMusicReady from './pages/JejuPlay/Music/JejuMusicReady';
-import JejuMusicPlay from './pages/JejuPlay/Music/JejuMusicPlay';
-import JejuMusicLose from './pages/JejuPlay/Music/JejuMusicLose';
-import JejuMusicResult from './pages/JejuPlay/Music/JejuMusicResult';
-import JejuSpeedReady from './pages/JejuPlay/Speed/JejuSpeedReady';
-import JejuSpeedPlay from './pages/JejuPlay/Speed/JejuSpeedPlay';
-import JejuSpeedLose from './pages/JejuPlay/Speed/JejuSpeedLose';
-import JejuSpeedResult from './pages/JejuPlay/Speed/JejuSpeedResult';
+import CreateWaitingRoom from './pages/JejuPlay/CreateWaitingRoom';
+import GameOverPage from './pages/JejuPlay/GameOverPage';
+import PlayPage from './pages/JejuPlay/PlayPage';
+import PlayResultPage from './pages/JejuPlay/PlayResultPage';
+import WaitingRoomPage from './pages/JejuPlay/WaitingRoomPage';
 
 function App() {
   return (
@@ -48,18 +41,11 @@ function App() {
         <Route path="/jeju-edu/play-page/:video-id" element={<ShadowingPlayPage />} />
         <Route path="/jeju-edu/result" element={<ShadowingResultPage />} />
         <Route path="/jeju-play" element={<PlayMainPage />} />
-        <Route path="/drama" element={<JejuDramaReady />} />
-        <Route path="/drama/play-page" element={<JejuDramaPlay />} />
-        <Route path="/drama/lose-page" element={<JejuDramaLose />} />
-        <Route path="/drama/result" element={<JejuDramaResult />} />
-        <Route path="/music" element={<JejuMusicReady />} />
-        <Route path="/music/play-page" element={<JejuMusicPlay />} />
-        <Route path="/music/lose-page" element={<JejuMusicLose />} />
-        <Route path="/music/result" element={<JejuMusicResult />} />
-        <Route path="/speed" element={<JejuSpeedReady />} />
-        <Route path="/speed/play-page" element={<JejuSpeedPlay />} />
-        <Route path="/speed/lose-page" element={<JejuSpeedLose />} />
-        <Route path="/speed/result" element={<JejuSpeedResult />} />
+        <Route path="/jeju-play/create" element={<CreateWaitingRoom />} />
+        <Route path="/jeju-play/gameover" element={<GameOverPage />} />  
+        <Route path="/jeju-play/:party-id" element={<PlayPage />} />  
+        <Route path="/jeju-play/:party-id/result" element={<PlayResultPage />} />
+        <Route path="/jeju-play/:party-id/wait" element={<WaitingRoomPage />} />
       </Routes>
   );
 }

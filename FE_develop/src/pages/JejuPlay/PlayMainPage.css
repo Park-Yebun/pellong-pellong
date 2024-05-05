@@ -1,0 +1,216 @@
+.play-main-container {
+    width: 360px;
+    position: relative;
+}
+
+.title {
+    margin-top: 1.56rem;
+    margin-left: 2.44rem;
+
+    /* font-family: "Abhaya Libre SemiBold"; */
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 0.0015rem;
+}
+
+.speed-quiz-btn {
+    width: 20.0625rem;
+    height: 6.625rem;
+    flex-shrink: 0;
+
+    margin-top: 0.81rem;
+    margin-left: 1.25rem;
+
+    border-radius: 2.5rem;
+    border: 6px solid rgba(255, 255, 255, 0.30);
+    background: var(--1, linear-gradient(180deg, #CF65F4 0%, #952CB9 100%));
+    box-shadow: 0px 22px 44px 0px rgba(149, 44, 185, 0.40);
+
+    color: #FFF;
+    /* font-family: "Abhaya Libre SemiBold"; */
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 0.00125rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.drama-quiz-btn {
+    width: 9.5rem;
+    height: 6.625rem;
+    flex-shrink: 0;
+
+    border-radius: 2.5rem;
+    border: 6px solid rgba(255, 255, 255, 0.30);
+    background: linear-gradient(180deg, #FFCF53 0%, #F90 100%);
+    box-shadow: 0px 22px 44px 0px rgba(255, 153, 0, 0.40);
+
+    color: #FFF;
+    /* font-family: "Abhaya Libre SemiBold"; */
+    font-size: 0.9375rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 0.00094rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.music-quiz-btn {
+    width: 9.5rem;
+    height: 6.625rem;
+    flex-shrink: 0;
+
+    border-radius: 0.9375rem 3.125rem;
+    border: 6px solid rgba(255, 255, 255, 0.30);
+    background: linear-gradient(180deg, #44BBFE 0%, #1E78FE 100%);
+    box-shadow: 0px 22px 44px 0px rgba(32, 124, 254, 0.40);
+
+    color: #FFF;
+    /* font-family: "Abhaya Libre SemiBold"; */
+    font-size: 0.9375rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 0.00094rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.waitroom-container {
+    margin-left: 2rem;
+}
+
+.party-title {
+    width: 180px;
+}
+
+.party-type {
+    width: 99px;
+    height: 16px;
+
+    border-radius: 3.125rem;
+    background: #C4C4C4;
+
+    color: #FFF;
+    /* font-family: "Abhaya Libre ExtraBold"; */
+    font-size: 0.6875rem;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    letter-spacing: 0.00069rem;
+    text-align: center;
+}
+
+.party-occupancy > div {
+    margin-left: 1rem;
+}
+
+.btn-group {
+    margin-top: 0.88rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 60%;
+}
+
+.password-modal {
+    width: 278px;
+    height: 199px;
+    position: absolute;
+    top: 300px;
+    left: 40px;
+
+    border-radius: 10px;
+    border: 0.3px solid #D8D8D8;
+    background: #FFF;
+}
+.close {
+    position: absolute;
+    right: 7px;
+    top: 9px;
+}
+
+.password-txt {
+    position: absolute;
+    top: 39px;
+    left: 60px;
+
+    color: #000;
+    text-align: center;
+    /* font-family: "Abhaya Libre SemiBold"; */
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 0.015px;
+}
+
+.password {
+    width: 207px;
+    height: 43px;
+    position: absolute;
+    top: 84px;
+    left: 34px;
+
+    background: #D9D9D9;
+    border: none;
+    outline: none;
+}
+
+.isWrong {
+    position: absolute;
+    top: 68px;
+    left: 35px;
+
+    color: #F53360;
+    /* font-family: Inter; */
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.submitbtn {
+    width: 64px;
+    height: 36px;
+    position: absolute;
+    top: 141px;
+    left: 107.5px;
+
+    border-radius: 10px;
+    background: #D9D9D9;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+    color: #FFF;
+    -webkit-text-stroke-width: 0.5;
+    -webkit-text-stroke-color: #000;
+    /* font-family: Roboto; */
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px; /* 133.333% */
+    letter-spacing: 0.1px;
+    text-align: center;
+    text-justify: center;
+}
+
+/* .isPublic {
+    width: 20.0625rem;
+    height: 6rem;
+} */
