@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 
 const WaitingRoomPage = () => {
   return (
-    <div>
-    </div>
+    <div></div>
   );
 };
 
