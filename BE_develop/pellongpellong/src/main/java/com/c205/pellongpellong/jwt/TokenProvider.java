@@ -22,19 +22,19 @@ import java.util.Date;
 @RequiredArgsConstructor
 @Component
 public class TokenProvider {
-//
+
     private static final long ACCESS_TOKEN_EXPIRE_TIME_IN_MILLISECONDS = 1000 * 60 * 60; // 60min
 
 //    @Value("${jwt.secret}")
 //    private String secret;
     private Key key;
-//
+
 //    @PostConstruct
 //    public void init() {
 //        byte[] key = Decoders.BASE64URL.decode(secret);
 //        this.key = Keys.hmacShaKeyFor(secret.getBytes());
 //    }
-//
+
     public boolean validateToken(String token) {
 
         try {
