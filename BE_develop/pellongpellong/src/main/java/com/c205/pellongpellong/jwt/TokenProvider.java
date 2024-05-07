@@ -25,7 +25,7 @@ public class TokenProvider {
 
     private static final long ACCESS_TOKEN_EXPIRE_TIME_IN_MILLISECONDS = 1000 * 60 * 60; // 60min
 
-//    @Value("${jwt.secret}")
+//    @Value("${Jwt.secret}")
 //    private String secret;
     private Key key;
 
