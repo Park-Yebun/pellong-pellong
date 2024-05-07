@@ -1,16 +1,21 @@
 package com.c205.pellongpellong.controller;
 
 
+import com.c205.pellongpellong.dto.RankDTO;
 import com.c205.pellongpellong.entity.Member;
 import com.c205.pellongpellong.entity.Rank;
 import com.c205.pellongpellong.repository.RankRepository;
 import com.c205.pellongpellong.repository.MemberRepository;
+import com.c205.pellongpellong.service.RankService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,6 +24,7 @@ public class RankController {
     private final RankRepository rankRepository;
 
     private final MemberRepository memberRepository;
+    private final RankService rankService;
 
     @PostMapping("/ranking/{memberId}")
     public ResponseEntity<String> addRank(@PathVariable long memberId) {
@@ -41,6 +47,6 @@ public class RankController {
 
     }
 
-
-
+    @GetMapping("/ranking")
+    public List<RankDTO> getAllRank() {return rankService.getAllRank();}
 }

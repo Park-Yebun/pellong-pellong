@@ -1,5 +1,6 @@
 package com.c205.pellongpellong.entity;
 
+import com.c205.pellongpellong.dto.RankDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,5 +31,14 @@ public class Rank {
         this.member = member;
         this.sumExp = sumExp;
         this.nickname = nickname;
+    }
+
+    public RankDTO of(Rank rank) {
+        return RankDTO.builder()
+                .rankId(rank.getRankId())
+                .memberId(rank.getMember().getMemberId())
+                .sumExp(rank.getSumExp())
+                .nickname(rank.getNickname())
+                .build();
     }
 }

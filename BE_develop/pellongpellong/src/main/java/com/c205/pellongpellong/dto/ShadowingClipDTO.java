@@ -1,9 +1,7 @@
 package com.c205.pellongpellong.dto;  // step3. DTO 만들기
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 
 //@NoArgsConstructor  // 기본 생성자 추가
 //@AllArgsConstructor  // 모든 필드 값을 파라미터로 받는 생성자 추가
