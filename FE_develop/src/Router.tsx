@@ -18,9 +18,13 @@ import ShadowingResultPage from './pages/JejuEdu/ShadowingResultPage';
 import PlayMainPage from './pages/JejuPlay/PlayMainPage';
 import CreateWaitingRoom from './pages/JejuPlay/CreateWaitingRoom';
 import GameOverPage from './pages/JejuPlay/GameOverPage';
-import PlayPage from './pages/JejuPlay/PlayPage';
+import OtherPlayPage from './pages/JejuPlay/Other/OtherPlayPage';
 import PlayResultPage from './pages/JejuPlay/PlayResultPage';
 import WaitingRoomPage from './pages/JejuPlay/WaitingRoomPage';
+
+// component
+import SoloUser from './components/JejuPlay/SoloUser';
+import DuelUser from './components/JejuPlay/DuelUser';
 
 function App() {
   return (
@@ -43,9 +47,12 @@ function App() {
         <Route path="/jeju-play" element={<PlayMainPage />} />
         <Route path="/jeju-play/create" element={<CreateWaitingRoom />} />
         <Route path="/jeju-play/gameover" element={<GameOverPage />} />  
-        <Route path="/jeju-play/:party-id" element={<PlayPage />} />  
+        <Route path="/jeju-play/other/:party-id" element={<OtherPlayPage />} />
         <Route path="/jeju-play/:party-id/result" element={<PlayResultPage />} />
         <Route path="/jeju-play/:party-id/wait" element={<WaitingRoomPage />} />
+        {/* component */}
+        {/* <Route path="solo" element={<SoloUser />} /> */}
+        <Route path="duel" element={<DuelUser />} />
       </Routes>
   );
 }
