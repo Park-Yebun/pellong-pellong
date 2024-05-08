@@ -26,6 +26,9 @@ import WaitingRoomPage from './pages/JejuPlay/WaitingRoomPage';
 import SoloUser from './components/JejuPlay/SoloUser';
 import DuelUser from './components/JejuPlay/DuelUser';
 
+// test
+import Test from './pages/TestPage';
+
 function App() {
   return (
       <Routes>
@@ -51,8 +54,10 @@ function App() {
         <Route path="/jeju-play/:party-id/result" element={<PlayResultPage />} />
         <Route path="/jeju-play/:party-id/wait" element={<WaitingRoomPage />} />
         {/* component */}
-        {/* <Route path="solo" element={<SoloUser />} /> */}
-        <Route path="duel" element={<DuelUser />} />
+        {/* <Route path="/solo" element={<SoloUser />} /> */}
+        <Route path="/duel" element={<DuelUser />} />
+        {/* test */}
+        <Route path="/test" element={<Test />} />
       </Routes>
   );
 }
