@@ -1,61 +1,67 @@
 package com.c205.pellongpellong.controller;
 
-import com.c205.pellongpellong.dto.PartyDetailDto;
+import com.c205.pellongpellong.dto.PartyDTO;
+import com.c205.pellongpellong.dto.PartyDetailDTO;
 import com.c205.pellongpellong.entity.Party;
+import com.c205.pellongpellong.repository.MemberRepository;
 import com.c205.pellongpellong.service.PartyService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+
 @RestController
 @RequiredArgsConstructor
 public class PartyController {
 
-    @Autowired
-    private PartyService partyService;
+    private final PartyService partyService;
+    private final MemberRepository memberRepository;
 
-    // 모든 파티 상세 정보 조회
+    @PostMapping("/party/create/{memberId}")
+    public ResponseEntity<?> createParty(@PathVariable Long memberId, @RequestBody Party party) {
+        // 해당 멤버가 이미 파티를 생성했는지 확인
+        Optional<Party> existingParty = partyService.findPartyByMemberId(memberId);
+        if (existingParty.isPresent()) {
+            return ResponseEntity.badRequest().body("Error: Member already created a party.");
+        }
+
+        // 파티 생성
+        party.setMember(memberRepository.findById(memberId).orElseThrow(() -> new RuntimeException("Error: Member not found.")));
+        Party newParty = partyService.createParty(party);
+
+        //파티id만 반환
+        Map<String, Long> result = new HashMap<>();
+        result.put("partyId", newParty.getPartyId());
+        return ResponseEntity.ok(result);
+    }
+
+
+
     @GetMapping("/party")
-    public ResponseEntity<List<PartyDetailDto>> getAllParties() {
-        List<PartyDetailDto> parties = partyService.getAllPartiesWithDetails();
-        return ResponseEntity.ok(parties);
+    public ResponseEntity<List<PartyDTO>> getAllParties() {
+        List<PartyDTO> partyDTOs = partyService.listAllPartiesWithDetails();
+        return ResponseEntity.ok(partyDTOs);
     }
 
-    // 특정 종류(kind)의 파티 조회
-    @GetMapping("/party/kind/{kind}")
-    public ResponseEntity<List<Party>> getPartiesByKind(@PathVariable int kind) {
-        List<Party> parties = partyService.getPartiesByKind(kind);
-        return ResponseEntity.ok(parties);
-    }
+    @DeleteMapping("/party/delete/{memberId}")
+    public ResponseEntity<?> deletePartyByMemberId(@PathVariable Long memberId) {
+        Optional<Party> party = partyService.findPartyByMemberId(memberId);
+        if (!party.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
 
-    // 특정 파티 조회
-    @GetMapping("/party/{partyId}")
-    public ResponseEntity<Party> getPartyById(@PathVariable Long partyId) {
-        Party party = partyService.getPartyById(partyId)
-                .orElseThrow(() -> new RuntimeException("Party not found with id: " + partyId));
-        return ResponseEntity.ok(party);
-    }
-
-    // 파티 생성
-    @PostMapping("/party")
-    public ResponseEntity<Party> createParty(@RequestBody Party party, @RequestParam Long memberId) {
-        Party createdParty = partyService.createParty(party, memberId);
-        return ResponseEntity.status(201).body(createdParty);
-    }
-
-    // 파티 수정
-    @PutMapping("/party/{partyId}")
-    public ResponseEntity<Party> updateParty(@PathVariable Long partyId, @RequestBody Party partyDetails) {
-        Party updatedParty = partyService.updateParty(partyId, partyDetails);
-        return ResponseEntity.ok(updatedParty);
-    }
-
-    // 파티 삭제
-    @DeleteMapping("/party/{partyId}")
-    public ResponseEntity<Void> deleteParty(@PathVariable Long partyId, @RequestParam Long memberId) {
-        partyService.deleteParty(partyId, memberId);
+        partyService.deleteParty(party.get().getPartyId());
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/party/{partyId}")
+    public ResponseEntity<PartyDetailDTO> getPartyDetail(@PathVariable Long partyId) {
+        PartyDetailDTO partyDetail = partyService.getPartyDetail(partyId);
+        return ResponseEntity.ok(partyDetail);
     }
 }
