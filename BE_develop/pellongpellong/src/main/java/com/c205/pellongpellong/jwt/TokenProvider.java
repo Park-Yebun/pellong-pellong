@@ -25,14 +25,28 @@ public class TokenProvider {
 
     private static final long ACCESS_TOKEN_EXPIRE_TIME_IN_MILLISECONDS = 1000 * 60 * 60; // 60min
 
-//    @Value("${Jwt.secret}")
-//    private String secret;
     private Key key;
+
+    @Value("${jwt.secret}")
+    private String secret;
+
+    @PostConstruct
+    public void init() {
+        byte[] key = Decoders.BASE64URL.decode(secret);
+        this.key = Keys.hmacShaKeyFor(key);
+    }
+
+
 
 //    @PostConstruct
 //    public void init() {
-//        byte[] key = Decoders.BASE64URL.decode(secret);
-//        this.key = Keys.hmacShaKeyFor(secret.getBytes());
+//        String secret = environment.getProperty("jwt.secret");
+//        if (secret == null) {
+//            throw new IllegalArgumentException("jwt.secret property is null");
+//        }
+//        log.info("jwt.secret property value: {}", secret);
+//        byte[] keyBytes = Decoders.BASE64URL.decode(secret);
+//        this.key = Keys.hmacShaKeyFor(keyBytes);
 //    }
 
     public boolean validateToken(String token) {
