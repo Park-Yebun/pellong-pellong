@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom'; // Link 컴포넌트를 import 합니다.
+import './TestPage.css'; // CSS 파일을 import 합니다.
 
 interface Question {
   id: number;
@@ -11,24 +13,111 @@ const QuizApp: React.FC = () => {
   const questions: Question[] = [
     {
       id: 1,
-      question: '2+2는?',
-      options: ['1', '3', '4', '5'],
+      question: "'할망'",
+      options: ['망치', '하고싶은 마음', '할머니', '의심되는 마음'],
       correctAnswerIndex: 2,
     },
-    // 다른 문제들 추가
+    {
+      id: 2,
+      question: "'무신'",
+      options: ['뭔, 무슨', '군인', '미신', '맨발'],
+      correctAnswerIndex: 0,
+    },
+    {
+      id: 3,
+      question: "'히어뜩이'",
+      options: ['당당하게', '새 부리', '오뚝이', '정신이 어지럽게'],
+      correctAnswerIndex: 3,
+    },
+    {
+      id: 4,
+      question: "'페삭'",
+      options: ['바삭', '쓰레기', '뱃 삯', '거름망'],
+      correctAnswerIndex: 0,
+    },
+    {
+      id: 5,
+      question: "'하영'",
+      options: ['내려가다', '안녕하세요', '많이', '달 밤'],
+      correctAnswerIndex: 2,
+    },
+    {
+      id: 6,
+      question: "'천성'",
+      options: ['역시', '찬성', '성직자', '언제나'],
+      correctAnswerIndex: 3,
+    },
+    {
+      id: 7,
+      question: "'졸바로'",
+      options: ['줄 서서', '저녁밥', '올바르게', '잠깐 졸다'],
+      correctAnswerIndex: 2,
+    },
+    {
+      id: 8,
+      question: "'제나'",
+      options: ['제발', '그녀', '다리미', '놋쇠'],
+      correctAnswerIndex: 0,
+    },
+    {
+      id: 9,
+      question: "'오고생이'",
+      options: ['자동차', '아침밥', '고스란히', '하루살이'],
+      correctAnswerIndex: 2,
+    },
+    {
+      id: 10,
+      question: "'역부로'",
+      options: ['어이없이', '힘들게', '기차역', '일부러'],
+      correctAnswerIndex: 3,
+    },
+    {
+      id: 11,
+      question: "'어떠난'",
+      options: ['어떻게 하면', '어째서', '어떠한', '얼른'],
+      correctAnswerIndex: 1,
+    },
+    {
+      id: 12,
+      question: "'더레이'",
+      options: ['더해서', '더럽게', '더워지다', '더디다'],
+      correctAnswerIndex: 1,
+    },
+    {
+      id: 13,
+      question: "'다못'",
+      options: ['다다르다', '사뭇', '다만, 또', '대강대강, 대충대충'],
+      correctAnswerIndex: 2,
+    },
+    {
+      id: 14,
+      question: "'겡삭겡삭'",
+      options: ['빙긋빙긋', '싱긋싱긋', '방긋방긋', '쉬엄쉬엄'],
+      correctAnswerIndex: 0,
+    },
+    {
+      id: 15,
+      question: "'지접다'",
+      options: ['아프다', '뜨겁다', '맵다', '지저귀다'],
+      correctAnswerIndex: 1,
+    },
   ];
+
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [score, setScore] = useState<number>(0);
   const [showResult, setShowResult] = useState<boolean>(false);
-  const [wrongAnswers, setWrongAnswers] = useState<Question[]>([]);
+  const [isReviewingWrongAnswers, setIsReviewingWrongAnswers] = useState<boolean>(false);
+  const [wrongAnswersIndices, setWrongAnswersIndices] = useState<number[]>([]);
 
   const handleAnswerSelection = (selectedOptionIndex: number) => {
     const currentQuestion = questions[currentQuestionIndex];
     if (selectedOptionIndex === currentQuestion.correctAnswerIndex) {
       setScore(score + 1);
     } else {
-      setWrongAnswers([...wrongAnswers, currentQuestion]);
+      if (!isReviewingWrongAnswers) {
+        setWrongAnswersIndices([...wrongAnswersIndices, currentQuestionIndex]);
+      }
     }
     if (currentQuestionIndex === questions.length - 1) {
       setShowResult(true);
@@ -37,34 +126,44 @@ const QuizApp: React.FC = () => {
     }
   };
 
-  const restartQuiz = () => {
-    setCurrentQuestionIndex(0);
+  const handleRetryWrongAnswers = () => {
+    setCurrentQuestionIndex(wrongAnswersIndices[0]);
     setScore(0);
     setShowResult(false);
-    setWrongAnswers([]);
+    setIsReviewingWrongAnswers(true);
+  };
+
+  const renderQuiz = () => {
+    return (
+      <div className='test-question-container'>
+        <h2 className="test-question">문제 {currentQuestionIndex + 1}</h2>
+        <p className="test-question">{questions[currentQuestionIndex].question}</p>
+        <ul className="test-options-list">
+          {questions[currentQuestionIndex].options.map((option, index) => (
+            <li key={index} className="test-option" onClick={() => handleAnswerSelection(index)}>
+              {option}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
   };
 
   return (
-    <div>
+    <div className="test-container">
       {showResult ? (
-        <div>
-          <h2>결과</h2>
-          <p>맞힌 문제 수: {score}</p>
-          <button onClick={restartQuiz}>다시 시작하기</button>
-          <button onClick={() => setShowResult(false)}>틀린 문제 다시 풀기</button>
+        <div className="test-result-container">
+          <h2 className="test-result">결과</h2>
+          <p className="test-result">맞힌 문제 수: {score}</p>
+          <div className='test-btn-container'>
+            <Link to="/jeju-test" className="test-button">메인으로</Link>
+            {!isReviewingWrongAnswers && (
+              <button className="test-button" onClick={handleRetryWrongAnswers}>틀린 문제 다시 풀어보기</button>
+            )}
+          </div>
         </div>
       ) : (
-        <div>
-          <h2>문제 {currentQuestionIndex + 1}</h2>
-          <p>{questions[currentQuestionIndex].question}</p>
-          <ul>
-            {questions[currentQuestionIndex].options.map((option, index) => (
-              <li key={index} onClick={() => handleAnswerSelection(index)}>
-                {option}
-              </li>
-            ))}
-          </ul>
-        </div>
+        renderQuiz()
       )}
     </div>
   );

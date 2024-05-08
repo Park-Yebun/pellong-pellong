@@ -20,7 +20,7 @@ const RankPage: React.FC = () => {
   return (
     <div>
       <BackButton />
-      <h1>랭크 페이지</h1>
+      <div>랭크 페이지</div>
       <Slider {...settings}>
         {ranks.map((rank, index) => (
           <RankIcon key={index} rank={rank.title} iconUrl={rank.imageUrl} />

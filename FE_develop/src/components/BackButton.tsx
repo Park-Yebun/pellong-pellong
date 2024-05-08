@@ -7,7 +7,7 @@ import BackArrow from '../assets/back-arrow.png'
 const BackButton = () => {
   const navigate = useNavigate();
   const goBack = () => {
-    navigate(-1); // 이전 페이지로 이동
+    navigate('/'); // Navigate to the home page
   };
 
   return (

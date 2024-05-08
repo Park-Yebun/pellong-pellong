@@ -1,13 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-const TestResultPage = () => {
+const ResultPage: React.FC = () => {
   return (
-    <div>
-      <h1>Test Result Page</h1>
-      <p>This is the content of Test Result Page.</p>
+    <div className="test-result-container">
+      <h2 className="test-result">결과</h2>
     </div>
   );
 };
 
-export default TestResultPage;
+export default ResultPage;
