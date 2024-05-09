@@ -1,7 +1,9 @@
 package com.c205.pellongpellong.config;
 
 
+
 import com.c205.pellongpellong.jwt.JwtAuthorizationFilter;
+
 import com.c205.pellongpellong.oauth2.handler.OAuth2AuthenticationFailureHandler;
 import com.c205.pellongpellong.oauth2.handler.OAuth2AuthenticationSuccessHandler;
 import com.c205.pellongpellong.oauth2.repository.HttpCookieOAuth2AuthorizationRequestRepository;
@@ -21,13 +23,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.cors.CorsConfigurationSource;
-
-import java.util.Arrays;
-
-
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
@@ -45,29 +40,19 @@ public class SecurityConfig {
     }
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000")); // 클라이언트의 URL
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept"));
-        configuration.setAllowCredentials(true);
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
-    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .cors().configurationSource(corsConfigurationSource()) // CORS 설정 적용
-                .and()
-                .csrf(AbstractHttpConfigurer::disable)
-                .headers(headersConfigurer -> headersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
-                .sessionManagement(sessions -> sessions.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
+        http.csrf(AbstractHttpConfigurer::disable)
+                .headers(headersConfigurer -> headersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)) // For H2 DB
+                .formLogin(AbstractHttpConfigurer::disable)
+                .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers(antMatcher("/api/**")).permitAll()
-                        .requestMatchers(antMatcher("/h2-console/**")).permitAll()
+//                        .requestMatchers(antMatcher("/api/hello/**")).permitAll()
+//                        .requestMatchers(antMatcher("/h2-console/**")).permitAll()
+                        .requestMatchers(antMatcher("/**")).permitAll()
                         .anyRequest().authenticated()
                 )
+                .sessionManagement(sessions -> sessions.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2Login(configure ->
                         configure.authorizationEndpoint(config -> config.authorizationRequestRepository(httpCookieOAuth2AuthorizationRequestRepository))
                                 .userInfoEndpoint(config -> config.userService(customOAuth2UserService))
