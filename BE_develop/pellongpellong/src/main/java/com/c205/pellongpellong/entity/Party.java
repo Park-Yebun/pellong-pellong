@@ -23,7 +23,7 @@ public class Party {
     @JoinColumn(name = "memberId")
     private Member member; // 참조키로 Member를 연결
 
-    @Column(length = 4,nullable = false)
+    @Column(length = 4)
     private String password;
 
     @Column(length = 32,nullable = false)
