@@ -8,6 +8,7 @@ import com.c205.pellongpellong.repository.GuestRepository;
 import com.c205.pellongpellong.repository.MemberRepository;
 import com.c205.pellongpellong.repository.PartyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +24,10 @@ public class GuestService {
     private PartyRepository partyRepository;
     @Autowired
     private MemberRepository memberRepository;
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
+    // 웹소켓 적용
     public GuestDTO addGuestToParty(Long partyId, Long memberId) {
         Party party = partyRepository.findById(partyId).orElseThrow(() -> new RuntimeException("파티id를 찾을 수 없어요"));
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new RuntimeException("회원id을 찾을 수 없어요"));
@@ -39,6 +43,7 @@ public class GuestService {
         party.setPo(party.getPo() + 1);
         partyRepository.save(party);
 
+        messagingTemplate.convertAndSend("/topic/parties/" + partyId, party);
         return new GuestDTO(guest.getGuestId(), member.getNickname(), member.getProfileImg());
     }
 
@@ -62,6 +67,7 @@ public class GuestService {
         }
         partyRepository.save(party);
         guestRepository.delete(guest);
+        messagingTemplate.convertAndSend("/topic/parties/" + partyId, party);
     }
 
 }
