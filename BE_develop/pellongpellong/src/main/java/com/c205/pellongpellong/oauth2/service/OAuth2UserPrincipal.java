@@ -13,9 +13,11 @@ import java.util.Map;
 public class OAuth2UserPrincipal implements OAuth2User, UserDetails {
 
     private final OAuth2UserInfo userInfo;
+    private final Long memberId;
 
-    public OAuth2UserPrincipal(OAuth2UserInfo userInfo) {
+    public OAuth2UserPrincipal(OAuth2UserInfo userInfo, Long memberId) {
         this.userInfo = userInfo;
+        this.memberId = memberId;
     }
 
     @Override
@@ -66,4 +68,6 @@ public class OAuth2UserPrincipal implements OAuth2User, UserDetails {
     public OAuth2UserInfo getUserInfo() {
         return userInfo;
     }
+
+    public Long getMemberId() { return memberId; }
 }
