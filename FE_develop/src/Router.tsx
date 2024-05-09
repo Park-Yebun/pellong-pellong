@@ -38,7 +38,7 @@ function App() {
         <Route path="/my-page/profile-edit" element={<ProfileEdit />} />
         <Route path="/rank" element={<RankPage />} />
         <Route path="/jeju-quiz" element={<JejuQuizListPage />} />
-        <Route path="/jeju-quiz/quiz-page" element={<JejuQuizPage />} />
+        <Route path="/jeju-quiz/level/:level" element={<JejuQuizPage />} />
         <Route path="/jeju-quiz/resolve" element={<QuizResolvePage />} />
         <Route path="/jeju-quiz/result" element={<QuizResultPage />} />
         <Route path="/jeju-test" element={<TestFirstPage />} />
