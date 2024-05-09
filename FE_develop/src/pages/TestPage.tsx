@@ -9,22 +9,22 @@ const TestPage = () => {
 
   return (
     <div>
-        <a href="https://saturituri.com/api/oauth2/authorization/google?redirect_uri=https://saturituri.com&mode=login">
+        <a href="https://saturituri.com/api/oauth2/authorization/google?redirect_uri=https://saturituri.com/test&mode=login">
         <button>Google Login</button>
       </a>
-      <a href="https://saturituri.com/api/oauth2/authorization/google?redirect_uri=https://saturituri.com&mode=unlink">
+      <a href="https://saturituri.com/api/oauth2/authorization/google?redirect_uri=https://saturituri.com/test&mode=unlink">
         <button>Google Unlink</button>
       </a>
-      <a href="http://www.saturituri.com/api/oauth2/authorization/naver?redirect_uri=https://www.saturituri.com&mode=login">
+      <a href="https://saturituri.com/api/oauth2/authorization/naver?redirect_uri=https://saturituri.com/test&mode=login">
         <button>Naver Login</button>
       </a>
-      <a href="http://www.saturituri.com/api/oauth2/authorization/naver?redirect_uri=https://www.saturituri.com&mode=unlink">
+      <a href="https://saturituri.com/api/oauth2/authorization/naver?redirect_uri=https://saturituri.com/test&mode=unlink">
         <button>Naver Unlink</button>
       </a>
-      <a href="https://www.saturituri.com/api/oauth2/authorization/kakao?redirect_uri=https://www.saturituri.com&mode=login">
+      <a href="https://saturituri.com/api/oauth2/authorization/kakao?redirect_uri=https://saturituri.com/test&mode=login">
         <button>Kakao Login</button>
       </a>
-      <a href="https://www.saturituri.com/api/oauth2/authorization/kakao?redirect_uri=https://www.saturituri.com&mode=unlink">
+      <a href="https://saturituri.com/api/oauth2/authorization/kakao?redirect_uri=https://saturituri.com/test&mode=unlink">
         <button>Kakao Unlink</button>
       </a>
 
