@@ -1,0 +1,51 @@
+.QT5-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f9f9f9; /* 배경색 업데이트 */
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .QT5-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .QT5-button {
+    background-color: #007aff;
+    color: #fff;
+    font-size: 16px;
+    padding: 12px 24px;
+    margin: 5px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .QT5-message {
+    font-size: 18px;
+    margin-top: 10px;
+    color: #007aff;
+  }
+  
+  .QT5-restart-button {
+    background-color: #ff3b30; /* 다시 시작 버튼의 배경색 업데이트 */
+    color: #fff;
+    font-size: 16px;
+    padding: 12px 24px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .QT5-restart-button:hover {
+    background-color: #cc2e23; /* 호버 시 조금 더 진한 빨간색으로 변화 */
+  }
+  
