@@ -9,10 +9,10 @@ const TestPage = () => {
 
   return (
     <div>
-        <a href="http://www.saturituri.com/api/oauth2/authorization/google?redirect_uri=http://www.saturituri.com&mode=login">
+        <a href="https://saturituri.com/api/oauth2/authorization/google?redirect_uri=https://saturituri.com&mode=login">
         <button>Google Login</button>
       </a>
-      <a href="http://www.saturituri.com/api/oauth2/authorization/google?redirect_uri=http://www.saturituri.com&mode=unlink">
+      <a href="https://saturituri.com/api/oauth2/authorization/google?redirect_uri=https://saturituri.com&mode=unlink">
         <button>Google Unlink</button>
       </a>
       <a href="http://www.saturituri.com/api/oauth2/authorization/naver?redirect_uri=https://www.saturituri.com&mode=login">
