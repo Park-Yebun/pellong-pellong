@@ -19,6 +19,7 @@ import PlayMainPage from './pages/JejuPlay/PlayMainPage';
 import CreateWaitingRoom from './pages/JejuPlay/CreateWaitingRoom';
 import GameOverPage from './pages/JejuPlay/GameOverPage';
 import OtherPlayPage from './pages/JejuPlay/Other/OtherPlayPage';
+import SpeedPlayPage from './pages/JejuPlay/Speed/SpeedPlayPage';
 import PlayResultPage from './pages/JejuPlay/PlayResultPage';
 import WaitingRoomPage from './pages/JejuPlay/WaitingRoomPage';
 
@@ -32,7 +33,7 @@ import Test from './pages/TestPage';
 function App() {
   return (
       <Routes>
-        <Route path="/social-login" element={<SocialLoginPage />} />
+        <Route path="/login" element={<SocialLoginPage />} />
         <Route path="/" element={<MainPage />} />
         <Route path="/my-page" element={<MyPageMain />} />
         <Route path="/my-page/profile-edit" element={<ProfileEdit />} />
@@ -45,14 +46,15 @@ function App() {
         <Route path="/jeju-test/test-page" element={<TestPage />} />
         <Route path="/jeju-test/test-result" element={<TestResultPage />} />
         <Route path="/jeju-edu" element={<ShadowingMainPage />} />
-        <Route path="/jeju-edu/play-page/:video-id" element={<ShadowingPlayPage />} />
+        <Route path="/jeju-edu/play-page/:videoId" element={<ShadowingPlayPage />} />
         <Route path="/jeju-edu/result" element={<ShadowingResultPage />} />
         <Route path="/jeju-play" element={<PlayMainPage />} />
         <Route path="/jeju-play/create" element={<CreateWaitingRoom />} />
         <Route path="/jeju-play/gameover" element={<GameOverPage />} />  
-        <Route path="/jeju-play/other/:party-id" element={<OtherPlayPage />} />
-        <Route path="/jeju-play/:party-id/result" element={<PlayResultPage />} />
-        <Route path="/jeju-play/:party-id/wait" element={<WaitingRoomPage />} />
+        <Route path="/jeju-play/other/:partyId" element={<OtherPlayPage />} />
+        <Route path="/jeju-play/speed/:partyId" element={<SpeedPlayPage />} />
+        <Route path="/jeju-play/:partyId/result" element={<PlayResultPage />} />
+        <Route path="/jeju-play/:partyId/wait" element={<WaitingRoomPage />} />
         {/* component */}
         {/* <Route path="/solo" element={<SoloUser />} /> */}
         <Route path="/duel" element={<DuelUser />} />

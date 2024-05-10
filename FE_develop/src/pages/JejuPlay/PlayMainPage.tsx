@@ -7,7 +7,6 @@ import lock from '../../assets/JejuPlay/lock.png'
 import occupancy from '../../assets/JejuPlay/occupancy.png'
 import close from '../../assets/JejuPlay/close.png'
 import './PlayMainPage.css'
-import dummydata from '../../data/waitingrooms.js' 
 
 
 const PlayMainPage = () => {
@@ -36,13 +35,13 @@ const PlayMainPage = () => {
     if (!roomData[room.partyId-1].isPublic) {
       setPasswordModalOpen(true)
     } else {
-      navigate(`/jeju-play/${room.partyId}/wait`)
+      navigate(`/jeju-play/${room.partyId}/wait`);
     };}
    
   const submitPassword = () => {
     const enteredPassword = passwordRef.current?.value;
     if (selectedRoom && selectedRoom.password === enteredPassword) {
-      navigate(`/jeju-play/${selectedRoom.partyId}/wait`)
+      navigate(`/jeju-play/${selectedRoom.partyId}/wait`);
     } else {
       setIsWrong(true)
     }
@@ -51,14 +50,14 @@ const PlayMainPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const response = await fetch('', {
-        //   method: 'GET',
-        //   headers: {
-        //     'Content-Type': 'application/json'
-        //   }
-        // });
-        // const data = await response.json();
-        setRoomData(dummydata);
+        const response = await fetch('https://www.saturituri.com/api/party', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        const data = await response.json();
+        setRoomData(data);
         console.log('데이터 로드 성공')
       } catch (error) {
         console.log('데이터 로드 실패', error) 
@@ -67,7 +66,7 @@ const PlayMainPage = () => {
     fetchData()
   }, []);
 
-  const createRoom = (partyKind:string) => {
+  const createRoom = (partyKind:number) => {
     navigate( '/jeju-play/create', { 
       state: {
         kind: partyKind
@@ -79,13 +78,13 @@ const PlayMainPage = () => {
       <BackButton />
       <div className='play title'>플레이</div>
         <div>
-            <div className='speed-quiz-btn' onClick={() => createRoom("speed")}>
+            <div className='speed-quiz-btn' onClick={() => createRoom(1)}>
                 <div>사투리 스피드 퀴즈</div>
                 <img className='speed-quiz-icon' src={speedquizicon} alt="speedquizicon" />
             </div>
             <div className='btn-group'>
-              <div className='drama-quiz-btn' onClick={() => createRoom("cinedrama")}>드라마 대사 퀴즈</div>
-              <div className='music-quiz-btn' onClick={() => createRoom("music")}>노래 가사 퀴즈</div>
+              <div className='drama-quiz-btn' onClick={() => createRoom(3)}>드라마 대사 퀴즈</div>
+              <div className='music-quiz-btn' onClick={() => createRoom(2)}>노래 가사 퀴즈</div>
             </div>
         </div>
         <div className='waitroom title'>대기방</div>
