@@ -61,9 +61,36 @@ export const Player = styled.div`
     height: 135px;
     margin-bottom: 9px;
 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
     border-radius: 0px 5px;
     background: #FFF;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+`
+
+export const ProfileImg = styled.img`
+    width: 64px;
+    height: 64px;
+    margin-top: 20px;
+
+    background: #BDE8A1;
+    border-radius: 60px;
+`
+
+export const Nickname = styled.div`
+    margin-top: 13px;
+
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    letter-spacing: 0.016px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `
 
 export const StartBtn = styled.div`

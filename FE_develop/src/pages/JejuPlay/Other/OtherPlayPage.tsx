@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import moviebadge from '../../../assets/JejuPlay/moviebadge.png'
 import stageboard from '../../../assets/JejuPlay/stageboard.png'
 import mardarin from '../../../assets/JejuPlay/mandarin.png'
 import dummydata from '../../../data/drama';
 import SoloUser from '../../../components/JejuPlay/SoloUser';
+import DuelUser from '../../../components/JejuPlay/DuelUser';
 import {
   Container,
   Answer,
@@ -22,6 +23,7 @@ import {
 
 const OtherPlayPage = () => {
   const navigate = useNavigate();
+  // const {to} = useLocation().state;
   const [quizList, setQuizList] = useState<any[]>([]);
   const [quiz, setQuiz] = useState<Quiz|null>(null);
   const [stage, setStage] = useState<number>(1)
@@ -112,7 +114,12 @@ const OtherPlayPage = () => {
         <MandarinBadge src={mardarin} alt='mandarin'></MandarinBadge>
         <Answer ref={answerRef} placeholder='제목을 입력하세요.' onKeyDown={(e) => {if(e.key === 'Enter') {checkAnswer(answerRef.current?.value)}}}></Answer>
       </AnswerBox>
-      <SoloUser alert={alert} lifeCnt={lifeCnt}/>
+      {/* {to == 1 && (
+        <SoloUser alert={alert} lifeCnt={lifeCnt}/>
+      )}
+      {to == 2 && (
+        <DuelUser/>
+      )} */}
     </Container>
   );
 };
