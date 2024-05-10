@@ -47,7 +47,7 @@ const CreateWaitingRoom = () => {
 
     // try {
     //   const memberId = 9
-    //   const response = await fetch(`https://www.saturituri.com/api/party/create/${memberId}`, {
+    //   const response = await fetch(`https://www.localhost:8080/party/create/${memberId}`, {
     //     method: "POST",
     //     headers: {
     //       "Content-Type": "application/json",
