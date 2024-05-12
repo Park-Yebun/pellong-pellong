@@ -1,8 +1,10 @@
 package com.c205.pellongpellong.oauth2.service;
 
+import com.c205.pellongpellong.entity.Member;
 import com.c205.pellongpellong.oauth2.exception.OAuth2AuthenticationProcessingException;
 import com.c205.pellongpellong.oauth2.user.OAuth2UserInfo;
 import com.c205.pellongpellong.oauth2.user.OAuth2UserInfoFactory;
+import com.c205.pellongpellong.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
@@ -13,16 +15,21 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.Map;
 
 
 @RequiredArgsConstructor
 @Service
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
+    private final MemberRepository memberRepository;
+
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
 
         OAuth2User oAuth2User = super.loadUser(oAuth2UserRequest);
+        saveOrUpdate(oAuth2User);
+//        return oAuth2User;
 
         try {
             return processOAuth2User(oAuth2UserRequest, oAuth2User);
@@ -51,6 +58,21 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         }
 
         return new OAuth2UserPrincipal(oAuth2UserInfo);
+    }
+
+    private Member saveOrUpdate(OAuth2User oAuth2User){
+        Map<String, Object> attributes = oAuth2User.getAttributes();
+        String email = (String) attributes.get("eamil");
+        String profileImg = (String) attributes.get("profileImageUrl");
+        String nickname = (String) attributes.get("nickname");
+        Member member = memberRepository.findByEmail(email)
+                .map(entity -> entity.update(nickname, profileImg))
+                .orElse(Member.builder()
+                        .email(email)
+                        .nickname(nickname)
+                        .profileImg(profileImg)
+                        .build());
+        return memberRepository.save(member);
     }
 }
 

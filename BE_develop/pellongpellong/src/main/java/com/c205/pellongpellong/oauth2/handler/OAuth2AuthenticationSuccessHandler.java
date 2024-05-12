@@ -25,6 +25,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.Optional;
 
 import static com.c205.pellongpellong.oauth2.repository.HttpCookieOAuth2AuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
@@ -35,6 +36,11 @@ import static com.c205.pellongpellong.oauth2.repository.HttpCookieOAuth2Authoriz
 @RequiredArgsConstructor
 @Component
 public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+
+    private static final String REFRESH_TOKEN_COOKIE_NAME = "refresh_token";
+    private static final Duration REFRESH_TOKEN_DURATION = Duration.ofDays(14);
+
+
 
     private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
     private final OAuth2UserUnlinkManager oAuth2UserUnlinkManager;
@@ -94,13 +100,17 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 //          리프레시 토큰 생성 -> 저장 -> 쿠키에 저장
             String refreshToken = tokenProvider.createToken(authentication);
             saveRefreshToken(member.getMemberId(), refreshToken);
+            addRefreshTokenToCookie(request, response, refreshToken);
 
+
+//          액세스 토큰 생성 -> 패스에 액세스 토큰, 리프레시 토큰 추가
             String accessToken = tokenProvider.createToken(authentication);
-
             return UriComponentsBuilder.fromUriString(targetUrl)
                     .queryParam("access_token", accessToken)
                     .queryParam("refresh_token", refreshToken)
                     .build().toUriString();
+
+
 
         } else if ("unlink".equalsIgnoreCase(mode)) {
 
@@ -134,11 +144,19 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         httpCookieOAuth2AuthorizationRequestRepository.removeAuthorizationRequestCookies(request, response);
     }
 
+//  생성된 리프레시 토큰을 전달받아 DB에 저장
     private void saveRefreshToken(Long memberId, String newRefreshToken) {
         RefreshToken refreshToken = refreshTokenRepository.findByMemberId(memberId)
                 .map(entity -> entity.update(newRefreshToken))
                 .orElse(new RefreshToken(memberId, newRefreshToken));
 
         refreshTokenRepository.save(refreshToken);
+    }
+
+//  생성된 리프레시 토큰을 쿠키에 저장
+    private void addRefreshTokenToCookie(HttpServletRequest request, HttpServletResponse response, String refreshToken) {
+        int cookieMaxAge = (int) REFRESH_TOKEN_DURATION.toSeconds();
+        CookieUtils.deleteCookie(request, response, REFRESH_TOKEN_COOKIE_NAME);
+        CookieUtils.addCookie(response, REFRESH_TOKEN_COOKIE_NAME, refreshToken, cookieMaxAge);
     }
 }

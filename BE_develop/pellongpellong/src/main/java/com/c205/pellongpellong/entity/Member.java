@@ -30,4 +30,11 @@ public class Member {
         this.nickname = nickname;
         this.profileImg = profileImg;
     }
+
+    public Member update(String nickname, String profileImg) {
+        this.nickname = nickname;
+        this.profileImg = profileImg;
+
+        return this;
+    }
 }
