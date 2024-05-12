@@ -85,7 +85,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             );
 
             String accessToken = tokenProvider.createToken(authentication);
-            String refreshToken = "test_refresh_token";
+            String refreshToken = tokenProvider.createToken(authentication);
 
             return UriComponentsBuilder.fromUriString(targetUrl)
                     .queryParam("access_token", accessToken)
