@@ -1,6 +1,7 @@
 package com.c205.pellongpellong.service;
 
 import com.c205.pellongpellong.dto.MyInfoRankDTO;
+import com.c205.pellongpellong.dto.PlayerDTO;
 import com.c205.pellongpellong.dto.ProfileRankDTO;
 import com.c205.pellongpellong.dto.RankDTO;
 import com.c205.pellongpellong.entity.Rank;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,4 +38,19 @@ public class RankService {
         return rankDTOs;
     }
 
+    public Rank updateSumExp(long myId, int expValue) {
+        Rank rank = rankRepository.findByMemberMemberId(myId)
+                .orElseThrow(() -> new RuntimeException("해당 memberId에 해당하는 회원의 Rank가 존재하지 않습니다."));
+        rank.setSumExp(rank.getSumExp() + expValue);
+        return rankRepository.save(rank);
+    }
+
+    public void updatePlayersSumExp(List<PlayerDTO> players) {
+        for (PlayerDTO player : players) {
+            Rank rank = rankRepository.findByMemberMemberId(player.getPlayerId())
+                    .orElseThrow(() -> new RuntimeException("해당 memberId에 해당하는 회원의 Rank가 존재하지 않습니다."));
+            rank.setSumExp(rank.getSumExp() + player.getPlayerExp());
+            rankRepository.save(rank);
+        }
+    }
 }
