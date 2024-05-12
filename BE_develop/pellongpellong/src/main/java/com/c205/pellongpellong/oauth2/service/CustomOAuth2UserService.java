@@ -62,9 +62,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private Member saveOrUpdate(OAuth2User oAuth2User){
         Map<String, Object> attributes = oAuth2User.getAttributes();
+//        System.out.println("Attributes:");
+//        attributes.forEach((key, value) -> System.out.println(key + ": " + value));
         String email = (String) attributes.get("eamil");
-        String profileImg = (String) attributes.get("profileImageUrl");
-        String nickname = (String) attributes.get("nickname");
+        String profileImg = "플필";
+        String nickname = "닉넴";
         Member member = memberRepository.findByEmail(email)
                 .map(entity -> entity.update(nickname, profileImg))
                 .orElse(Member.builder()
@@ -72,6 +74,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                         .nickname(nickname)
                         .profileImg(profileImg)
                         .build());
+
         return memberRepository.save(member);
     }
 }
