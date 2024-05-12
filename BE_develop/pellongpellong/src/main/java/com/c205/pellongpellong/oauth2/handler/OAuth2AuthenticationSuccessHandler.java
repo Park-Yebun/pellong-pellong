@@ -1,5 +1,7 @@
 package com.c205.pellongpellong.oauth2.handler;
 
+import com.c205.pellongpellong.entity.Member;
+import com.c205.pellongpellong.entity.RefreshToken;
 import com.c205.pellongpellong.jwt.TokenProvider;
 import com.c205.pellongpellong.oauth2.repository.HttpCookieOAuth2AuthorizationRequestRepository;
 import com.c205.pellongpellong.oauth2.service.OAuth2UserPrincipal;
@@ -9,14 +11,15 @@ import com.c205.pellongpellong.oauth2.user.OAuth2UserUnlinkManager;
 import com.c205.pellongpellong.oauth2.util.CookieUtils;
 
 
-
-
+import com.c205.pellongpellong.repository.RefreshTokenRepository;
+import com.c205.pellongpellong.service.MemberService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -36,6 +39,8 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
     private final OAuth2UserUnlinkManager oAuth2UserUnlinkManager;
     private final TokenProvider tokenProvider;
+    private final RefreshTokenRepository refreshTokenRepository;
+    private final MemberService memberService;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -83,9 +88,14 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                     principal.getUserInfo().getNickname(),
                     principal.getUserInfo().getAccessToken()
             );
+            OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+            Member member = memberService.findByEmail((String) oAuth2User.getAttributes().get("email"));
+
+//          리프레시 토큰 생성 -> 저장 -> 쿠키에 저장
+            String refreshToken = tokenProvider.createToken(authentication);
+            saveRefreshToken(member.getMemberId(), refreshToken);
 
             String accessToken = tokenProvider.createToken(authentication);
-            String refreshToken = tokenProvider.createToken(authentication);
 
             return UriComponentsBuilder.fromUriString(targetUrl)
                     .queryParam("access_token", accessToken)
@@ -122,5 +132,13 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     protected void clearAuthenticationAttributes(HttpServletRequest request, HttpServletResponse response) {
         super.clearAuthenticationAttributes(request);
         httpCookieOAuth2AuthorizationRequestRepository.removeAuthorizationRequestCookies(request, response);
+    }
+
+    private void saveRefreshToken(Long memberId, String newRefreshToken) {
+        RefreshToken refreshToken = refreshTokenRepository.findByMemberId(memberId)
+                .map(entity -> entity.update(newRefreshToken))
+                .orElse(new RefreshToken(memberId, newRefreshToken));
+
+        refreshTokenRepository.save(refreshToken);
     }
 }

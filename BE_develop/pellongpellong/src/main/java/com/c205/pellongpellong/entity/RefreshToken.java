@@ -21,6 +21,11 @@ public class RefreshToken {
     @Column(name = "refreshToken", nullable = false)
     private String refreshToken;
 
+    public RefreshToken(Long memberId, String refreshToken) {
+        this.memberId = memberId;
+        this.refreshToken = refreshToken;
+    }
+
     public RefreshToken update(String newRefreshToken) {
         this.refreshToken = newRefreshToken;
         return this;
