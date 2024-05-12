@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.Map;
+import java.util.Optional;
 
 
 @RequiredArgsConstructor
@@ -79,34 +80,31 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             throw new OAuth2AuthenticationProcessingException("Email not found from OAuth2 provider");
         }
         // 기존에 저장된 사용자인지 확인하기
-        Member existingMember = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Member not found for email: " + email));
-        if (existingMember != null) {
+        Optional<Member> existingMemberOptional = memberRepository.findByEmail(email);
+        if (existingMemberOptional.isPresent()) {
+            Member existingMember = existingMemberOptional.get();
             String nickname = oAuth2UserInfo.getNickname();
-            if (nickname == null) {
+            if(nickname == null) {
                 // nickname이 null이면 name을 가져와서 설정
                 nickname = oAuth2UserInfo.getName();
             }
-            // 기존 사용자가 있으면 업데이트
             existingMember.setNickname(nickname);
             existingMember.setProfileImg(oAuth2UserInfo.getProfileImageUrl());
             return memberRepository.save(existingMember);
-
-
         } else {
+            // 새로운 사용자라면 엔티티에 저장
             String nickname = oAuth2UserInfo.getNickname();
             if (nickname == null) {
                 // nickname이 null이면 name을 가져와서 설정
                 nickname = oAuth2UserInfo.getName();
             }
-            // 새로운 사용자라면 엔티티에 저장
-            existingMember = Member.builder()
-                    .email(email)
+            Member newMember = Member.builder()
+                    .email(oAuth2UserInfo.getEmail())
                     .nickname(nickname)
                     .profileImg(oAuth2UserInfo.getProfileImageUrl())
                     .build();
 
-            return memberRepository.save(existingMember);
+            return memberRepository.save(newMember);
         }
     }
 }
