@@ -31,7 +31,8 @@ public class Exp {
     @JoinColumn(name = "memberId")
     private Member member;
     @Builder
-    public Exp(int exp, String expName, LocalDateTime expAt) {
+    public Exp(Member member, int exp, String expName, LocalDateTime expAt) {
+        this.member = member;
         this.exp = exp;
         this.expName = expName;
         this.expAt = expAt;

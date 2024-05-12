@@ -5,8 +5,8 @@ import lombok.Getter;
 @Getter
 public class MyInfoVarDTO {
     private String tier;
-    private int rank;
-    public MyInfoVarDTO(String tier, int rank) {
+    private Long rank;
+    public MyInfoVarDTO(String tier, Long rank) {
         this.tier = tier;
         this.rank = rank;
     }
