@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -51,6 +52,11 @@ public class MemberController {
 
     @PostMapping("members")
     public Member addMember(@RequestBody Member member) { return memberService.saveMember(member); }
+
+    @GetMapping("members/info")
+    public ResponseEntity<Member> info(@AuthenticationPrincipal Member member){
+        return ResponseEntity.ok(member);
+    }
 
     @PatchMapping("members/{memberId}")
     public Member updateMemberFields(@PathVariable Long memberId, @RequestBody Map<String, Object> fields){
