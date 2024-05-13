@@ -1,9 +1,12 @@
 package com.c205.pellongpellong.controller;
 
 import com.c205.pellongpellong.dto.GuestDTO;
+import com.c205.pellongpellong.dto.GuestRequest;
+import com.c205.pellongpellong.dto.PartyDTO;
 import com.c205.pellongpellong.service.GuestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,10 +17,10 @@ public class GuestController {
 
     private final GuestService guestService;
 
-    @PostMapping("/party/guest")
-    public ResponseEntity<GuestDTO> addGuestToParty(@RequestParam Long partyId, @RequestParam Long memberId) {
-        GuestDTO guestDTO = guestService.addGuestToParty(partyId, memberId);
-        return ResponseEntity.ok(guestDTO);
+    @MessageMapping(value = "/party/guest")
+    public ResponseEntity<PartyDTO> addGuestToParty(@RequestBody GuestRequest guest) {
+            PartyDTO partyDTO = guestService.addGuestToParty(guest);
+        return ResponseEntity.ok(partyDTO);
     }
 
     @GetMapping("/guest/{partyId}")
