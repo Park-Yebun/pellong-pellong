@@ -2,16 +2,23 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
+interface JwtPayload {
+  sub: string;
+  name: string;
+  email: string;
+  // 필요한 경우 추가 속성 정의
+}
+
 const Home = () => {
 
   const [searchParams] = useSearchParams();
   const accessToken = searchParams.get('access_token');
   const refreshToken = searchParams.get('refresh_token');
-  const [decodedToken, setDecodedToken] = useState(null);
+  const [decodedToken, setDecodedToken] = useState<JwtPayload | null>(null);
 
   useEffect(() => {
     if (accessToken) {
-      const decoded = jwtDecode(accessToken); // 이 부분 수정
+      const decoded = jwtDecode(accessToken) as JwtPayload
       setDecodedToken(decoded);
     }
   }, [accessToken]);
