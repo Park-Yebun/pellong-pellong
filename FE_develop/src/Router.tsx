@@ -30,8 +30,11 @@ import DuelUser from './components/JejuPlay/DuelUser';
 // test
 import Test from './pages/TestPage';
 
+import { AuthProvider } from './contexts/AuthContext';
+
 function App() {
   return (
+    <AuthProvider>
       <Routes>
         <Route path="/login" element={<SocialLoginPage />} />
         <Route path="/" element={<MainPage />} />
@@ -61,6 +64,7 @@ function App() {
         {/* test */}
         <Route path="/test" element={<Test />} />
       </Routes>
+      </AuthProvider>
   );
 }
 
