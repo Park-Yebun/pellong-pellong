@@ -18,9 +18,8 @@ const QuizType4: React.FC = () => {
 
   return (
     <div className="QT4-container">
-      <h3>Quiz Type 4</h3>
-      <p>사투리 단어: {dialectWord}</p>
-      <p>표준어 단어 선택지:</p>
+      <h3>뜻이 일치하는 단어를 고르세요</h3>
+      <p>{dialectWord}</p>
       <div className="QT4-button-container">
         {standardWords.map((word, index) => (
           <button

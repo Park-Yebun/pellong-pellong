@@ -35,35 +35,61 @@ const QuizType5: React.FC = () => {
     }
   };
 
-  // 재시작 함수
-  const restartQuiz = () => {
-    setSelectedDialectWords([]);
-    setSelectedImages([]);
-    setIsCorrect(false);
-  };
-
   return (
     <div className="QT5-container">
-      <h3>Quiz Type 5</h3>
+      <h3>일치하는 카드를 매치하세요</h3>
       <div className="QT5-content">
         {/* 사투리 단어 선택지 */}
-        <div>
-          <p>사투리 단어 선택지:</p>
-          <button className="QT5-button" onClick={() => selectWord("사투리단어1")}>사투리단어1</button>
-          <button className="QT5-button" onClick={() => selectWord("사투리단어2")}>사투리단어2</button>
-          <button className="QT5-button" onClick={() => selectWord("사투리단어3")}>사투리단어3</button>
+        <div className="QT5-saturi-box">
+          <button
+            className={`QT5-button ${
+              isCorrect && selectedDialectWords.includes("사투리단어1") ? 'QT5-correct-button' : ''}`}
+            onClick={() => selectWord("사투리단어1")}
+          >
+            사투리단어1
+          </button>
+          <button
+            className={`QT5-button ${
+              isCorrect && selectedDialectWords.includes("사투리단어2") ? 'QT5-correct-button' : ''}`}
+            onClick={() => selectWord("사투리단어2")}
+          >
+            사투리단어2
+          </button>
+          <button
+            className={`QT5-button ${
+              isCorrect && selectedDialectWords.includes("사투리단어3") ? 'QT5-correct-button' : ''}`}
+            onClick={() => selectWord("사투리단어3")}
+          >
+            사투리단어3
+          </button>
         </div>
         {/* 이미지 선택지 */}
-        <div>
-          <p>이미지 선택지:</p>
-          <button className="QT5-button" onClick={() => selectImage("이미지1")}>이미지1</button>
-          <button className="QT5-button" onClick={() => selectImage("이미지2")}>이미지2</button>
-          <button className="QT5-button" onClick={() => selectImage("이미지3")}>이미지3</button>
+        <div className='QT5-image-box'>
+          <button
+            className={`QT5-button ${
+              isCorrect && selectedImages.includes("이미지1") ? 'QT5-correct-button' : ''}`}
+            onClick={() => selectImage("이미지1")}
+          >
+            이미지1
+          </button>
+          <button
+            className={`QT5-button ${
+              isCorrect && selectedImages.includes("이미지2") ? 'QT5-correct-button' : ''}`}
+            onClick={() => selectImage("이미지2")}
+          >
+            이미지2
+          </button>
+          <button
+            className={`QT5-button ${
+              isCorrect && selectedImages.includes("이미지3") ? 'QT5-correct-button' : ''}`}
+            onClick={() => selectImage("이미지3")}
+          >
+            이미지3
+          </button>
         </div>
         {/* 정답 표시 */}
         {isCorrect && <p className="QT5-message">정답입니다!</p>}
         {/* 재시작 버튼 */}
-        <button className="QT5-restart-button" onClick={restartQuiz}>다시 시작</button>
       </div>
     </div>
   );
