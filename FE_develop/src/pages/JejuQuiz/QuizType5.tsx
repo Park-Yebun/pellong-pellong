@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import './QuizType5.css'; // CSS 파일 추가
 
-const QuizType5: React.FC = () => {
+interface QuizType5Props {
+  onAnswer: (isCorrect: boolean) => void;
+}
+
+const QuizType5: React.FC<QuizType5Props> = ({ onAnswer }) => {
   // 초기 상태 설정
   const [selectedDialectWords, setSelectedDialectWords] = useState<string[]>([]);
   const [selectedImages, setSelectedImages] = useState<string[]>([]);

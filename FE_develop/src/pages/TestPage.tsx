@@ -3,10 +3,12 @@ import { useSearchParams } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
 interface JwtPayload {
-  sub: string;
-  name: string;
-  email: string;
-  // 필요한 경우 추가 속성 정의
+  sub: string;        // 사용자 ID
+  name: string;       // 사용자 이름
+  email: string;      // 이메일
+  memberId: string;   // 멤버 ID
+  nickname: string;   // 닉네임
+  profileImg: string; // 프로필 이미지 URL
 }
 
 const Home = () => {

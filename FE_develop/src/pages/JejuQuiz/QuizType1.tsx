@@ -1,42 +1,29 @@
-import React, { useState } from 'react';
-import './QuizType1.css';
+import React from "react";
 
-const GameType1: React.FC = () => {
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+interface QuizType1Props {
+  onAnswer: (isCorrect: boolean) => void;
+}
 
-  const playAudio = (audioFilePath: string) => {
-    // 음성 파일 재생 로직
-  };
+const QuizType1: React.FC<QuizType1Props> = ({ onAnswer }) => {
+  // 가정: 정답은 0번째 옵션입니다.
+  const correctOptionIndex = 0;
+  const options = ["Option 1", "Option 2", "Option 3"];
 
-  const handleOptionSelect = (option: string) => {
-    setSelectedOption(option);
-    // 선택된 옵션 처리 로직
-  };
-
-  const playAudioAndRenderOptions = () => {
-    const audioFilePath = "path/to/audio/file.mp3";
-    playAudio(audioFilePath);
-
-    return (
-      <div className="QT1-options-container">
-        <p className="QT1-instructions">음성을 듣고 일치하는 답을 선택하세요.</p>
-        <button className="QT1-option-button" onClick={() => handleOptionSelect("Option A")}>Option A</button>
-        <button className="QT1-option-button" onClick={() => handleOptionSelect("Option B")}>Option B</button>
-        <button className="QT1-option-button" onClick={() => handleOptionSelect("Option C")}>Option C</button>
-      </div>
-    );
+  const handleOptionSelect = (optionIndex: number) => {
+    const isCorrect = optionIndex === correctOptionIndex;
+    onAnswer(isCorrect);
   };
 
   return (
-    <div className="QT1-container">
-      <h3>Game Type 1</h3>
-      {selectedOption ? (
-        <p>선택된 옵션: {selectedOption}</p>
-      ) : (
-        playAudioAndRenderOptions()
-      )}
+    <div>
+      <h2>Question 1</h2>
+      {options.map((option, index) => (
+        <button key={index} onClick={() => handleOptionSelect(index)}>
+          {option}
+        </button>
+      ))}
     </div>
   );
 };
 
-export default GameType1;
+export default QuizType1;

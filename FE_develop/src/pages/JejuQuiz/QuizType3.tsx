@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import './QuizType3.css'; // CSS 파일 추가
 
-const GameType3: React.FC = () => {
+interface QuizType3Props {
+  onAnswer: (isCorrect: boolean) => void;  // 이 부분이 필요함
+}
+
+const QuizType3: React.FC<QuizType3Props> = ({ onAnswer }) =>{
   // 더미 데이터 정의
   const dummyData = [
     {
@@ -77,4 +81,4 @@ const GameType3: React.FC = () => {
   );
 };
 
-export default GameType3;
+export default QuizType3;
