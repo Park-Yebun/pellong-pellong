@@ -22,7 +22,7 @@ public class Quiz {
     @Column(name = "quizNo", nullable = false)
     private int quizNo;
 
-    @Column(name = "quezCategory", nullable = false)
+    @Column(name = "quizCategory", nullable = false)
     private int quizCategory;
 
     @Column(name = "quizAnswer", nullable = false)
