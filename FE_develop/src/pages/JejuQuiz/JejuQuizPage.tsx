@@ -40,7 +40,7 @@ const LevelPlayScreen: React.FC = () => {
 
   return (
     <div className="level-play-container">
-      <h2>Level {level}</h2>
+      <div className="level-info">Level {level}</div>
       <div className="question-list">
         {/* 현재 문제 유형을 렌더링합니다. */}
         {questions.length > 0 && currentQuestionIndex < questions.length ? (
@@ -48,9 +48,9 @@ const LevelPlayScreen: React.FC = () => {
         ) : (
           <p>No more questions</p>
         )}
-      {currentQuestionIndex < questions.length && (
-        <button onClick={nextQuestion}>Next Question</button>
-      )}
+        {currentQuestionIndex < questions.length && (
+          <button onClick={nextQuestion}>Next Question</button>
+        )}
       </div>
     </div>
   );

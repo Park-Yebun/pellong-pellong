@@ -3,10 +3,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  background-color: #f0f0f0; /* 아이폰의 기본 배경색과 유사하게 설정 */
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; /* 아이폰 기본 폰트 적용 */
-  padding: 0 20px; /* 좌우 여백 추가 */
+  background-color: #D1E9F9;
+  height: 80vh;
+  padding: 20px;
+  text-align: center;
 }
 
 .QT1-container h3 {
@@ -28,15 +28,17 @@
 }
 
 .QT1-option-button {
-  background-color: #007aff; /* 아이폰의 기본 버튼 색상과 유사하게 설정 */
-  color: #fff; /* 버튼 텍스트 색상을 흰색으로 설정하여 대비를 높임 */
-  font-size: 16px;
-  padding: 12px 24px; /* 패딩을 늘려 버튼의 눌림감을 높임 */
-  margin-bottom: 10px;
-  border-radius: 8px; /* 더 둥근 모서리를 갖도록 변경 */
+  background-color: #fff; /* 주황색 버튼 */
+  color: black;
+  font-size: 18px;
+  width: 300px;
+  height: 100px;
+  padding: 14px 28px; /* 좀 더 큰 패딩 */
+  margin: 10px;
   border: none;
+  border-radius: 25px; /* 더 둥근 모양 */
   cursor: pointer;
-  transition: background-color 0.3s ease; /* 배경색 변화에 부드러운 애니메이션 적용 */
+  transition: all 0.3s ease;
 }
 
 .QT1-option-button:last-child {
