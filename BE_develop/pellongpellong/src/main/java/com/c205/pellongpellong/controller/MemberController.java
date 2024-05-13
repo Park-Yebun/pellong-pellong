@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -54,8 +55,15 @@ public class MemberController {
     public Member addMember(@RequestBody Member member) { return memberService.saveMember(member); }
 
     @GetMapping("members/info")
-    public ResponseEntity<Member> info(@AuthenticationPrincipal Member member){
-        return ResponseEntity.ok(member);
+    public Member getUserInfo(@AuthenticationPrincipal UserDetails userDetails) {
+        // 이메일 가져오기
+        String email = userDetails.getUsername();
+
+        // 회원 찾기
+        Member member = memberService.findByEmail(email);
+
+        // 찾은 회원 반환
+        return member;
     }
 
     @PatchMapping("members/{memberId}")
