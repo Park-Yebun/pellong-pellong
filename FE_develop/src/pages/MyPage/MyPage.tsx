@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate} from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext'
 import './MyPage.css'
 
 import UserProfile from '../../components/MyPage/UserProfile';
@@ -9,6 +10,7 @@ import UserBadge from '../../components/MyPage/UserBadge'
 import BackButton from '../../components/BackButton';
 
 const MyPage: React.FC = () => {
+  const { decodedToken } = useAuth();
   const username = "빵빵이";
   const tier = "Platinum";
   const navigate = useNavigate();
@@ -32,7 +34,7 @@ const MyPage: React.FC = () => {
   return (
     <div className='mypage-container'>
       <BackButton />
-      <UserProfile />
+      <UserProfile decodedToken={decodedToken} />
       <UserRank username={username} tier={tier} />
       <div className="profile-edit-button">
         <Link to="/edit-profile" className="btn-edit-profile">프로필 수정</Link>

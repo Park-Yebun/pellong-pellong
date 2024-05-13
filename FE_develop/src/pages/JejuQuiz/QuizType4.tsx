@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import './QuizType4.css'; // CSS 파일 추가
 
-const QuizType4: React.FC = () => {
+interface QuizType4Props {
+  onAnswer: (isCorrect: boolean) => void
+}
+
+const QuizType4: React.FC<QuizType4Props> = ({ onAnswer }) => {
   const dialectWord = '사투리단어';
   const standardWords = ['표준어1', '표준어2', '표준어3']; // 여기에 실제 데이터를 사용할 수도 있습니다.
 
