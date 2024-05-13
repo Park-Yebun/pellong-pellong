@@ -23,7 +23,6 @@ const GameType2: React.FC = () => {
   return (
     <div>
       <div className="QT2-container">
-        <h3>Game Type 2</h3>
         <p className="QT2-instructions">음성을 듣고 일치하는 답을 선택하세요.</p> {/* 지침 클래스 추가 */}
         <button className="QT2-option-button" onClick={() => handleOptionSelect("Option A")}>Option A</button>
         <button className="QT2-option-button" onClick={() => handleOptionSelect("Option B")}>Option B</button>

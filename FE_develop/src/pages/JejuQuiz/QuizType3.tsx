@@ -55,7 +55,7 @@ const GameType3: React.FC = () => {
     <div className="QT3-container">
       <h3>Game Type 3</h3>
       <div>
-        <p>단어: {word}</p>
+        <div className='QT3-word-box'>단어: {word}</div>
         {images.map((image, index) => (
           <img
             key={index}
