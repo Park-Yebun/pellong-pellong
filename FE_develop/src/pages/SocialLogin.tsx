@@ -41,31 +41,6 @@ export const Kakao = styled.div`
 `
 
 const SocialLoginPage = () => {
-  const [searchParams] = useSearchParams();
-  const store = useStore();
-  const accessToken = searchParams.get('access_token');
-  const refreshToken = searchParams.get('refresh_token');
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (accessToken) {
-        try {
-          const response = await fetch('https://www.saturituri.com/api/members/info', {
-            method: 'GET',
-            headers: {
-              'Authorization': 'Bearer ' + accessToken
-            }
-          });
-          const userInfo = await response.json();
-          store.setLoginUserInfo(userInfo)
-          console.log("로그인 데이터 저장 완료", userInfo)
-        } catch (error) {
-          console.log("로그인 데이터 저장 실패", error)
-        };
-      };
-    }
-    fetchData();
-  }, []);
   return (
     <Container>
       <Google></Google>
