@@ -106,8 +106,8 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 //          액세스 토큰 생성 -> 패스에 액세스 토큰, 리프레시 토큰 추가
             String accessToken = tokenProvider.createToken(authentication);
             return UriComponentsBuilder.fromUriString(targetUrl)
-                    .queryParam("access_token", accessToken)
-                    .queryParam("refresh_token", refreshToken)
+//                    .queryParam("access_token", accessToken)
+//                    .queryParam("refresh_token", refreshToken)
                     .build().toUriString();
 
 
