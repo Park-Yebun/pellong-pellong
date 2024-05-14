@@ -58,7 +58,7 @@ const WaitingRoomPage = () => {
         // console.log("구독 요청 후 응답 데이터!!", response)
       });
       // 클라이언트 > 서버 메세지 보내기(참여자 추가요청)
-      client.send(`/app/party/guest`, {},JSON.stringify({partyId: partyId, memberId: store.loginUserInfo?.memberId}));
+      client.send(`/app/party/guest`, {},JSON.stringify({partyId: partyId, memberId: 40}));
     })
     return () => client.disconnect(() => {
       console.log("웹소켓 연결이 해제되었습니다.")
