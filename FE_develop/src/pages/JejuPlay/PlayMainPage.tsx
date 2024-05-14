@@ -8,7 +8,6 @@ import occupancy from '../../assets/JejuPlay/occupancy.png'
 import close from '../../assets/JejuPlay/close.png'
 import './PlayMainPage.css'
 
-
 const PlayMainPage = () => {
   const [roomData, setRoomData] = useState<any[]>([]);
   const [passwordModalOpen, setPasswordModalOpen] = useState<boolean>(false);
@@ -29,7 +28,6 @@ const PlayMainPage = () => {
     nickname: string;
     profileImg: string;
   }
-
   const handleClick = (room:Room) => {
     setSelectedRoom(room)
     if (!roomData[room.partyId-1].isPublic) {

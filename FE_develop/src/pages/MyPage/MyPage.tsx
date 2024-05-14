@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate} from 'react-router-dom';
 import './MyPage.css'
+import useStore from '../../store';
 
 import UserProfile from '../../components/MyPage/UserProfile';
 import UserRank from '../../components/MyPage/UserRank'
@@ -9,6 +10,7 @@ import UserBadge from '../../components/MyPage/UserBadge'
 import BackButton from '../../components/BackButton';
 
 const MyPage: React.FC = () => {
+  const store = useStore();
   const username = "빵빵이";
   const tier = "Platinum";
   const navigate = useNavigate();
@@ -31,6 +33,7 @@ const MyPage: React.FC = () => {
 
   return (
     <div className='mypage-container'>
+      {store.loginUserInfo?.nickname}
       <BackButton />
       <UserProfile />
       <UserRank username={username} tier={tier} />
