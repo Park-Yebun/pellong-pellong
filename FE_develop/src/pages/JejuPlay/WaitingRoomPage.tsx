@@ -72,7 +72,7 @@ const WaitingRoomPage = () => {
           roomNum = parseInt(partyId);
       }else{ roomNum = 0; };
       try {
-        const response = await fetch(`http://localhost:8080/party/${partyId}`, {
+        const response = await fetch(`https://www.saturituri.com/party/${partyId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json'
