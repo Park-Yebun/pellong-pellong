@@ -57,15 +57,15 @@ public class RankService {
 
     // 여기서부터 Redis 이용한 랭킹 시스템 메서드
     // 상위 10개의 랭킹을 가져옴, 개수는 추후 커스텀
-    public List<RankingDTO> getRankingList() {
-        String key = "ranking";
-        ZSetOperations<String, String> stringStringZSetOperations = redisTemplate.opsForZSet();
-        Set<ZSetOperations.TypedTuple<String>> typedTuples = stringStringZSetOperations.reverseRangeWithScores(key, 0L, 10L);
-        List<RankingDTO> collect = typedTuples.stream()
-                .map(typedTuple -> new RankingDTO(typedTuple.getValue(), typedTuple.getScore()))
-                .collect(Collectors.toList());
-        return collect;
-    }
+//    public List<RankingDTO> getRankingList() {
+//        String key = "ranking";
+//        ZSetOperations<String, String> stringStringZSetOperations = redisTemplate.opsForZSet();
+//        Set<ZSetOperations.TypedTuple<String>> typedTuples = stringStringZSetOperations.reverseRangeWithScores(key, 0L, 10L);
+//        List<RankingDTO> collect = typedTuples.stream()
+//                .map(typedTuple -> new RankingDTO(typedTuple.getValue(), typedTuple.getScore()))
+//                .collect(Collectors.toList());
+//        return collect;
+//    }
 
 
     public Long getRank(Long memberId) {
