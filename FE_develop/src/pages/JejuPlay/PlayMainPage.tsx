@@ -48,7 +48,7 @@ const PlayMainPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https:/saturituri.com/api/party', {
+        const response = await fetch('https://www.saturituri.com/api/party', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json'
