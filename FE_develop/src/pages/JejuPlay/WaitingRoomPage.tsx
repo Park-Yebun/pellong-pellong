@@ -55,7 +55,7 @@ const WaitingRoomPage = () => {
       // 구독 요청
       client.subscribe("/topic/party/" + partyId, function(message){
         const response = JSON.parse(message.body)
-        // console.log("구독 요청 후 응답 데이터!!", response)
+        console.log("구독 요청 후 응답 데이터!!", response)
       });
       // 클라이언트 > 서버 메세지 보내기(참여자 추가요청)
       client.send(`/app/party/guest`, {},JSON.stringify({partyId: partyId, memberId: 40}));
