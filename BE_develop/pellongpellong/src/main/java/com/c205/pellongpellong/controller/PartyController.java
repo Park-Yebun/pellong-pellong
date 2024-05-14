@@ -70,7 +70,7 @@ public class PartyController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/api/party/{partyId}")
+    @GetMapping("/party/{partyId}")
     public ResponseEntity<PartyDetailDTO> getPartyDetail(@PathVariable Long partyId) {
         logger.info("요청이 잘 왔어요.");
         logger.info("Received request for party details with partyId: {}", partyId.toString());
