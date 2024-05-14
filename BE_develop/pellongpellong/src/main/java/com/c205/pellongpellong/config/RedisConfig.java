@@ -16,7 +16,7 @@ public class RedisConfig {
     @Value("${spring.data.redis.host}")
     private String host;
 
-    @Value("${spring.data.redis.port}")
+    @Value("{spring.data.redis.port}")
     private int port;
 
     @Bean
@@ -25,8 +25,8 @@ public class RedisConfig {
     }
 
     @Bean
-    public RedisTemplate<Long, String> redisTemplate() {
-        RedisTemplate<Long, String> redisTemplate = new RedisTemplate<>();
+    public RedisTemplate<String, String> redisTemplate() {
+        RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
         redisTemplate.setKeySerializer(new StringRedisSerializer()); //key 깨짐 방지
         redisTemplate.setValueSerializer(new StringRedisSerializer());//value 깨짐 방지
         redisTemplate.setConnectionFactory(redisConnectionFactory());

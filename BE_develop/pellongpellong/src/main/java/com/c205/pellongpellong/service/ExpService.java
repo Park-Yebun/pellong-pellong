@@ -7,7 +7,9 @@ import com.c205.pellongpellong.entity.Member;
 import com.c205.pellongpellong.repository.ExpRepository;
 import com.c205.pellongpellong.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,6 +21,7 @@ public class ExpService {
 
     private final ExpRepository expRepository;
     private final MemberRepository memberRepository;
+    private final RedisTemplate redisTemplate;
     public List<ExpDTO> getExpByMemberId(Long memberId) {
         // ExpRepository를 사용하여 memberId에 해당하는 Exp 데이터를 가져옴
         List<Exp> expList = expRepository.findByMember_MemberId(memberId);
@@ -44,6 +47,9 @@ public class ExpService {
                 .expName(expName)
                 .expAt(LocalDateTime.now())
                 .build();
+        //redis에 data 전송
+        redisTemplate.opsForZSet().add("ranking", member.getMemberId(), expValue);
+
         return expRepository.save(exp);
     }
 
@@ -57,7 +63,11 @@ public class ExpService {
                     .expName(expName)
                     .expAt(LocalDateTime.now())
                     .build();
+            //redis에 data 전송
+            redisTemplate.opsForZSet().add("ranking", member.getMemberId(), player.getPlayerExp());
             expRepository.save(exp);
         }
     }
+
+
 }
