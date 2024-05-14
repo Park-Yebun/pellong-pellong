@@ -62,7 +62,7 @@ public class RankService {
         ZSetOperations<String, String> stringStringZSetOperations = redisTemplate.opsForZSet();
         Set<ZSetOperations.TypedTuple<String>> typedTuples = stringStringZSetOperations.reverseRangeWithScores(key, 0L, 10L);
         List<RankingDTO> collect = typedTuples.stream()
-                .map(typedTuple -> new RankingDTO(typedTuple.getValue(), typedTuple.getScore()))
+                .map(typedTuple -> new RankingDTO(Long.parseLong(typedTuple.getValue()), Integer.parseInt(Double.toString(typedTuple.getScore()))))
                 .collect(Collectors.toList());
         return collect;
     }
