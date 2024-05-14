@@ -11,21 +11,21 @@ import QuizType5 from "./QuizType5";
 const LevelPlayScreen: React.FC = () => {
   const { level } = useParams<{ level?: string }>();
 
-  // 각 레벨에 따른 문제 유형들
   const chapterQuestions = [
-    ["QuizType 1", "QuizType 2", "QuizType 3", "QuizType 4", "QuizType 5"],
-    ["QuizType 1", "QuizType 2", "QuizType 3", "QuizType 4", "QuizType 5"],
-    // 나머지 레벨에 대한 문제 유형들을 추가할 수 있습니다.
+    ["QuizType 1"],
+    ["QuizType 2"],
+    ["QuizType 3"],
+    ["QuizType 4"],
+    ["QuizType 5"],
   ];
 
   const [questions, setQuestions] = useState<string[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
+  const [score, setScore] = useState<number>(0);
 
   useEffect(() => {
-    // 레벨에 맞는 문제 유형들을 가져옵니다.
     const levelIndex = parseInt(level ?? '1') - 1;
     const levelQuestions = chapterQuestions[levelIndex];
-    // 각 문제 유형에서 랜덤하게 10문제를 선택합니다.
     const selectedQuestions: string[] = [];
     for (let i = 0; i < 10; i++) {
       const randomIndex = Math.floor(Math.random() * levelQuestions.length);
@@ -34,40 +34,43 @@ const LevelPlayScreen: React.FC = () => {
     setQuestions(selectedQuestions);
   }, [level]);
 
-  const nextQuestion = () => {
-    setCurrentQuestionIndex(prevIndex => prevIndex + 1);
+  const handleAnswer = (isCorrect: boolean) => {
+    if (isCorrect) {
+      setScore(prevScore => prevScore + 1);
+    }
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex(prevIndex => prevIndex + 1);
+    } else {
+      alert(`Quiz completed! Your score: ${score + (isCorrect ? 1 : 0)}/${questions.length}`);
+    }
   };
 
   return (
     <div className="level-play-container">
-      <h2>Level {level}</h2>
+      <div className="level-info">Level {level}</div>
       <div className="question-list">
-        {/* 현재 문제 유형을 렌더링합니다. */}
         {questions.length > 0 && currentQuestionIndex < questions.length ? (
-          renderQuestion(questions[currentQuestionIndex])
+          renderQuestion(questions[currentQuestionIndex], handleAnswer)
         ) : (
           <p>No more questions</p>
         )}
-      {currentQuestionIndex < questions.length && (
-        <button onClick={nextQuestion}>Next Question</button>
-      )}
       </div>
     </div>
   );
 };
 
-const renderQuestion = (questionType: string) => {
+const renderQuestion = (questionType: string, onAnswer: (isCorrect: boolean) => void) => {
   switch (questionType) {
     case "QuizType 1":
-      return <QuizType1 />;
+      return <QuizType1 onAnswer={onAnswer} />;
     case "QuizType 2":
-      return <QuizType2 />;
+      return <QuizType2 onAnswer={onAnswer} />;
     case "QuizType 3":
-      return <QuizType3 />;
+      return <QuizType3 onAnswer={onAnswer} />;
     case "QuizType 4":
-      return <QuizType4 />;
+      return <QuizType4 onAnswer={onAnswer} />;
     case "QuizType 5":
-      return <QuizType5 />;
+      return <QuizType5 onAnswer={onAnswer} />;
     default:
       return null;
   }
