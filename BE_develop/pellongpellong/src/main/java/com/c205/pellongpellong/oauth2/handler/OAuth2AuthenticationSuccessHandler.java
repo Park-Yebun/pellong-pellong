@@ -103,13 +103,11 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             addRefreshTokenToCookie(request, response, refreshToken);
 
 
-            // 액세스 토큰 생성 -> 헤더에 액세스 토큰 추가
+//          액세스 토큰 생성 -> 패스에 액세스 토큰 추가
             String accessToken = tokenProvider.createToken(authentication);
-            response.setHeader("Authorization", "Bearer " + accessToken);
 
             return UriComponentsBuilder.fromUriString(targetUrl)
-//                    .queryParam("access_token", accessToken)
-//                    .queryParam("refresh_token", refreshToken)
+                    .queryParam("access_token", accessToken)
                     .build().toUriString();
 
 
