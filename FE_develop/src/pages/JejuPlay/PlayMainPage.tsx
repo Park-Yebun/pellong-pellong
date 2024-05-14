@@ -30,7 +30,7 @@ const PlayMainPage = () => {
   }
   const handleClick = (room:Room) => {
     setSelectedRoom(room)
-    if (!roomData[room.partyId-1].isPublic) {
+    if (roomData[room.partyId-1].isPublic === false) {
       setPasswordModalOpen(true)
     } else {
       navigate(`/jeju-play/${room.partyId}/wait`);
