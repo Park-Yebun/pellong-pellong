@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './MainPage.css';
+import useStore from '../store';
 import myPageIcon from '../assets/mypage-icon.png';
 import rankIcon from '../assets/rank-icon.png';
 import sunsetIcon from '../assets/sunset.png';
@@ -13,6 +14,7 @@ import cloudEdu from '../assets/cloud-edu.png';
 
 function MainPage() {
   const navigate = useNavigate(); // useNavigate hook 사용
+  const store = useStore();
 
   const [showModal, setShowModal] = useState(false);
   const [nightMode, setNightMode] = useState(false); // 야경 모드 상태
@@ -38,6 +40,28 @@ function MainPage() {
   function toggleNightMode() {
     setNightMode(!nightMode); // 야경 모드 토글
   }
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken")
+    const fetchData = async () => {
+      if (accessToken) {
+        try {
+          const response = await fetch('https://www.saturituri.com/api/members/info', {
+            method: 'GET',
+            headers: {
+              'Authorization': 'Bearer ' + accessToken
+            }
+          });
+          const userInfo = await response.json();
+          store.setLoginUserInfo(userInfo)
+          console.log("로그인 데이터 저장 완료", userInfo)
+        } catch (error) {
+          console.log("로그인 데이터 저장 실패", error)
+        };
+      };
+    }
+    fetchData();
+  }, []);
 
   return (
     <div className={`main-container ${nightMode ? 'night-mode' : ''}`}>
