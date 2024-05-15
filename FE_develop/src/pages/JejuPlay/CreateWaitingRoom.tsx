@@ -45,22 +45,22 @@ const CreateWaitingRoom = () => {
     }
     // 한 유저당 한 파티만 만들 수 있어서 자꾸 에러코드 나길래 잠시 막아뒀어요
 
-    // try {
-    //   const memberId = 9
-    //   const response = await fetch(`https://www.localhost:8080/party/create/${memberId}`, {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(bodyData)
-    //   });
-    //   console.log(response);
-    //   const partyId = await response.json();
-    //   navigate(`/jeju-play/${partyId}/wait`);
-    // } catch (error) {
-    //   console.log(bodyData);
-    //   console.log(error);
-    // }
+    try {
+      console.log("왜 언디파인드?",bodyData.isPublic)
+      const memberId = 36
+      const response = await fetch(`http://www.localhost:8080/party/create/${memberId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bodyData)
+      });
+      console.log(response);
+      const partyId = await response.json();
+      navigate(`/jeju-play/${partyId}/wait`);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
