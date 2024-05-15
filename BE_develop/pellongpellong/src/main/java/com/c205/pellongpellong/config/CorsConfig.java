@@ -12,8 +12,7 @@ public class CorsConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000", "https://saturituri.com") // 여러 오리진을 배열로 지정
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                .allowedHeaders("*")
-                .exposedHeaders("Authorization") // CORS로 인해 프론트단에서 인식하지 못하는 Authorization 헤더를 노출
+                .allowedHeaders("Authorization", "Content-Type")
                 .allowCredentials(true) // 쿠키와 인증 헤더를 허용
                 .maxAge(3600); // pre-flight request의 캐시 시간
 
