@@ -25,8 +25,10 @@ public class MemberVariableService {
     private final MemberRepository memberRepository;
     private final RankRepository rankRepository;
     private final DailyQuestRepository dailyQuestRepository;
+
     public MyInfoVarDTO getMyInfoVar(long memberId) {
-        MemberVariable memberVariable = memberVariableRepository.findById(memberId).orElseThrow(() -> new RuntimeException("User not found"));
+        MemberVariable memberVariable = memberVariableRepository.findByMember_MemberId(memberId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
         return new MyInfoVarDTO(memberVariable.getTier(), memberVariable.getRank());
     }
 

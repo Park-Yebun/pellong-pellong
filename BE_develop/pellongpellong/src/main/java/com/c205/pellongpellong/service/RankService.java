@@ -20,7 +20,7 @@ public class RankService {
     private final RedisTemplate<String, String> redisTemplate;
 
     public MyInfoRankDTO getMyInfoRank(long memberId){
-        Rank rank = rankRepository.findById(memberId).orElseThrow(() -> new RuntimeException("User not found"));
+        Rank rank = rankRepository.findByMemberMemberId(memberId).orElseThrow(() -> new RuntimeException("User not found"));
         return new MyInfoRankDTO(rank.getSumExp());
 
     }
