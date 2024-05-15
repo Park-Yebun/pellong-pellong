@@ -55,13 +55,9 @@ const SocialLoginPage = () => {
   const accessToken = searchParams.get('access_token');
 
   useEffect(() => {
-    console.log("패치데이터 작동!!")
+    // console.log("패치데이터 작동!!")
     const fetchData = async () => {
-      if (store.isLogin === true) {
-        console.log(store.isLogin)
-        navigate(`/my-page/${store.loginUserInfo?.memberId}`)
-        
-      } else if (store.isLogin === false && accessToken) {
+     if (accessToken) {
         const decoded = jwtDecode(accessToken) as JwtPayload;
         localStorage.setItem('accessToken', accessToken);
         store.setLoginUserInfo(decoded);
@@ -84,7 +80,7 @@ const SocialLoginPage = () => {
         } catch (error) {
           console.log(error)
         };
-      }
+      };
     }
     fetchData();
   }, [accessToken]);
