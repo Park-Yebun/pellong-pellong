@@ -78,7 +78,7 @@ public class PartyController {
         return ResponseEntity.ok(partyDetail);
     }
 
-    @MessageMapping(value = "/party/{partyId}")
+    @MessageMapping(value = "/api/party/{partyId}")
     public void enterUser(@PathVariable Long partyId) {
         messagingTemplate.convertAndSend("/topic/party/" + partyId, "대기방에 입장하셨습니다.");
     }
