@@ -35,7 +35,6 @@ const MyPage: React.FC = () => {
 
   return (
     <div className='mypage-container'>
-      {store.loginUserInfo?.nickname}
       <BackButton />
       <UserProfile decodedToken={decodedToken} />
       <UserRank username={username} tier={tier} />
