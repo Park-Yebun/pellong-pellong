@@ -10,6 +10,8 @@ import com.c205.pellongpellong.service.MemberVariableService;
 import com.c205.pellongpellong.service.RankService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -36,6 +38,9 @@ public class MemberController {
     private final MemberBadgeService memberBadgeService;
 
     private MemberBadgeRepository memberBadgeRepository;
+
+    private final RedisTemplate<String, String> redisTemplate;
+
 
     @Autowired
     public void setMemberBadgeRepository(MemberBadgeRepository memberBadgeRepository) {
@@ -73,12 +78,23 @@ public class MemberController {
 
     @GetMapping("/members/{memberId}")
     public MyInfoDTO getMyInfoMember(@PathVariable Long memberId) {
+        ZSetOperations<String, String> zSetOps = redisTemplate.opsForZSet();
+        Long lenZSetOps = zSetOps.size("ranking");
+        Long rank = zSetOps.rank("ranking", memberId.toString());
+        assert lenZSetOps != null;
+        assert rank != null;
+        Long descRank = lenZSetOps - rank + 1L;
+
+
+
+
         MyInfoMemberDTO myInfoMemberDTO = memberService.getMyInfoMember(memberId);
         MyInfoVarDTO myInfoVarDTO = memberVariableService.getMyInfoVar(memberId);
         MyInfoRankDTO myInfoRankDTO = rankService.getMyInfoRank(memberId);
         Long representativeBadgeId = memberBadgeService.getRepresentativeBadgeId(memberId);
 //        log.info("Email: {}", myInfoMemberDTO.getEmail());
-        return new MyInfoDTO(myInfoMemberDTO.getEmail(), myInfoMemberDTO.getNickname(), myInfoMemberDTO.getProfileImg(), myInfoVarDTO.getTier(), myInfoVarDTO.getRank(), myInfoRankDTO.getSumExp(), representativeBadgeId);
+//        return new MyInfoDTO(myInfoMemberDTO.getEmail(), myInfoMemberDTO.getNickname(), myInfoMemberDTO.getProfileImg(), myInfoVarDTO.getTier(), myInfoVarDTO.getRank(), myInfoRankDTO.getSumExp(), representativeBadgeId);
+        return new MyInfoDTO(myInfoMemberDTO.getEmail(), myInfoMemberDTO.getNickname(), myInfoMemberDTO.getProfileImg(), myInfoVarDTO.getTier(), descRank, myInfoRankDTO.getSumExp(), representativeBadgeId);
     }
 
     @GetMapping("/profiles/{memberId}")

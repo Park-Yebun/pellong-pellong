@@ -48,5 +48,5 @@ public class RankController {
     }
 
     @GetMapping("/ranking")
-    public List<RankDTO> getAllRank() {return rankService.getAllRank();}
+    public List<RankDTO> getAllRank() {return rankService.getAllRankInRedis();}
 }
