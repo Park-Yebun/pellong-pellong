@@ -39,7 +39,7 @@ function App() {
         <Route path="/login" element={<SocialLoginPage />} />
         <Route path="/" element={<MainPage />} />
         <Route path="/my-page/:memberId" element={<MyPageMain />} />
-        <Route path="/my-page/profile-edit" element={<ProfileEdit />} />
+        <Route path="/my-page/:memberId/profile-edit" element={<ProfileEdit />} />
         <Route path="/rank" element={<RankPage />} />
         <Route path="/jeju-quiz" element={<JejuQuizListPage />} />
         <Route path="/jeju-quiz/level/:level" element={<JejuQuizPage />} />
