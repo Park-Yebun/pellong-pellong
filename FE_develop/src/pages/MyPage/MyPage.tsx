@@ -1,21 +1,41 @@
-import React, { useState } from 'react';
-import { Link, useNavigate} from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext'
-import './MyPage.css'
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useParams} from 'react-router-dom';
+import '../../components/MyPage/UserProfile.css';
 import useStore from '../../store';
 
-import UserProfile from '../../components/MyPage/UserProfile';
 import UserRank from '../../components/MyPage/UserRank'
 import UserBadge from '../../components/MyPage/UserBadge'
-
 import BackButton from '../../components/BackButton';
+import logoutImg from '../../assets/logout.png'
+import {
+  EditBox,
+  EditBtn,
+  Container,
+  Email,
+  InfoBox,
+  Nickname,
+  UserProfile,
+  UserProfileBox,
+  ProfileImg,
+  Logout,
+  NicknameBox
+} from './MyPage.styled'
+ 
+interface User {
+  email: string;
+  nickname: string;
+  profileImg: string;
+  tier: string;
+  rank: number;
+  sumExp: number;
+  representativeBadgeId: number;
+}
 
 const MyPage: React.FC = () => {
   const store = useStore();
-  const { decodedToken } = useAuth();
-  const username = "빵빵이";
-  const tier = "Platinum";
+  const memberId = useParams();
   const navigate = useNavigate();
+  const [userData, setUserData] = useState<User|null>(null);
 
   const [badges] = useState([
     { id: 1, title: "First Win", description: "Won your first match.", imageUrl: "../../assets/badges/b1.jpg" },
@@ -33,16 +53,60 @@ const MyPage: React.FC = () => {
     navigate(-1); // 이전 페이지로 이동
   };
 
+  const modifyProfile = () => {
+    navigate(`/my-page/${store.loginUserInfo?.memberId}/profile-edit`)
+  };
+
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+    useStore.getState().setLoginUserInfo(undefined);
+    console.log("로그아웃되었습니다.") // 추후에 모달로 구현할 것
+    navigate('/')
+  }
+
+  useEffect(() => {
+    console.log("페치데이터 동작!!")
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://www.saturituri.com/api/members/' + store.loginUserInfo?.memberId, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        const data = await response.json();
+        setUserData(data);
+        console.log("데이터 로드 완료", response);
+      } catch (error) {
+        console.log("데이터 로드 실패", error)
+      }
+    }
+    fetchData()
+  },[]);
+
   return (
-    <div className='mypage-container'>
+    <Container>
       <BackButton />
-      <UserProfile decodedToken={decodedToken} />
-      <UserRank username={username} tier={tier} />
-      <div className="profile-edit-button">
-        <Link to="/edit-profile" className="btn-edit-profile">프로필 수정</Link>
-      </div>
-      <UserBadge badges={badges} /> 
-    </div>
+      { userData && (
+          <UserProfileBox>
+              <UserProfile>
+                  <InfoBox>
+                      <ProfileImg src={userData?.profileImg} alt="Profile" style={{ width: 124, borderRadius: '50%' }} />
+                      <NicknameBox>
+                        <Nickname>예분</Nickname>
+                        <Logout src={logoutImg} alt='logout' onClick={() => logout()}/>
+                      </NicknameBox>
+                  </InfoBox>
+                  <EditBox>
+                    <EditBtn onClick={() => modifyProfile()}>프로필 수정</EditBtn>
+                  </EditBox>
+              </UserProfile>
+              <UserBadge badges={badges} /> 
+          </UserProfileBox>
+        )}
+      {/* JSX 주석 내부에는 다른 JSX 태그를 포함하지 마세요
+      <UserRank username={userData?.nickname} tier={userData?.tier} /> */}
+    </Container>
   );
 };
 
