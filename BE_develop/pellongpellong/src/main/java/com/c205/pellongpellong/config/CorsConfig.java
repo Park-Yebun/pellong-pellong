@@ -10,10 +10,15 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000", "https://saturituri.com") // 여러 오리진을 배열로 지정
+                .allowedOrigins("*") // 모든 오리진 허용
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
-                .allowCredentials(true) // 쿠키와 인증 헤더를 허용
                 .maxAge(3600); // pre-flight request의 캐시 시간
+//        registry.addMapping("/**")
+//                .allowedOrigins("http://localhost:3000", "https://saturituri.com") // 여러 오리진을 배열로 지정
+//                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+//                .allowedHeaders("*")
+//                .allowCredentials(true) // 쿠키와 인증 헤더를 허용
+//                .maxAge(3600); // pre-flight request의 캐시 시간
     }
 }
