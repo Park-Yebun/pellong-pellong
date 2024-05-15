@@ -5,6 +5,10 @@ import com.c205.pellongpellong.oauth2.exception.OAuth2AuthenticationProcessingEx
 import com.c205.pellongpellong.oauth2.user.OAuth2UserInfo;
 import com.c205.pellongpellong.oauth2.user.OAuth2UserInfoFactory;
 import com.c205.pellongpellong.repository.MemberRepository;
+import com.c205.pellongpellong.controller.RankController;
+import com.c205.pellongpellong.controller.MemberBadgeController;
+import com.c205.pellongpellong.controller.DailyQuestController;
+import com.c205.pellongpellong.controller.MemberVariableController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
@@ -24,7 +28,10 @@ import java.util.Optional;
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private final MemberRepository memberRepository;
-
+    private final RankController rankController;
+    private final MemberBadgeController memberBadgeController;
+    private final DailyQuestController dailyQuestController;
+    private final MemberVariableController memberVariableController;
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
 
@@ -82,15 +89,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         // 기존에 저장된 사용자인지 확인하기
         Optional<Member> existingMemberOptional = memberRepository.findByEmail(email);
         if (existingMemberOptional.isPresent()) {
-            Member existingMember = existingMemberOptional.get();
-            String nickname = oAuth2UserInfo.getNickname();
-            if(nickname == null) {
-                // nickname이 null이면 name을 가져와서 설정
-                nickname = oAuth2UserInfo.getName();
-            }
-            existingMember.setNickname(nickname);
-            existingMember.setProfileImg(oAuth2UserInfo.getProfileImageUrl());
-            return memberRepository.save(existingMember);
+            // 기존 사용자가 있으면 아무 것도 하지 않고 반환
+            return existingMemberOptional.get();
         } else {
             // 새로운 사용자라면 엔티티에 저장
             String nickname = oAuth2UserInfo.getNickname();
@@ -99,12 +99,22 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                 nickname = oAuth2UserInfo.getName();
             }
             Member newMember = Member.builder()
-                    .email(oAuth2UserInfo.getEmail())
+                    .email(email)
                     .nickname(nickname)
                     .profileImg(oAuth2UserInfo.getProfileImageUrl())
                     .build();
 
-            return memberRepository.save(newMember);
+            // 새로운 멤버를 저장합니다.
+            Member savedMember = memberRepository.save(newMember);
+
+            // 저장된 멤버의 ID를 사용하여 여러 메소드를 호출합니다.
+            rankController.addRank(savedMember.getMemberId());
+            memberBadgeController.addMemberBadge(savedMember.getMemberId());
+            dailyQuestController.addDailyQuest(savedMember.getMemberId());
+            memberVariableController.addMemberVariable(savedMember.getMemberId());
+
+            return savedMember;
+
         }
     }
 }
