@@ -86,7 +86,7 @@ const SocialLoginPage = () => {
   }, [accessToken]);
   return (
     <Container>
-      <Google></Google>
+      <Google onClick={() => window.location.href = "https://saturituri.com/api/oauth2/authorization/google?redirect_uri=https://www.saturituri.com/login&mode=login"}></Google>
       <Kakao onClick={() => window.location.href = "https://saturituri.com/api/oauth2/authorization/kakao?redirect_uri=https://www.saturituri.com/login/&mode=login"}></Kakao>
     </Container>
   );
