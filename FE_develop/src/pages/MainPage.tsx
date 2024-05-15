@@ -1,5 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useStore from '../store';
 import './MainPage.css';
 import myPageIcon from '../assets/mypage-icon.png';
 import rankIcon from '../assets/rank-icon.png';
@@ -13,6 +14,7 @@ import cloudEdu from '../assets/cloud-edu.png';
 
 function MainPage() {
   const navigate = useNavigate(); // useNavigate hook 사용
+  const store = useStore();
 
   const [showModal, setShowModal] = useState(false);
   const [nightMode, setNightMode] = useState(false); // 야경 모드 상태
@@ -20,9 +22,13 @@ function MainPage() {
   function handleClick(e: React.MouseEvent<HTMLAnchorElement>, path: string) {
     e.preventDefault(); // 기본 링크 동작 차단
     // 애니메이션을 추가할 수 있습니다.
-    setTimeout(() => {
-      navigate(path); // 설정한 지연 시간 후에 페이지 이동
-    }, 300);
+    if (path.includes('/my-page/') && store.isLogin === false) {
+      navigate('/login')
+    } else {
+      setTimeout(() => {
+          navigate(path); // 설정한 지연 시간 후에 페이지 이동
+      }, 300);
+    };
   }
 
   function toggleModal() {
@@ -48,7 +54,7 @@ function MainPage() {
         <a href="/rank" onClick={(e) => handleClick(e, '/rank')} className="image-link">
           <img src={rankIcon} alt="랭크 조회 페이지" />
         </a>
-        <a href="/my-page" onClick={(e) => handleClick(e, '/my-page')} className="image-link">
+        <a onClick={(e) => handleClick(e, '/my-page/' + store.loginUserInfo?.memberId)} className="image-link">
           <img src={myPageIcon} alt="마이페이지" />
         </a>
       </div>
