@@ -10,6 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.web.bind.annotation.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 
 @RestController
@@ -17,6 +20,7 @@ import java.util.List;
 public class GuestController {
 
     private final GuestService guestService;
+    private static final Logger logger = LoggerFactory.getLogger(PartyController.class);
 
     @MessageMapping(value = "/party/guest")
     public ResponseEntity<PartyDetailDTO> addGuestToParty(@RequestBody GuestRequest guest) {
@@ -33,6 +37,7 @@ public class GuestController {
     @MessageMapping(value = "/party/guest/delete")
     public ResponseEntity<?> removeGuest(@RequestBody GuestRequest guest) {
         try {
+            logger.info(guest.getMemberId() + "멤버 아이디 출력");
             guestService.removeGuestFromParty(guest);
             return ResponseEntity.ok().build();
         } catch (RuntimeException e) {
