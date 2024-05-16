@@ -36,12 +36,10 @@ public class PartyService {
         Party savedParty = partyRepository.save(party);
 
         // 방장을 Guest 엔티티에 추가
-        Guest guest = new Guest();
-        guest.setMember(party.getMember());
-        guest.setParty(savedParty);
-        guestRepository.save(guest);
-
-        messagingTemplate.convertAndSend("/topic/parties", savedParty);
+//        Guest guest = new Guest();
+//        guest.setMember(party.getMember());
+//        guest.setParty(savedParty);
+//        guestRepository.save(guest);
         return savedParty;
     }
 
@@ -78,7 +76,7 @@ public class PartyService {
 
         PartyDetailDTO partydetail = new PartyDetailDTO(party.getPartyId(), party.getPartyName(), party.getKind(),
                                                         party.getPo(), party.getTo(), party.getIsPublic(),
-                                                        party.getMember().getNickname(), party.getMember().getProfileImg(), guestDTOs);
+                                                        party.getMember().getMemberId(), guestDTOs);
         messagingTemplate.convertAndSend("/topic/party/" + party.getPartyId(), partydetail);
         return partydetail;
     }
