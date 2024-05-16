@@ -29,7 +29,7 @@ public class PartyService {
     private GuestRepository guestRepository;
 
     public Optional<Party> findPartyByMemberId(Long memberId) {
-        return partyRepository.findByMemberId(memberId);
+        return partyRepository.findByMemberMemberId(memberId);
     }
     // 웹소켓적용
     public Party createParty(Party party) {
