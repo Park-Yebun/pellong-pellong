@@ -77,4 +77,10 @@ public class PartyController {
         messagingTemplate.convertAndSend("/topic/party/" + partyId, enterMessage);
         logger.info("Sent message to /topic/party/" + partyId + ": " + enterMessage);
     }
+
+    @MessageMapping(value = "/party/{partyId}/start")
+    public void startGame(@PathVariable Long partyId) {
+        messagingTemplate.convertAndSend("/topic/party/" + partyId, "start");
+        logger.info("Sent message to /topic/party/" + partyId + ": start");
+    }
 }
