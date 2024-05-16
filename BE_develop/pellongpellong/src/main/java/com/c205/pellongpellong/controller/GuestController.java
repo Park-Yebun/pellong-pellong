@@ -30,10 +30,10 @@ public class GuestController {
         return ResponseEntity.ok(guestsDTOs);
     }
 
-    @DeleteMapping("/party/{partyId}/guest/{memberId}")
-    public ResponseEntity<?> removeGuest(@PathVariable Long partyId, @PathVariable Long memberId) {
+    @MessageMapping(value = "/party/guest/delete")
+    public ResponseEntity<?> removeGuest(@RequestBody GuestRequest guest) {
         try {
-            guestService.removeGuestFromParty(partyId, memberId);
+            guestService.removeGuestFromParty(guest);
             return ResponseEntity.ok().build();
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

@@ -33,13 +33,10 @@ public class GuestService {
     // 웹소켓 적용
     @Transactional
     public PartyDetailDTO addGuestToParty(GuestRequest user) {
-        Long partyId = user.getPartyId();
-        Long memberId = user.getMemberId();
-
         Party party = partyRepository.findById(user.getPartyId()).orElseThrow(() -> new RuntimeException("파티id를 찾을 수 없어요"));
         Member member = memberRepository.findById(user.getMemberId()).orElseThrow(() -> new RuntimeException("회원id을 찾을 수 없어요"));
 
-        List<Guest> existingGuests = guestRepository.findByPartyPartyIdAndMemberMemberId(partyId, memberId);
+        List<Guest> existingGuests = guestRepository.findByPartyPartyIdAndMemberMemberId(user.getPartyId(), user.getMemberId());
         if (!existingGuests.isEmpty()) {
             throw new IllegalStateException("해당 회원은 이미 파티에 참여 중입니다.");
         }
@@ -66,8 +63,7 @@ public class GuestService {
                 party.getPo(),
                 party.getTo(),
                 party.getIsPublic(),
-                member.getNickname(),
-                member.getProfileImg(),
+                member.getMemberId(),
                 guestDTOs);
         messagingTemplate.convertAndSend("/topic/party/" + party.getPartyId(), partydetail);
         return partydetail;
@@ -81,8 +77,8 @@ public class GuestService {
     }
 
     @Transactional
-    public void removeGuestFromParty(Long partyId, Long memberId) {
-        List<Guest> guests = guestRepository.findByPartyPartyIdAndMemberMemberId(partyId, memberId);
+    public void removeGuestFromParty(GuestRequest user) {
+        List<Guest> guests = guestRepository.findByPartyPartyIdAndMemberMemberId(user.getPartyId(), user.getMemberId());
         if (guests.isEmpty()) {
             throw new RuntimeException("해당 파티의 파티원을 찾을 수 없어요");
         }
@@ -93,7 +89,7 @@ public class GuestService {
         }
         partyRepository.save(party);
         guestRepository.delete(guest);
-        messagingTemplate.convertAndSend("/topic/party/" + partyId, party);
+        messagingTemplate.convertAndSend("/topic/party/" + user.getPartyId(), "유저가 퇴장했습니다.");
     }
 
 }
