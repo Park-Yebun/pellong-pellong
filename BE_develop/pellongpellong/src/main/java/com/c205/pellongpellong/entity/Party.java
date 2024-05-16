@@ -1,6 +1,7 @@
 package com.c205.pellongpellong.entity;
 
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

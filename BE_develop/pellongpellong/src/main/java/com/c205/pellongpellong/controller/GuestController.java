@@ -3,6 +3,7 @@ package com.c205.pellongpellong.controller;
 import com.c205.pellongpellong.dto.GuestDTO;
 import com.c205.pellongpellong.dto.GuestRequest;
 import com.c205.pellongpellong.dto.PartyDTO;
+import com.c205.pellongpellong.dto.PartyDetailDTO;
 import com.c205.pellongpellong.service.GuestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +19,9 @@ public class GuestController {
     private final GuestService guestService;
 
     @MessageMapping(value = "/party/guest")
-    public ResponseEntity<PartyDTO> addGuestToParty(@RequestBody GuestRequest guest) {
-            PartyDTO partyDTO = guestService.addGuestToParty(guest);
-        return ResponseEntity.ok(partyDTO);
+    public ResponseEntity<PartyDetailDTO> addGuestToParty(@RequestBody GuestRequest guest) {
+            PartyDetailDTO partydetail = guestService.addGuestToParty(guest);
+        return ResponseEntity.ok(partydetail);
     }
 
     @GetMapping("/guest/{partyId}")

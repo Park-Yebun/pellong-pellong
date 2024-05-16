@@ -3,6 +3,7 @@ package com.c205.pellongpellong.service;
 import com.c205.pellongpellong.dto.GuestDTO;
 import com.c205.pellongpellong.dto.GuestRequest;
 import com.c205.pellongpellong.dto.PartyDTO;
+import com.c205.pellongpellong.dto.PartyDetailDTO;
 import com.c205.pellongpellong.entity.Guest;
 import com.c205.pellongpellong.entity.Member;
 import com.c205.pellongpellong.entity.Party;
@@ -30,7 +31,8 @@ public class GuestService {
     private SimpMessagingTemplate messagingTemplate;
 
     // 웹소켓 적용
-    public PartyDTO addGuestToParty(GuestRequest user) {
+    @Transactional
+    public PartyDetailDTO addGuestToParty(GuestRequest user) {
         Long partyId = user.getPartyId();
         Long memberId = user.getMemberId();
 
@@ -53,7 +55,11 @@ public class GuestService {
         party.setPo(party.getPo() + 1);
         partyRepository.save(party);
 
-        PartyDTO partyDTO = new PartyDTO(
+        List<GuestDTO> guestDTOs = party.getGuests().stream()
+                .map(g -> new GuestDTO(g.getGuestId(), g.getMember().getNickname(), g.getMember().getProfileImg()))
+                .collect(Collectors.toList());
+
+        PartyDetailDTO partydetail = new PartyDetailDTO(
                 party.getPartyId(),
                 party.getPartyName(),
                 party.getKind(),
@@ -61,12 +67,10 @@ public class GuestService {
                 party.getTo(),
                 party.getIsPublic(),
                 member.getNickname(),
-
-                member.getProfileImg()
-        );
-        messagingTemplate.convertAndSend("/topic/party/" + party.getPartyId(), partyDTO);
-//        messagingTemplate.convertAndSend("/topic/party/" + partyId, party);
-        return partyDTO;
+                member.getProfileImg(),
+                guestDTOs);
+        messagingTemplate.convertAndSend("/topic/party/" + party.getPartyId(), partydetail);
+        return partydetail;
     }
 
     public List<GuestDTO> listGuestsByPartyId(Long partyId) {
