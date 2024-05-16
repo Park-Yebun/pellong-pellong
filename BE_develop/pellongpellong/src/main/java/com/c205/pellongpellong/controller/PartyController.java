@@ -70,16 +70,11 @@ public class PartyController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/party/{partyId}")
-    public ResponseEntity<PartyDetailDTO> getPartyDetail(@PathVariable Long partyId) {
-        logger.info("요청이 잘 왔어요.");
-        logger.info("Received request for party details with partyId: {}", partyId.toString());
-        PartyDetailDTO partyDetail = partyService.getPartyDetail(partyId);
-        return ResponseEntity.ok(partyDetail);
-    }
 
-    @MessageMapping(value = "/party/{partyId}")
+    @GetMapping("/party/{partyId}")
     public void enterUser(@PathVariable Long partyId) {
-        messagingTemplate.convertAndSend("/topic/party/" + partyId, "대기방에 입장하셨습니다.");
+        String enterMessage =  "대기방에 입장하셨습니다.";
+        messagingTemplate.convertAndSend("/topic/party/" + partyId, enterMessage);
+        logger.info("Sent message to /topic/party/" + partyId + ": " + enterMessage);
     }
 }
