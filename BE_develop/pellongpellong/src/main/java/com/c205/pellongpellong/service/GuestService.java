@@ -31,8 +31,16 @@ public class GuestService {
 
     // 웹소켓 적용
     public PartyDTO addGuestToParty(GuestRequest user) {
+        Long partyId = user.getPartyId();
+        Long memberId = user.getMemberId();
+
         Party party = partyRepository.findById(user.getPartyId()).orElseThrow(() -> new RuntimeException("파티id를 찾을 수 없어요"));
         Member member = memberRepository.findById(user.getMemberId()).orElseThrow(() -> new RuntimeException("회원id을 찾을 수 없어요"));
+
+        List<Guest> existingGuests = guestRepository.findByPartyPartyIdAndMemberMemberId(partyId, memberId);
+        if (!existingGuests.isEmpty()) {
+            throw new IllegalStateException("해당 회원은 이미 파티에 참여 중입니다.");
+        }
 
         if (party.getPo() >= party.getTo()) {
             throw new IllegalStateException("방이 가득 찼어요.");

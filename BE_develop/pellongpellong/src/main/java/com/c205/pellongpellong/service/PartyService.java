@@ -3,8 +3,10 @@ package com.c205.pellongpellong.service;
 import com.c205.pellongpellong.dto.GuestDTO;
 import com.c205.pellongpellong.dto.PartyDTO;
 import com.c205.pellongpellong.dto.PartyDetailDTO;
+import com.c205.pellongpellong.entity.Guest;
 import com.c205.pellongpellong.entity.Member;
 import com.c205.pellongpellong.entity.Party;
+import com.c205.pellongpellong.repository.GuestRepository;
 import com.c205.pellongpellong.repository.PartyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -23,18 +25,31 @@ public class PartyService {
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
+    @Autowired
+    private GuestRepository guestRepository;
+
     public Optional<Party> findPartyByMemberId(Long memberId) {
         return partyRepository.findById(memberId);
     }
     // 웹소켓적용
     public Party createParty(Party party) {
         Party savedParty = partyRepository.save(party);
+
+        // 방장을 Guest 엔티티에 추가
+        Guest guest = new Guest();
+        guest.setMember(party.getMember());
+        guest.setParty(savedParty);
+        guestRepository.save(guest);
+
         messagingTemplate.convertAndSend("/topic/parties", savedParty);
         return savedParty;
     }
 
     // 웹소켓적용
     public void deleteParty(Long partyId) {
+        Party party = partyRepository.findById(partyId).orElseThrow(() -> new RuntimeException("파티를 찾을 수 없습니다."));
+
+        guestRepository.deleteAll(party.getGuests());
         partyRepository.deleteById(partyId);
         messagingTemplate.convertAndSend("/topic/parties", "삭제된 방번호는 : " + partyId);
     }
@@ -60,6 +75,7 @@ public class PartyService {
         List<GuestDTO> guestDTOs = party.getGuests().stream()
                 .map(guest -> new GuestDTO(guest.getGuestId(), guest.getMember().getNickname(), guest.getMember().getProfileImg()))
                 .collect(Collectors.toList());
+
         PartyDetailDTO partydetail = new PartyDetailDTO(party.getPartyId(), party.getPartyName(), party.getKind(),
                                                         party.getPo(), party.getTo(), party.getIsPublic(),
                                                         party.getMember().getNickname(), party.getMember().getProfileImg(), guestDTOs);
