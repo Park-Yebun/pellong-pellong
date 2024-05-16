@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -80,8 +81,20 @@ public class PartyController {
     }
 
     @MessageMapping(value = "/party/{partyId}/start")
-    public void startGame(@PathVariable Long partyId) {
-        messagingTemplate.convertAndSend("/topic/party/" + partyId, "start");
+    public void startGame(@Payload StartGameRequest startGameRequest, @PathVariable Long partyId) {
+        messagingTemplate.convertAndSend("/topic/party/" + partyId, startGameRequest.getPartyType());
         logger.info("Sent message to /topic/party/" + partyId + ": start");
+    }
+
+    public class StartGameRequest {
+        private String partyType;
+
+        public String getPartyType() {
+            return partyType;
+        }
+
+        public void setPartyType(String partyType) {
+            this.partyType = partyType;
+        }
     }
 }
