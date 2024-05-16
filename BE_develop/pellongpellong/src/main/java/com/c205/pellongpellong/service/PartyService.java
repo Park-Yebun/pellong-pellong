@@ -63,6 +63,7 @@ public class PartyService {
                     party.getPo(),
                     party.getTo(),
                     party.getIsPublic(),
+                    party.getPassword(),
                     member.getNickname(),
                     member.getProfileImg()
             );
