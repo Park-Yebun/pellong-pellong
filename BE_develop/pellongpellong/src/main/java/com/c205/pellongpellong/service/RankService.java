@@ -25,7 +25,6 @@ public class RankService {
     public MyInfoRankDTO getMyInfoRank(long memberId){
         Rank rank = rankRepository.findByMemberMemberId(memberId).orElseThrow(() -> new RuntimeException("User not found"));
         return new MyInfoRankDTO(rank.getSumExp());
-
     }
 
     public ProfileRankDTO getProfileRank(long memberId){
