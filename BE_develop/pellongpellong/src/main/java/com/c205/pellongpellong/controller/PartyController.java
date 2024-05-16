@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -38,11 +39,11 @@ public class PartyController {
         // 해당 멤버가 이미 파티를 생성했는지 확인
         Optional<Party> existingParty = partyService.findPartyByMemberId(memberId);
         if (existingParty.isPresent()) {
-            return ResponseEntity.badRequest().body("Error: Member already created a party.");
+            return ResponseEntity.badRequest().body("방을 이미 만드셨습니다.");
         }
 
         // 파티 생성
-        party.setMember(memberRepository.findById(memberId).orElseThrow(() -> new RuntimeException("Error: Member not found.")));
+        party.setMember(memberRepository.findById(memberId).orElseThrow(() -> new RuntimeException("멤버 값을 찾을 수 없습니다.")));
         Party newParty = partyService.createParty(party);
 
         //파티id만 반환

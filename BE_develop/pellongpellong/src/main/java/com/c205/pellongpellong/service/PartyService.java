@@ -29,20 +29,26 @@ public class PartyService {
     private GuestRepository guestRepository;
 
     public Optional<Party> findPartyByMemberId(Long memberId) {
-        return partyRepository.findById(memberId);
+        return partyRepository.findByMemberId(memberId);
     }
     // 웹소켓적용
     public Party createParty(Party party) {
+        // 해당 멤버가 이미 파티를 생성했는지 확인
+        Optional<Party> existingParty = findPartyByMemberId(party.getMember().getMemberId());
+        if (existingParty.isPresent()) {
+            throw new IllegalStateException("이미 파티를 생성한 멤버입니다.");
+        }
+
+        // 파티 저장
         Party savedParty = partyRepository.save(party);
 
         // 방장을 Guest 엔티티에 추가
-//        Guest guest = new Guest();
-//        guest.setMember(party.getMember());
-//        guest.setParty(savedParty);
-//        guestRepository.save(guest);
+        // Guest guest = new Guest();
+        // guest.setMember(party.getMember());
+        // guest.setParty(savedParty);
+        // guestRepository.save(guest);
         return savedParty;
     }
-
     // 웹소켓적용
     public void deleteParty(Long partyId) {
         Party party = partyRepository.findById(partyId).orElseThrow(() -> new RuntimeException("파티를 찾을 수 없습니다."));
