@@ -29,7 +29,7 @@ public class RankService {
     }
 
     public ProfileRankDTO getProfileRank(long memberId){
-        Rank rank = rankRepository.findById(memberId).orElseThrow(() -> new RuntimeException("User not found"));
+        Rank rank = rankRepository.findByMemberMemberId(memberId).orElseThrow(() -> new RuntimeException("User not found"));
         return new ProfileRankDTO(rank.getSumExp());
     }
 
