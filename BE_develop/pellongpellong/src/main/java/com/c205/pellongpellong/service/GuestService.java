@@ -31,6 +31,9 @@ public class GuestService {
 
     // 웹소켓 적용
     public PartyDTO addGuestToParty(GuestRequest user) {
+        Long partyId = user.getPartyId();
+        Long memberId = user.getMemberId();
+
         Party party = partyRepository.findById(user.getPartyId()).orElseThrow(() -> new RuntimeException("파티id를 찾을 수 없어요"));
         Member member = memberRepository.findById(user.getMemberId()).orElseThrow(() -> new RuntimeException("회원id을 찾을 수 없어요"));
 
