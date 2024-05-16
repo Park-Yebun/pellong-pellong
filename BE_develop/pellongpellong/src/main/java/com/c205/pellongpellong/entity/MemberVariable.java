@@ -16,7 +16,7 @@ public class MemberVariable {
     @Column(name = "memberVariableId", updatable = false)
     private Long memberVariableId;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "memberId")
     private Member member;
 

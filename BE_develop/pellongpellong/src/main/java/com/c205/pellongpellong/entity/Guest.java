@@ -12,7 +12,8 @@ public class Guest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long guestId;
 
-    @OneToOne(fetch = FetchType.LAZY)
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "memberId")
     private Member member; // 참조키로 Member를 연결
 

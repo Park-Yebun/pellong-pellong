@@ -16,7 +16,7 @@ public class DailyQuest {
     @Column(name = "dailyQuestId", updatable = false) // 데이터베이스의 dailyQuestId 컬럼과 매핑
     private Long dailyQuestId;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "memberId")
     private Member member;
 

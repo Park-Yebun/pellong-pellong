@@ -27,7 +27,7 @@ public class Exp {
     @Column(name = "expAt",  nullable = false)
     private LocalDateTime expAt;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "memberId")
     private Member member;
     @Builder

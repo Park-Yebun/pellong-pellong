@@ -16,7 +16,7 @@ public class Rank {
     @Column(name = "rankId", updatable = false)
     private Long rankId;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "memberId")
     private Member member;
 
