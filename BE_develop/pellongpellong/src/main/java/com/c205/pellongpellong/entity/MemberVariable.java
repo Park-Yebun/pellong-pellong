@@ -23,8 +23,8 @@ public class MemberVariable {
     @Column(name = "tier", nullable = false, columnDefinition = "varchar(100) default '금귤'")
     private String tier;
 
-    @Column(name = "rank", nullable = false)
-    private int rank;
+    @Column(name = "`rank`", nullable = false)
+    private Long rank;
 
     @Column(name = "accDailyQuest", nullable = false, columnDefinition = "int default 0")
     private int accDailyQuest;
@@ -39,7 +39,7 @@ public class MemberVariable {
     private LocalDateTime loginedAt;
 
     @Builder
-    public MemberVariable(Long memberVariableId, Member member, String tier, int rank, int accDailyQuest, int accLark, int accOwl, LocalDateTime loginedAt) {
+    public MemberVariable(Long memberVariableId, Member member, String tier, Long rank, int accDailyQuest, int accLark, int accOwl, LocalDateTime loginedAt) {
         this.memberVariableId = memberVariableId;
         this.member = member;
         this.tier = tier;

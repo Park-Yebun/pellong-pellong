@@ -22,7 +22,7 @@ public class MemberService {
     @Autowired
     private final MemberRepository memberRepository;
 
-    public Member saveMember(Member member ) {
+    public Member saveMember(Member member) {
         return memberRepository.save(member);
     }
 
@@ -44,6 +44,11 @@ public class MemberService {
                 .orElseThrow(() -> new IllegalArgumentException("not found: " + memberId));
     }
 
+    public Member findByEmail(String email) {
+        return memberRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Unexpected member"));
+    }
+
     public MyInfoMemberDTO getMyInfoMember(long memberId){
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new RuntimeException("User not found"));
         return new MyInfoMemberDTO(member.getEmail(), member.getNickname(), member.getProfileImg());
@@ -54,6 +59,7 @@ public class MemberService {
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new RuntimeException("User not found"));
         return new ProfileMemberDTO(member.getNickname(), member.getProfileImg());
     }
+
 
     public void delete(long memberId) {
         memberRepository.deleteById(memberId);

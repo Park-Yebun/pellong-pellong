@@ -97,4 +97,17 @@ public class TokenProvider {
 
         return new UsernamePasswordAuthenticationToken(user, "", Collections.emptyList());
     }
+
+    public Long getMemberId(String token) {
+        Claims claims = getClaims(token);
+        return claims.get("memberId", Long.class);
+    }
+
+    private Claims getClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
 }

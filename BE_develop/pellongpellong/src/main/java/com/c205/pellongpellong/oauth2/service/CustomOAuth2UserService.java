@@ -1,11 +1,14 @@
 package com.c205.pellongpellong.oauth2.service;
 
-
 import com.c205.pellongpellong.entity.Member;
 import com.c205.pellongpellong.oauth2.exception.OAuth2AuthenticationProcessingException;
 import com.c205.pellongpellong.oauth2.user.OAuth2UserInfo;
 import com.c205.pellongpellong.oauth2.user.OAuth2UserInfoFactory;
 import com.c205.pellongpellong.repository.MemberRepository;
+import com.c205.pellongpellong.controller.RankController;
+import com.c205.pellongpellong.controller.MemberBadgeController;
+import com.c205.pellongpellong.controller.DailyQuestController;
+import com.c205.pellongpellong.controller.MemberVariableController;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
@@ -16,26 +19,25 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.Map;
+import java.util.Optional;
 
 
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private final MemberRepository memberRepository;
-
-    public CustomOAuth2UserService(MemberRepository memberRepository) {
-
-        this.memberRepository = memberRepository;
-    }
-
+    private final RankController rankController;
+    private final MemberBadgeController memberBadgeController;
+    private final DailyQuestController dailyQuestController;
+    private final MemberVariableController memberVariableController;
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
 
         OAuth2User oAuth2User = super.loadUser(oAuth2UserRequest);
-
-//        oAuth2User 찍히는 데이터 확인용
-//        System.out.println(oAuth2User.getAttributes());
+        saveOrUpdate(oAuth2UserRequest, oAuth2User);
+//        return oAuth2User;
 
         try {
             return processOAuth2User(oAuth2UserRequest, oAuth2User);
@@ -45,12 +47,28 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             // Throwing an instance of AuthenticationException will trigger the OAuth2AuthenticationFailureHandler
             throw new InternalAuthenticationServiceException(ex.getMessage(), ex.getCause());
         }
-
-//        String email = oAuth2UserInfo.getEmail();
-//        Member existData = memberRepository.findByEmail();
     }
 
     private OAuth2User processOAuth2User(OAuth2UserRequest userRequest, OAuth2User oAuth2User) {
+
+        String registrationId = userRequest.getClientRegistration()
+                .getRegistrationId();
+
+        String accessToken = userRequest.getAccessToken().getTokenValue();
+
+        OAuth2UserInfo oAuth2UserInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(registrationId,
+                accessToken,
+                oAuth2User.getAttributes());
+
+        // OAuth2UserInfo field value validation
+        if (!StringUtils.hasText(oAuth2UserInfo.getEmail())) {
+            throw new OAuth2AuthenticationProcessingException("Email not found from OAuth2 provider");
+        }
+
+        return new OAuth2UserPrincipal(oAuth2UserInfo);
+    }
+
+    private Member saveOrUpdate(OAuth2UserRequest userRequest, OAuth2User oAuth2User) {
 
         String registrationId = userRequest.getClientRegistration()
                 .getRegistrationId();
@@ -68,54 +86,35 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         if (!StringUtils.hasText(oAuth2UserInfo.getEmail())) {
             throw new OAuth2AuthenticationProcessingException("Email not found from OAuth2 provider");
         }
-
         // 기존에 저장된 사용자인지 확인하기
-        Member existingMember = memberRepository.findByEmail(email);
-        if (existingMember != null) {
-            String nickname = oAuth2UserInfo.getNickname();
-            if (nickname == null) {
-                // nickname이 null이면 name을 가져와서 설정
-                nickname = oAuth2UserInfo.getName();
-            }
-
-            // 기존 사용자가 있으면 업데이트
-            existingMember.setNickname(nickname);
-            existingMember.setProfileImg(oAuth2UserInfo.getProfileImageUrl());
-            memberRepository.save(existingMember);
-            System.out.println(oAuth2UserInfo);
-            System.out.println(existingMember.getMemberId());
-            return new OAuth2UserPrincipal(oAuth2UserInfo, existingMember.getMemberId());
-//            데이터 확인용 출력
-//            System.out.println("이름" + oAuth2UserInfo.getName());
-//            System.out.println("닉넴" + oAuth2UserInfo.getNickname());
-//            System.out.println("전부" + oAuth2UserInfo.getAttributes());
-//            System.out.println("플필" + oAuth2UserInfo.getProfileImageUrl());
-//            System.out.println("이멜" + oAuth2UserInfo.getEmail());
-//            System.out.println("타입" + oAuth2UserInfo.getClass());
-
-
+        Optional<Member> existingMemberOptional = memberRepository.findByEmail(email);
+        if (existingMemberOptional.isPresent()) {
+            // 기존 사용자가 있으면 아무 것도 하지 않고 반환
+            return existingMemberOptional.get();
         } else {
-
+            // 새로운 사용자라면 엔티티에 저장
             String nickname = oAuth2UserInfo.getNickname();
             if (nickname == null) {
                 // nickname이 null이면 name을 가져와서 설정
                 nickname = oAuth2UserInfo.getName();
             }
-
-            // 새로운 사용자라면 엔티티에 저장
-            existingMember = Member.builder()
+            Member newMember = Member.builder()
                     .email(email)
                     .nickname(nickname)
                     .profileImg(oAuth2UserInfo.getProfileImageUrl())
                     .build();
 
-            memberRepository.save(existingMember);
-            System.out.println(oAuth2UserInfo);
-            System.out.println(existingMember.getMemberId());
-            return new OAuth2UserPrincipal(oAuth2UserInfo, existingMember.getMemberId());
+            // 새로운 멤버를 저장합니다.
+            Member savedMember = memberRepository.save(newMember);
+
+            // 저장된 멤버의 ID를 사용하여 여러 메소드를 호출합니다.
+            rankController.addRank(savedMember.getMemberId());
+            memberBadgeController.addMemberBadge(savedMember.getMemberId());
+            dailyQuestController.addDailyQuest(savedMember.getMemberId());
+            memberVariableController.addMemberVariable(savedMember.getMemberId());
+
+            return savedMember;
 
         }
-
     }
 }
-

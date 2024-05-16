@@ -75,18 +75,11 @@ public class PartyService {
         List<GuestDTO> guestDTOs = party.getGuests().stream()
                 .map(guest -> new GuestDTO(guest.getGuestId(), guest.getMember().getNickname(), guest.getMember().getProfileImg()))
                 .collect(Collectors.toList());
-        messagingTemplate.convertAndSend("/topic/parties"+ partyId, "방상세조회중입니다 : ");
 
-        return new PartyDetailDTO(
-                party.getPartyId(),
-                party.getPartyName(),
-                party.getKind(),
-                party.getPo(),
-                party.getTo(),
-                party.getIsPublic(),
-                party.getMember().getNickname(),
-                party.getMember().getProfileImg(),
-                guestDTOs
-        );
+        PartyDetailDTO partydetail = new PartyDetailDTO(party.getPartyId(), party.getPartyName(), party.getKind(),
+                                                        party.getPo(), party.getTo(), party.getIsPublic(),
+                                                        party.getMember().getNickname(), party.getMember().getProfileImg(), guestDTOs);
+        messagingTemplate.convertAndSend("/topic/party/" + party.getPartyId(), partydetail);
+        return partydetail;
     }
 }

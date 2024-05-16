@@ -1,6 +1,8 @@
 package com.c205.pellongpellong.service;
 
 import com.c205.pellongpellong.dto.GuestDTO;
+import com.c205.pellongpellong.dto.GuestRequest;
+import com.c205.pellongpellong.dto.PartyDTO;
 import com.c205.pellongpellong.entity.Guest;
 import com.c205.pellongpellong.entity.Member;
 import com.c205.pellongpellong.entity.Party;
@@ -28,9 +30,9 @@ public class GuestService {
     private SimpMessagingTemplate messagingTemplate;
 
     // 웹소켓 적용
-    public GuestDTO addGuestToParty(Long partyId, Long memberId) {
-        Party party = partyRepository.findById(partyId).orElseThrow(() -> new RuntimeException("파티id를 찾을 수 없어요"));
-        Member member = memberRepository.findById(memberId).orElseThrow(() -> new RuntimeException("회원id을 찾을 수 없어요"));
+    public PartyDTO addGuestToParty(GuestRequest user) {
+        Party party = partyRepository.findById(user.getPartyId()).orElseThrow(() -> new RuntimeException("파티id를 찾을 수 없어요"));
+        Member member = memberRepository.findById(user.getMemberId()).orElseThrow(() -> new RuntimeException("회원id을 찾을 수 없어요"));
 
         List<Guest> existingGuests = guestRepository.findByPartyPartyIdAndMemberMemberId(partyId, memberId);
         if (!existingGuests.isEmpty()) {
@@ -48,8 +50,20 @@ public class GuestService {
         party.setPo(party.getPo() + 1);
         partyRepository.save(party);
 
-        messagingTemplate.convertAndSend("/topic/parties/" + partyId, party);
-        return new GuestDTO(guest.getGuestId(), member.getNickname(), member.getProfileImg());
+        PartyDTO partyDTO = new PartyDTO(
+                party.getPartyId(),
+                party.getPartyName(),
+                party.getKind(),
+                party.getPo(),
+                party.getTo(),
+                party.getIsPublic(),
+                member.getNickname(),
+
+                member.getProfileImg()
+        );
+        messagingTemplate.convertAndSend("/topic/party/" + party.getPartyId(), partyDTO);
+//        messagingTemplate.convertAndSend("/topic/party/" + partyId, party);
+        return partyDTO;
     }
 
     public List<GuestDTO> listGuestsByPartyId(Long partyId) {
@@ -72,7 +86,7 @@ public class GuestService {
         }
         partyRepository.save(party);
         guestRepository.delete(guest);
-        messagingTemplate.convertAndSend("/topic/parties/" + partyId, party);
+        messagingTemplate.convertAndSend("/topic/party/" + partyId, party);
     }
 
 }

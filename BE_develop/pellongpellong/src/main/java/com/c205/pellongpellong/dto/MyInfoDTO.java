@@ -12,11 +12,11 @@ public class MyInfoDTO {
     private String nickname;
     private String profileImg;
     private String tier;
-    private int rank;
+    private Long rank;
     private int sumExp;
     private Long representativeBadgeId;
 
-    public MyInfoDTO(String email, String nickname, String profileImg, String tier, int rank, int sumExp, Long representativeBadgeId) {
+    public MyInfoDTO(String email, String nickname, String profileImg, String tier, Long rank, int sumExp, Long representativeBadgeId) {
         this.email = email;
         this.nickname = nickname;
         this.profileImg = profileImg;

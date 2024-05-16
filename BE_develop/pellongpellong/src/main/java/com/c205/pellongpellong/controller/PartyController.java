@@ -6,7 +6,10 @@ import com.c205.pellongpellong.entity.Party;
 import com.c205.pellongpellong.repository.MemberRepository;
 import com.c205.pellongpellong.service.PartyService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -14,13 +17,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 
 @RestController
 @RequiredArgsConstructor
 public class PartyController {
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     private final PartyService partyService;
     private final MemberRepository memberRepository;
+    private static final Logger logger = LoggerFactory.getLogger(PartyController.class);
+
 
     @PostMapping("/party/create/{memberId}")
     public ResponseEntity<?> createParty(@PathVariable Long memberId, @RequestBody Party party) {
@@ -61,7 +72,14 @@ public class PartyController {
 
     @GetMapping("/party/{partyId}")
     public ResponseEntity<PartyDetailDTO> getPartyDetail(@PathVariable Long partyId) {
+        logger.info("요청이 잘 왔어요.");
+        logger.info("Received request for party details with partyId: {}", partyId.toString());
         PartyDetailDTO partyDetail = partyService.getPartyDetail(partyId);
         return ResponseEntity.ok(partyDetail);
+    }
+
+    @MessageMapping(value = "/party/{partyId}")
+    public void enterUser(@PathVariable Long partyId) {
+        messagingTemplate.convertAndSend("/topic/party/" + partyId, "대기방에 입장하셨습니다.");
     }
 }

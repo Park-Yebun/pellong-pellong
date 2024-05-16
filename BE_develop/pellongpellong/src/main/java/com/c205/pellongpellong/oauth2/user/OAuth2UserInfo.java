@@ -2,6 +2,7 @@ package com.c205.pellongpellong.oauth2.user;
 
 import java.util.Map;
 
+
 public interface OAuth2UserInfo {
 
     OAuth2Provider getProvider();

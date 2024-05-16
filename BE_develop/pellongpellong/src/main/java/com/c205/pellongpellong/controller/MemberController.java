@@ -10,8 +10,12 @@ import com.c205.pellongpellong.service.MemberVariableService;
 import com.c205.pellongpellong.service.RankService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,6 +39,9 @@ public class MemberController {
 
     private MemberBadgeRepository memberBadgeRepository;
 
+    private final RedisTemplate<String, String> redisTemplate;
+
+
     @Autowired
     public void setMemberBadgeRepository(MemberBadgeRepository memberBadgeRepository) {
         this.memberBadgeRepository = memberBadgeRepository;
@@ -52,6 +59,18 @@ public class MemberController {
     @PostMapping("members")
     public Member addMember(@RequestBody Member member) { return memberService.saveMember(member); }
 
+    @GetMapping("members/info")
+    public Member getUserInfo(@AuthenticationPrincipal UserDetails userDetails) {
+        // 이메일 가져오기
+        String email = userDetails.getUsername();
+
+        // 회원 찾기
+        Member member = memberService.findByEmail(email);
+
+        // 찾은 회원 반환
+        return member;
+    }
+
     @PatchMapping("members/{memberId}")
     public Member updateMemberFields(@PathVariable Long memberId, @RequestBody Map<String, Object> fields){
         return memberService.updateMemberByFields(memberId, fields);
@@ -59,12 +78,23 @@ public class MemberController {
 
     @GetMapping("/members/{memberId}")
     public MyInfoDTO getMyInfoMember(@PathVariable Long memberId) {
+        ZSetOperations<String, String> zSetOps = redisTemplate.opsForZSet();
+        Long lenZSetOps = zSetOps.size("ranking");
+        Long rank = zSetOps.rank("ranking", memberId.toString());
+        assert lenZSetOps != null;
+        assert rank != null;
+        Long descRank = lenZSetOps - rank + 1L;
+
+
+
+
         MyInfoMemberDTO myInfoMemberDTO = memberService.getMyInfoMember(memberId);
         MyInfoVarDTO myInfoVarDTO = memberVariableService.getMyInfoVar(memberId);
         MyInfoRankDTO myInfoRankDTO = rankService.getMyInfoRank(memberId);
         Long representativeBadgeId = memberBadgeService.getRepresentativeBadgeId(memberId);
 //        log.info("Email: {}", myInfoMemberDTO.getEmail());
-        return new MyInfoDTO(myInfoMemberDTO.getEmail(), myInfoMemberDTO.getNickname(), myInfoMemberDTO.getProfileImg(), myInfoVarDTO.getTier(), myInfoVarDTO.getRank(), myInfoRankDTO.getSumExp(), representativeBadgeId);
+//        return new MyInfoDTO(myInfoMemberDTO.getEmail(), myInfoMemberDTO.getNickname(), myInfoMemberDTO.getProfileImg(), myInfoVarDTO.getTier(), myInfoVarDTO.getRank(), myInfoRankDTO.getSumExp(), representativeBadgeId);
+        return new MyInfoDTO(myInfoMemberDTO.getEmail(), myInfoMemberDTO.getNickname(), myInfoMemberDTO.getProfileImg(), myInfoVarDTO.getTier(), descRank, myInfoRankDTO.getSumExp(), representativeBadgeId);
     }
 
     @GetMapping("/profiles/{memberId}")
