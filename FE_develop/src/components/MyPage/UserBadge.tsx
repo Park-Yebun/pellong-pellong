@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './UserBadge.css';
 import useStore from '../../store';
 
@@ -14,6 +14,7 @@ interface UserBadgeProps {
   badges: Badge[];
 }
 
+
 const BadgeComponent: React.FC<{ badge: Badge; onClick: (badge: Badge) => void; isAcquired: boolean }> = ({ badge, onClick, isAcquired}) => {
   return (
     <div className="badge" onClick={() => onClick(badge)}>
@@ -27,6 +28,7 @@ const updateRepresentativeBadge = async (memberId: number, badgeId: number) => {
   try {
     const response = await fetch(`https://www.saturituri.com/api/profiles/${memberId}/badges/${badgeId}`, {
       method: 'PATCH',
+      mode: 'cors',
       headers: {
         'Content-Type': 'application/json'
       }
@@ -37,7 +39,7 @@ const updateRepresentativeBadge = async (memberId: number, badgeId: number) => {
     }
 
     const data = await response.json();
-    console.log('Representative badge updated successfully', data);
+    // console.log('Representative badge updated successfully', data);
   } catch (error) {
     console.error('Error updating representative badge:', error);
   }
@@ -51,6 +53,8 @@ const UserBadge: React.FC<UserBadgeProps> = ({ badges }) => {
     setSelectedBadge(badge);
   };
 
+    // store.loginUserInfo?.memberId 확인완료
+    // console.log("store.loginUserInfo?.memberId:", store.loginUserInfo?.memberId);
 
   return (
     <div>
