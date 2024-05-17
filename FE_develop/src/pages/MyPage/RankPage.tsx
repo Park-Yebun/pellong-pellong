@@ -41,6 +41,7 @@ interface User {
       const fetchUsers = async () => {
         try {
           const response = await fetch('https://www.saturituri.com/api/ranking', {
+            mode: 'no-cors',
             method: 'GET',
             headers: {
               'Content-Type': 'application/json'
