@@ -45,7 +45,8 @@ const WaitingRoomPage = () => {
   const isOwner  = roomData?.hostId === store.loginUserInfo?.memberId;
   const isReady = roomData?.po === roomData?.to;
 
-  // const startGame = (event: any) => {
+  const startGame = (event: any) => {
+    navigate('/jeju-play/speed/' + partyId);
   //   console.log("내가 방장이니?",isOwner)
   //   if (client && client.connected) {
   //   client.send(`/app/party/${partyId}/start`, {}, JSON.stringify({partyType: "speed"}));
@@ -63,18 +64,18 @@ const WaitingRoomPage = () => {
   //       });
   //     })
   //   }
-  //   if (!isOwner) {
-  //     event.preventDefault();
-  //     console.log("퀴즈 시작 권한이 없습니다.") //추후 alert나 모달로 구현할 것
-  //   } else {
-  //     if (!isReady) {
-  //       console.log("인원이 준비되지 않았습니다.") //추후 alert나 모달로 구현할 것
-  //     } else if (isReady && roomData?.kind === 2 || roomData?.kind === 3) {
-  //       client.send(`/app/party/${partyId}/start`, {}, JSON.stringify({partyType: "other"}));
-  //     } else if (isReady && roomData?.kind === 1) {
-  //       client.send(`/app/party/${partyId}/start`, {}, JSON.stringify({partyType: "speed"}));
-  //   };};
-  // }
+    // if (!isOwner) {
+    //   event.preventDefault();
+    //   console.log("퀴즈 시작 권한이 없습니다.") //추후 alert나 모달로 구현할 것
+    // } else {
+    //   if (!isReady) {
+    //     console.log("인원이 준비되지 않았습니다.") //추후 alert나 모달로 구현할 것
+    //   } else if (isReady && roomData?.kind === 2 || roomData?.kind === 3) {
+    //     client.send(`/app/party/${partyId}/start`, {}, JSON.stringify({partyType: "other"}));
+    //   } else if (isReady && roomData?.kind === 1) {
+    //     client.send(`/app/party/${partyId}/start`, {}, JSON.stringify({partyType: "speed"}));
+    // };};
+  }
 
   // 클라이언트 할당
   const socket = new SockJS('https://www.saturituri.com/ws');
@@ -141,7 +142,7 @@ const WaitingRoomPage = () => {
         </Player>
       ))}
       </PlayerContainer>
-      {/* <StartBtn onClick={(e) => startGame(e)}>퀴즈 시작</StartBtn> */}
+      <StartBtn onClick={(e) => startGame(e)}>퀴즈 시작</StartBtn>
     </Container>
   );
 };
