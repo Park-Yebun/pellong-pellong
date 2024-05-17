@@ -89,4 +89,6 @@ public class PartyService {
         messagingTemplate.convertAndSend("/topic/party/" + party.getPartyId(), partydetail);
         return partydetail;
     }
+
+
 }

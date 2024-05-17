@@ -1,17 +1,17 @@
 package com.c205.pellongpellong.controller;
 
 import com.c205.pellongpellong.dto.PartyDTO;
-import com.c205.pellongpellong.dto.PartyDetailDTO;
 import com.c205.pellongpellong.entity.Party;
 import com.c205.pellongpellong.repository.MemberRepository;
 import com.c205.pellongpellong.service.PartyService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -82,8 +82,17 @@ public class PartyController {
 
     @MessageMapping(value = "/party/{partyId}/start")
     public void startGame(@Payload StartGameRequest startGameRequest, @PathVariable Long partyId) {
-        messagingTemplate.convertAndSend("/topic/party/" + partyId, startGameRequest.getPartyType());
-        logger.info("Sent message to /topic/party/" + partyId + ": start");
+        Map<String, Object> message = new HashMap<>();
+        message.put("type", "startGame");
+        try {
+            String jsonMessage = new ObjectMapper().writeValueAsString(message);
+            messagingTemplate.convertAndSend("/topic/party/" + partyId, jsonMessage);
+            logger.info("Sent message to /topic/party/" + partyId + ": start");
+        } catch (JsonProcessingException e) {
+            // 로깅 및 오류 처리
+            logger.error("JSON 직렬화 오류", e);
+        }
+
     }
 
     public class StartGameRequest {
