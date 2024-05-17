@@ -31,7 +31,7 @@ public class PartyService {
     private GuestRepository guestRepository;
     private MemberRepository memberRepository;
     public Optional<Party> findPartyByMemberId(Long memberId) {
-        return partyRepository.findByMemberMemberId(memberId);
+        return partyRepository.findByMemberId(memberId);
     }
     // 웹소켓적용
     public Party createParty(Party party) {
