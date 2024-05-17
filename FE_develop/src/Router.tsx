@@ -22,6 +22,8 @@ import OtherPlayPage from './pages/JejuPlay/Other/OtherPlayPage';
 import SpeedPlayPage from './pages/JejuPlay/Speed/SpeedPlayPage';
 import PlayResultPage from './pages/JejuPlay/PlayResultPage';
 import WaitingRoomPage from './pages/JejuPlay/WaitingRoomPage';
+//철환추가
+import TranslatePage from './pages/TranslatePage';
 
 // component
 import SoloUser from './components/JejuPlay/SoloUser';
@@ -58,6 +60,7 @@ function App() {
         <Route path="/jeju-play/speed/:partyId" element={<SpeedPlayPage />} />
         <Route path="/jeju-play/:partyId/result" element={<PlayResultPage />} />
         <Route path="/jeju-play/:partyId/wait" element={<WaitingRoomPage />} />
+        <Route path="/ai" element={<TranslatePage />} /> {/* TranslatePage 철환 라우터 추가 */}
         {/* component */}
         {/* <Route path="/solo" element={<SoloUser />} /> */}
         <Route path="/duel" element={<DuelUser />} />

@@ -38,14 +38,15 @@ const MyPage: React.FC = () => {
   const [userData, setUserData] = useState<User|null>(null);
 
   const [badges] = useState([
-    { id: 1, title: "First Win", description: "Won your first match.", imageUrl: "../../assets/badges/b1.jpg" },
-    { id: 2, title: "Marathoner", description: "Completed a marathon.", imageUrl: "../../assets/badges/b2.jpg" },
-    { id: 3, title: "Bookworm", description: "Read 100 books.", imageUrl: "../../assets/badges/b3.jpg" },
-    { id: 4, title: "First Win", description: "Won your first match.", imageUrl: "../../assets/badges/b4.jpg" },
-    { id: 5, title: "Marathoner", description: "Completed a marathon.", imageUrl: "../../assets/badges/b5.jpg" },
-    { id: 6, title: "Bookworm", description: "Read 100 books.", imageUrl: "../../assets/badges/b6.jpg" },
-    { id: 7, title: "First Win", description: "Won your first match.", imageUrl: "../../assets/badges/b7.jpg" },
-    { id: 8, title: "Marathoner", description: "Completed a marathon.", imageUrl: "../../assets/badges/b8.jpg" },
+    { id: 1, title: "팰롱팰롱", description: "✨팰롱팰롱에 혼저옵서예✨", imageUrl: "../../assets/badges/01pellongpellong.png" },
+    { id: 2, title: "퀘스트 탐험가", description: "데일리 퀘스트를 XX개 완료함", imageUrl: "../../assets/badges/b2.jpg" },
+    { id: 3, title: "종달새 학습자", description: "오전 5시 - 오전 9시 사이에 퀴즈 XX개 완료함", imageUrl: "../../assets/badges/b3.jpg" },
+    { id: 4, title: "올빼미 학습자", description: "오후 9시 - 오전 5시 사이에 퀴즈 xx개 완료함", imageUrl: "../../assets/badges/b4.jpg" },
+    { id: 5, title: "exp 메달리스트", description: "누적 경험치 000000 xp를 획득함", imageUrl: "../../assets/badges/b5.jpg" },
+    { id: 6, title: "무결점학습자", description: "만점 챕터 xxx개를 달성함", imageUrl: "../../assets/badges/b6.jpg" },
+    { id: 7, title: "랭커", description: "전체 랭킹 1위 ~ 10위를 달성함", imageUrl: "../../assets/badges/b7.jpg" },
+    { id: 8, title: "탐나는 도다", description: "제주도에 방문함", imageUrl: "../../assets/badges/b8.jpg" },
+    { id: 9, title: "사투리의 신", description: "위의 모든 뱃지를 획득함", imageUrl: "../../assets/badges/b8.jpg" },
     // 추가 뱃지 데이터
   ]);
 
@@ -94,7 +95,7 @@ const MyPage: React.FC = () => {
                   <InfoBox>
                       <ProfileImg src={userData?.profileImg} alt="Profile" style={{ width: 124, borderRadius: '50%' }} />
                       <NicknameBox>
-                        <Nickname>예분</Nickname>
+                        <Nickname>{userData?.nickname}</Nickname>
                         <Logout src={logoutImg} alt='logout' onClick={() => logout()}/>
                       </NicknameBox>
                   </InfoBox>
