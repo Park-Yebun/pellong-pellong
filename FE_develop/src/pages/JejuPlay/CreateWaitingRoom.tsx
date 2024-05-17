@@ -46,7 +46,7 @@ const CreateWaitingRoom = () => {
     }
 
     try {
-      const response = await fetch(`http://www.localhost:8080/party/create/${store.loginUserInfo?.memberId}`, {
+      const response = await fetch(`https://www.saturituri.com/api/party/create/${store.loginUserInfo?.memberId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
