@@ -11,4 +11,8 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @Query(value = "SELECT nickname FROM Member WHERE memberId = :memberId", nativeQuery = true)
     Optional<String> getNicknameByMemberId(Long memberId);
+
+    @Query(value = "SELECT profileImg FROM Member WHERE memberId = :memberId", nativeQuery = true)
+    Optional<String> getProfileImgByMemberId(Long memberId);
+
 }
