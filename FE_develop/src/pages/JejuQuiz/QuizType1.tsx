@@ -43,8 +43,14 @@ const QuizType1: React.FC<{ quizData: QuizData; onNextQuestion: () => void }> = 
   return (
     <div className="QT1-container">
       <div className="QT1-quiz-header">
-        <h3>Quiz</h3>
-        <p>문제 {quizData.quizNo}번</p>
+        <div className="QT1-tinum">
+          <div className="QT1-quiz-title">Quiz</div>
+          <div className="QT1-quiz-nums">문제 {quizData.quizNo}번</div>
+        </div>
+        <div className="QT1-quiz-text">
+          뜻이 일치하는<br />
+          문장을 고르시오
+        </div>
       </div>
       <div className="QT1-quiz-content">
         {/* <div className="QT1-standard-text">
@@ -55,9 +61,9 @@ const QuizType1: React.FC<{ quizData: QuizData; onNextQuestion: () => void }> = 
           <img src={hanrabong} alt="" className="QT1-dialect-img" />
           <div className="QT1-dialect-text">{quizData.dialectVocas[0].dialectText}</div>
         </div>
-        <div className="QT1-image-container">
+        {/* <div className="QT1-image-container">
           <img src={quizData.dialectVocas[0].dialectImage} alt="Dialect Image" />
-        </div>
+        </div> */}
         <div className="QT1-audio-container">
           <audio controls>
             <source src={quizData.dialectVocas[0].dialectVoice} type="audio/mpeg" />
@@ -79,8 +85,8 @@ const QuizType1: React.FC<{ quizData: QuizData; onNextQuestion: () => void }> = 
       </div>
       {selectedAnswer !== null && (
         <div className="QT1-answer-feedback">
-          {isCorrect ? <p className="QT1-correct-feedback">Correct!</p> : <p className="QT1-incorrect-feedback">Incorrect!</p>}
-          <button onClick={handleNextQuestion} className="QT1-next-button">Next Question</button>
+          {isCorrect ? <p className="QT1-correct-feedback">맞았읍니다!</p> : <p className="QT1-incorrect-feedback">틀렸어용!</p>}
+          <button onClick={handleNextQuestion} className="QT1-next-button">다음 문제로</button>
         </div>
       )}
     </div>

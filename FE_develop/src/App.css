@@ -1,3 +1,5 @@
-/* .App {
-  text-align: center;
-} */
+@import url('//fonts.googleapis.com/earlyaccess/jejugothic.css');
+
+html {
+  font-family: 'Jeju Gothic', sans-serif;
+}

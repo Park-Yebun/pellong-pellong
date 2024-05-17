@@ -5,7 +5,7 @@ import background from '../assets/translate-background.png';
 
 // Container 스타일 컴포넌트
 const Container = styled.div`
-  width: 360px;
+  // width: 360px;
   height: 800px;
   display: flex;
   flex-direction: column;
