@@ -1,7 +1,6 @@
 // RankPage.tsx
 import React, { useState, useEffect } from 'react';
 import './RankPage.css';
-
 import BackButton from '../../components/BackButton';
 
 interface User {
