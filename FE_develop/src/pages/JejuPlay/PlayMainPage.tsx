@@ -80,7 +80,7 @@ const PlayMainPage = () => {
     <div className='play-main-container'>
       <BackButton />
       <div className='play title'>플레이</div>
-        <div>
+        <div className='play-btn-container'>
             <div className='speed-quiz-btn' onClick={() => createRoom(1)}>
                 <div>사투리 스피드 퀴즈</div>
                 <img className='speed-quiz-icon' src={speedquizicon} alt="speedquizicon" />

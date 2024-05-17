@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+
+import BackButton from '../../components/BackButton'
 import './ShadowingMainPage.css';
 
 
@@ -37,6 +39,7 @@ const goDetail = (videoId:string) => {
 
   return (
     <div className='background'>
+      <BackButton />
       <div className='upperbar'>
         <div className='content-box'>CONTENTS</div>
         <div className='description-box'>제주어를 발음해봐요</div>

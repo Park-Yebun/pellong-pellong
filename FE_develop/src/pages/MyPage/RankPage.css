@@ -1,23 +1,23 @@
-.user-ranking-container {
+.RK-user-ranking-container {
     width: 100%;
     height: 100vh;
     background-color: #D1E9F9;
 }
 
-.ranking-title {
+.RK-ranking-title {
     font-size: 30px;
     font-weight: bold;
     text-align: center;
     padding: 20px;
 }
 
-.user-grid {
+.RK-user-grid {
     padding: 10px;
     overflow-y: auto; /* 수직 스크롤 추가 */
     max-height: calc(100vh - 180px); /* 최대 높이 설정 */
 }
 
-.user-card {
+.RK-user-card {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -29,7 +29,7 @@
     margin-bottom: 20px;
 }
 
-.rank-number {
+.RK-rank-number {
     background-color: #007bff;
     color: #fff;
     border-radius: 20px;
@@ -41,28 +41,39 @@
     left: 15px; /* 왼쪽에서 15px만큼 이동 */
 }
 
-.profile-picture {
+.RK-profile-picture {
     width: 70px;
     height: 70px;
     border-radius: 50%;
+    margin-right: auto; /* 오른쪽에 여백 추가 */
 }
 
-.user-info {
+.RK-user-info {
     flex-grow: 1;
+    display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between; /* 요소들을 같은 간격으로 나열 */
+    padding: 10px; /* 내부 여백 추가 */
 }
 
-.username {
+.RK-username {
     font-size: 18px;
     font-weight: bold;
+    margin: 0 10px; /* 좌우 여백 추가 */
+    max-width: 100px; /* 최대 너비 설정 */
+    white-space: nowrap; /* 줄바꿈 방지 */
+    overflow: hidden; /* 넘치는 부분 숨기기 */
+    text-overflow: ellipsis; /* ...으로 표시 */
+    text-align: left;
+    flex-grow: 1;
 }
 
-.experience {
+.RK-experience {
     font-size: 14px;
+    margin: 0 10px;
 }
 
-.rank-badge img {
+.RK-rank-badge img {
     width: 90px;
     height: 90px;
     color: #fff;
@@ -70,4 +81,5 @@
     padding: 5px 10px;
     font-size: 14px;
     font-weight: bold;
+    margin-right: 10px; /* 오른쪽에 여백 추가 */
 }
