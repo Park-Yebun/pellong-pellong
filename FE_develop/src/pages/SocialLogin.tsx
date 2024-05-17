@@ -86,8 +86,8 @@ const SocialLoginPage = () => {
   }, [accessToken]);
   return (
     <Container>
-      <Google onClick={() => window.location.href = "http://localhost:8080/oauth2/authorization/google?redirect_uri=http://localhost:3000/login&mode=login"}></Google>
-      <Kakao onClick={() => window.location.href = "http://localhost:8080/oauth2/authorization/kakao?redirect_uri=http://localhost:3000/login&mode=login"}></Kakao>
+      <Google onClick={() => window.location.href = "https://www.saturituri.com/api/oauth2/authorization/google?redirect_uri=https://www.saturituri.com/login&mode=login"}></Google>
+      <Kakao onClick={() => window.location.href = "https://www.saturituri.com/api/oauth2/authorization/kakao?redirect_uri=https://www.saturituri.com/login&mode=login"}></Kakao>
     </Container>
   );
 };
