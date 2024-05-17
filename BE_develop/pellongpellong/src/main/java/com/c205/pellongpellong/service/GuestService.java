@@ -91,32 +91,13 @@ public class GuestService {
 
     @Transactional
     public void removeGuestFromParty(GuestRequest user) {
-        logger.info("서비스 단에서의 멤버아이디" + user.getMemberId());
-        logger.info("서비스 단에서의 파티아이디" + user.getPartyId());
 //        List<Guest> guests = guestRepository.findByPartyPartyIdAndMemberMemberId(user.getPartyId(), user.getMemberId());
         List<Guest> guests = guestRepository.findByPartyPartyIdAndMemberId(user.getPartyId(), user.getMemberId());
-        guests.forEach(guest -> {
-//            logger.info("게스트의 멤버ID: " + guest.getMember().getMemberId());
-            logger.info("게스트의 멤버ID: " + guest.getMemberId());
-        });
         if (guests.isEmpty()) {
             throw new RuntimeException("해당 파티의 파티원을 찾을 수 없어요");
         }
         Guest guest = guests.get(0); // 가정: 하나의 파티에 같은 회원이 여러 번 등록되지 않음
-//        logger.info("처리할 게스트의 멤버 ID: " + guest.getMember().getMemberId());
-        logger.info("처리할 게스트의 멤버 ID: " + guest.getMemberId());
         Party party = guest.getParty();
-        // 여기서 Party 객체의 상세 정보를 로깅합니다.
-        if (party != null) {
-            logger.info("Party ID: " + party.getPartyId());
-            logger.info("Party ID: " + party.getMember().getMemberId());
-            logger.info("Party Name: " + party.getPartyName());
-            logger.info("Current Number of Guests (Po): " + party.getPo());
-            logger.info("Total Number of Guests Allowed (To): " + party.getTo());
-            logger.info("Is Public: " + party.getIsPublic());
-        } else {
-            logger.error("No party found for guest");
-        }
 
 
         if (party.getPo() > 0) {
@@ -125,6 +106,7 @@ public class GuestService {
         partyRepository.save(party);
         guestRepository.delete(guest);
         messagingTemplate.convertAndSend("/topic/party/" + user.getPartyId(), "유저가 퇴장했습니다.");
+        logger.info("유저 퇴장 완료.");
     }
 
 }
