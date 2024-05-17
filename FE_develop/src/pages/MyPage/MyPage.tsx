@@ -69,12 +69,13 @@ const MyPage: React.FC = () => {
     console.log("페치데이터 동작!!")
     const fetchData = async () => {
       try {
-        const response = await fetch('https://www.saturituri.com/api/members/' + store.loginUserInfo?.memberId, {
+        const response = await fetch('https://www.saturituri.com/api/profiles/' + store.loginUserInfo?.memberId, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json'
           }
         });
+        console.log(response)
         const data = await response.json();
         setUserData(data);
         console.log("데이터 로드 완료", response);
