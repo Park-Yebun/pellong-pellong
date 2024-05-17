@@ -60,7 +60,7 @@ function App() {
         <Route path="/jeju-play/speed/:partyId" element={<SpeedPlayPage />} />
         <Route path="/jeju-play/:partyId/result" element={<PlayResultPage />} />
         <Route path="/jeju-play/:partyId/wait" element={<WaitingRoomPage />} />
-        <Route path="/translate" element={<TranslatePage />} /> {/* TranslatePage 철환 라우터 추가 */}
+        <Route path="/ai" element={<TranslatePage />} /> {/* TranslatePage 철환 라우터 추가 */}
         {/* component */}
         {/* <Route path="/solo" element={<SoloUser />} /> */}
         <Route path="/duel" element={<DuelUser />} />

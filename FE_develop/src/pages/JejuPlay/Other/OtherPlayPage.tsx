@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation, useParams } from 'react-router-dom';
 import moviebadge from '../../../assets/JejuPlay/moviebadge.png'
 import stageboard from '../../../assets/JejuPlay/stageboard.png'
 import mardarin from '../../../assets/JejuPlay/mandarin.png'
@@ -21,6 +21,10 @@ import {
   Alert
 } from './OtherPlayPage.styled'
 
+// 웹소켓 통신
+import SockJS from 'sockjs-client';
+import {Stomp, Frame} from '@stomp/stompjs';
+
 const OtherPlayPage = () => {
   const navigate = useNavigate();
   // const {to} = useLocation().state;
@@ -31,12 +35,31 @@ const OtherPlayPage = () => {
   const [isWrong, setIsWrong] = useState<boolean>(false);
   const [alert, setAlert] = useState<string>('');
   const [lifeCnt, setLifeCnt] = useState<number>(3);
+  const { partyId } = useParams();
+
+  // 클라이언트 할당
+  const socket = new SockJS('http://localhost:8080/ws');
+  let client = Stomp.over(socket);
 
   interface Quiz {
     readonly dramaId: number,
     content: string,
     title: string
   }
+
+  useEffect(() => {
+    // 소켓 연결
+    client.connect({}, () => {
+      // 구독 요청
+      client.subscribe("/topic/party/" + partyId, function(message){});
+
+    return () => {
+      client.disconnect(() => {
+        console.log("웹소켓 연결이 해제되었습니다.")
+      });
+    };
+  }, []);
+  });
 
   const selectRandomQuiz = () => {
     if (dummydata.length > 0) {

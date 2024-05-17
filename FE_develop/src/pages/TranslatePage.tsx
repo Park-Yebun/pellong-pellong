@@ -29,6 +29,7 @@ const Subtitle = styled.h2`
   margin: 10px 0;
 `;
 
+
 // TextArea 스타일 컴포넌트
 const TextArea = styled.textarea`
   width: 300px;
@@ -154,7 +155,6 @@ const TranslatePage: React.FC = () => {
       <TextArea 
         value={isStandardToJeju ? standardText : jejuText} 
         onChange={isStandardToJeju ? handleStandardChange : handleJejuChange} 
-        placeholder="이곳에 입력해주세요"
       />
       <IconButton onClick={toggleTranslationDirection}>
         <FaExchangeAlt />
