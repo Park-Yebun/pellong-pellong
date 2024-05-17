@@ -1,6 +1,7 @@
 // RankPage.tsx
 import React, { useState, useEffect } from 'react';
 import './RankPage.css';
+
 import BackButton from '../../components/BackButton';
 
 interface User {
@@ -41,7 +42,6 @@ interface User {
       const fetchUsers = async () => {
         try {
           const response = await fetch('https://www.saturituri.com/api/ranking', {
-            mode: 'no-cors',
             method: 'GET',
             headers: {
               'Content-Type': 'application/json'
