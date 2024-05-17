@@ -66,6 +66,23 @@ const MyPage: React.FC = () => {
     navigate('/')
   }
 
+  const getRankBadge = (sumExp: number) => {
+    if (sumExp >= 0 && sumExp < 100) {
+      return '../../assets/badge/small.png';
+    }
+    else if (sumExp >= 100 && sumExp < 300) {
+      return '../../assets/badge/middle.png';
+    }
+    else if (sumExp >= 300 && sumExp < 500) {
+      return '../../assets/badge/big.png';
+    }
+    else if (sumExp >= 500 && sumExp < 1000) {
+      return '../../assets/badge/sobig.png';
+    }
+    else if (sumExp > 1000)
+      return '../../assets/badge/brilliant.png';
+  };
+
   useEffect(() => {
     console.log("페치데이터 동작!!")
     const fetchData = async () => {
@@ -117,9 +134,14 @@ const MyPage: React.FC = () => {
                         <Nickname>{userData?.nickname}</Nickname>
                         <Logout src={logoutImg} alt='logout' onClick={() => logout()}/>
                       </NicknameBox>
+                      <img src={getRankBadge(userData.sumExp)} alt=""/>
+                      <p> {userData.tier}</p>
+                      <p> 순위 : {userData.rank}</p>
+                      <p> 누적 경험치 : {userData.sumExp}</p>
                   </InfoBox>
                   <EditBox>
                     <EditBtn onClick={() => modifyProfile()}>프로필 수정</EditBtn>
+     
                   </EditBox>
               </UserProfile>
               <UserBadge badges={badges} /> 
