@@ -13,9 +13,10 @@ interface UserBadgeProps {
   badges: Badge[];
 }
 
-const BadgeComponent: React.FC<{ badge: Badge; onClick: (badge: Badge) => void }> = ({ badge, onClick }) => {
+const BadgeComponent: React.FC<{ badge: Badge; onClick: (badge: Badge) => void }> = ({ badge, onClick}) => {
   return (
     <div className="badge" onClick={() => onClick(badge)}>
+        {/* <img src={isAcquired ? badge.imageUrl : 'blind.jpg'} alt={badge.title} /> */}
       <img src={badge.imageUrl} alt={badge.title} />
     </div>
   );

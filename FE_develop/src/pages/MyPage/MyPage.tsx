@@ -79,6 +79,7 @@ const MyPage: React.FC = () => {
         const data = await response.json();
         setUserData(data);
         console.log("데이터 로드 완료", response);
+        console.log(data);
       } catch (error) {
         console.log("데이터 로드 실패", error)
       }
