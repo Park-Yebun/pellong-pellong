@@ -1,24 +1,80 @@
 .QT1-container {
+  background-color: #D1E9F9;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 100vh;
+  max-width: 600px;
+  margin: auto;
+}
+
+.QT1-quiz-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.QT1-quiz-header h3 {
+  font-size: 24px;
+  color: #333;
+}
+
+.QT1-quiz-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  background-color: #D1E9F9;
-  height: 80vh;
-  padding: 20px;
+  margin-bottom: 50px;
+  gap: 20px;
+}
+
+.QT1-dialect-container {
+  display: flex;
+  align-items: center;
+  width: 300px;
+
+}
+
+.QT1-dialect-img {
+  width: 150px;
+  height: 150px;
+}
+
+.QT1-dialect-text{
   text-align: center;
-}
-
-.QT1-container h3 {
-  font-size: 24px;
-  color: #333; /* 아이폰의 기본 텍스트 색상과 유사하게 설정 */
-  margin-bottom: 20px;
-}
-
-.QT1-instructions {
+  width: 200px;
+  background-color: #fff;
+  color: #333;
   font-size: 18px;
-  color: #666; /* 부가 설명 텍스트의 색상을 조정하여 더 읽기 쉽게 설정 */
-  margin-bottom: 20px;
+  padding: 20px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  
+}
+
+.QT1-image-container {
+  text-align: center;
+  width: 300px;
+  background-color: #fff;
+  color: #333;
+  font-size: 18px;
+  padding: 20px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  
+}
+
+.QT1-image-container img {
+  height: 200px;
+  width: 200px;
+  border-radius: 5px;
+}
+
+.QT1-audio-container {
+  text-align: center;
+  margin-bottom: 10px;
 }
 
 .QT1-options-container {
@@ -27,24 +83,56 @@
   align-items: center;
 }
 
+.QT1-option-item {
+  margin-bottom: 10px;
+}
+
 .QT1-option-button {
-  background-color: #fff; /* 주황색 버튼 */
-  color: black;
-  font-size: 18px;
   width: 300px;
-  height: 100px;
-  padding: 14px 28px; /* 좀 더 큰 패딩 */
-  margin: 10px;
+  background-color: #fff;
+  color: #333;
+  font-size: 18px;
+  padding: 20px 20px;
   border: none;
-  border-radius: 25px; /* 더 둥근 모양 */
+  border-radius: 5px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease;
 }
 
-.QT1-option-button:last-child {
-  margin-bottom: 0; /* 마지막 선택지 버튼의 하단 마진을 제거하여 깔끔한 UI를 유지 */
+.QT1-option-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-.QT1-option-button:hover {
-  background-color: #0056b3; /* 버튼에 마우스 호버 시 조금 더 진한 파란색으로 변화 */
+.QT1-option-button:hover:not(:disabled) {
+  background-color: #f0f0f0;
+}
+
+.QT1-correct-feedback {
+  color: green;
+}
+
+.QT1-incorrect-feedback {
+  color: red;
+}
+
+.QT1-answer-feedback {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.QT1-next-button {
+  background-color: #0056b3;
+  color: white;
+  font-size: 18px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.QT1-next-button:hover {
+  background-color: #003d80;
 }
