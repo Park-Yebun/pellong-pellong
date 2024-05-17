@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { FaExchangeAlt } from 'react-icons/fa';
 import background from '../assets/translate-background.png';
 
+
+  
 // Container 스타일 컴포넌트
 const Container = styled.div`
   width: 360px;
@@ -25,6 +27,13 @@ const Title = styled.h1`
 // Subtitle 스타일 컴포넌트
 const Subtitle = styled.h2`
   font-size: 20px;
+  text-align: center;
+  margin: 10px 0;
+`;
+
+// Subtitle 스타일 컴포넌트
+const Sub2title = styled.h4`
+  font-size: 15px;
   text-align: center;
   margin: 10px 0;
 `;
@@ -109,6 +118,7 @@ const TranslatePage: React.FC = () => {
   const [standardText, setStandardText] = useState<string>('');
   const [jejuText, setJejuText] = useState<string>('');
   const [isStandardToJeju, setIsStandardToJeju] = useState<boolean>(true);
+  const [viewBoolean, setViewBoolean] = useState<boolean>(false);
 
   // 표준어 입력 핸들러
   const handleStandardChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -124,6 +134,7 @@ const TranslatePage: React.FC = () => {
 
   // 번역 함수
   const translate = async () => {
+    setViewBoolean(true);
     const text = isStandardToJeju ? standardText : jejuText;
     const direction = isStandardToJeju ? 'to_jeju' : 'to_standard';
     const translatedText = await fetchTranslation(text, direction);
@@ -146,11 +157,13 @@ const TranslatePage: React.FC = () => {
   const handleReset = () => {
     setStandardText('');
     setJejuText('');
+    setViewBoolean(false); // 메시지 숨기기
   };
 
   return (
     <Container>
       <Title>제주어 번역기</Title>
+      {viewBoolean && <Sub2title>잠시만 기다려주세요.</Sub2title>}
       <Subtitle>{isStandardToJeju ? '표준어' : '제주어'}</Subtitle>
       <TextArea 
         value={isStandardToJeju ? standardText : jejuText} 
