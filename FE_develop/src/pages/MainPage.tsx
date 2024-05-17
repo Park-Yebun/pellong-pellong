@@ -11,6 +11,7 @@ import cloudQuiz from '../assets/cloud-quiz.png';
 import cloudTest from '../assets/cloud-test.png';
 import cloudPlay from '../assets/cloud-play.png';
 import cloudEdu from '../assets/cloud-edu.png';
+import cloudTrans from '../assets/cloud-trans.png';
 
 function MainPage() {
   const navigate = useNavigate(); // useNavigate hook 사용
@@ -73,6 +74,9 @@ function MainPage() {
         </a>
         <a href="/jeju-edu" onClick={(e) => handleClick(e, '/jeju-edu')} className="rect-link bottom-right">
           <img src={cloudEdu} alt="사투리배움터" className="cloud-image" />
+        </a>
+        <a href="/ai" onClick={(e) => handleClick(e, '/ai')} className="rect-link bottom-middle">
+          <img src={cloudTrans} alt="사투리번역기" className="cloud-image" />
         </a>
       </div>
       {showModal && (
