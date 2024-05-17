@@ -91,8 +91,16 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         // 기존에 저장된 사용자인지 확인하기
         Optional<Member> existingMemberOptional = memberRepository.findByEmail(email);
         if (existingMemberOptional.isPresent()) {
-            // 기존 사용자가 있으면 아무 것도 하지 않고 반환
-            return existingMemberOptional.get();
+            // 기존 사용자가 있으면 닉네임과 프로필 이미지를 업데이트
+            Member existingMember = existingMemberOptional.get();
+            String newNickname = oAuth2UserInfo.getNickname();
+            if (newNickname == null) {
+                newNickname = oAuth2UserInfo.getName();  // nickname이 null이면 name으로 대체
+            }
+            existingMember.setNickname(newNickname);
+            existingMember.setProfileImg(oAuth2UserInfo.getProfileImageUrl());
+            memberRepository.save(existingMember);  // 변경된 정보 저장
+            return existingMember;
         } else {
             // 새로운 사용자라면 엔티티에 저장
             String nickname = oAuth2UserInfo.getNickname();
