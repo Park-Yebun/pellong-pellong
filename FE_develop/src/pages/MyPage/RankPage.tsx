@@ -57,6 +57,23 @@ interface User {
       }
       fetchUsers();
     }, []);
+
+    const getRankBadge = (sumExp: number) => {
+      if (sumExp >= 0 && sumExp < 100) {
+        return '../../assets/badge/small.png';
+      }
+      else if (sumExp >= 100 && sumExp < 300) {
+        return '../../assets/badge/middle.png';
+      }
+      else if (sumExp >= 300 && sumExp < 500) {
+        return '../../assets/badge/big.png';
+      }
+      else if (sumExp >= 500 && sumExp < 1000) {
+        return '../../assets/badge/sobig.png';
+      }
+      else if (sumExp > 1000)
+        return '../../assets/badge/brilliant.png';
+    };
   
     return (
       <div className="user-ranking-container">
@@ -68,7 +85,7 @@ interface User {
               <div className="user-info">
                 <span className="rank-number">{user.rankId}</span>
                 <span className="rank-badge">
-                  {/* <img src={user.rankBadge} alt="" /> */}
+                  <img src={getRankBadge(user.sumExp)} alt=""/>
                 </span>
                 <img className="profile-picture" src={user.profileImg} alt={`Profile of ${user.nickname}`} />
                 <p className="username">{user.nickname}</p>
