@@ -3,7 +3,6 @@ package com.c205.pellongpellong.service;
 import com.c205.pellongpellong.controller.PartyController;
 import com.c205.pellongpellong.dto.GuestDTO;
 import com.c205.pellongpellong.dto.GuestRequest;
-import com.c205.pellongpellong.dto.PartyDTO;
 import com.c205.pellongpellong.dto.PartyDetailDTO;
 import com.c205.pellongpellong.entity.Guest;
 import com.c205.pellongpellong.entity.Member;
@@ -11,12 +10,16 @@ import com.c205.pellongpellong.entity.Party;
 import com.c205.pellongpellong.repository.GuestRepository;
 import com.c205.pellongpellong.repository.MemberRepository;
 import com.c205.pellongpellong.repository.PartyRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -75,7 +78,18 @@ public class GuestService {
                 party.getIsPublic(),
                 member.getMemberId(),
                 guestDTOs);
-        messagingTemplate.convertAndSend("/topic/party/" + party.getPartyId(), partydetail);
+        
+        // 웹소켓 송신 메세지 객체 타입으로 만들어서 보내주기
+        Map<String, Object> message = new HashMap<>();
+        message.put("type", "updateData");
+        message.put("partyDetail", partydetail);
+        try {
+            String jsonMessage = new ObjectMapper().writeValueAsString(message);
+            messagingTemplate.convertAndSend("/topic/party/" + party.getPartyId(), jsonMessage);
+        } catch (JsonProcessingException e) {
+            // 로깅 및 오류 처리
+            logger.error("JSON 직렬화 오류", e);
+        }
         return partydetail;
     }
 
@@ -105,8 +119,36 @@ public class GuestService {
         }
         partyRepository.save(party);
         guestRepository.delete(guest);
-        messagingTemplate.convertAndSend("/topic/party/" + user.getPartyId(), "유저가 퇴장했습니다.");
-        logger.info("유저 퇴장 완료.");
+
+        // 업데이트된 파티 테이블 정보 가져오기
+        List<GuestDTO> guestDTOs = party.getGuests().stream()
+                .map(g -> new GuestDTO(g.getGuestId(),
+                        memberRepository.getNicknameByMemberId(g.getMemberId()).orElseThrow(),
+                        memberRepository.findMemberByMemberId(g.getMemberId()).orElseThrow().getProfileImg()))
+                .collect(Collectors.toList());
+
+        PartyDetailDTO partydetail = new PartyDetailDTO(
+                party.getPartyId(),
+                party.getPartyName(),
+                party.getKind(),
+                party.getPo(),
+                party.getTo(),
+                party.getIsPublic(),
+                party.getMember().getMemberId(),
+                guestDTOs);
+
+        // 웹소켓 송신 메세지 객체 타입으로 만들어서 보내주기
+        Map<String, Object> message = new HashMap<>();
+        message.put("type", "updateData");
+        message.put("partyDetail", partydetail);
+        try {
+            String jsonMessage = new ObjectMapper().writeValueAsString(message);
+            messagingTemplate.convertAndSend("/topic/party/" + party.getPartyId(), jsonMessage);
+            logger.info("유저 퇴장 완료.");
+        } catch (JsonProcessingException e) {
+            // 로깅 및 오류 처리
+            logger.error("JSON 직렬화 오류", e);
+        }
     }
 
 }
