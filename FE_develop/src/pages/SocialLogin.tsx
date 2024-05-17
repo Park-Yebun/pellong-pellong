@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import useStore from '../store';
@@ -86,8 +86,8 @@ const SocialLoginPage = () => {
   }, [accessToken]);
   return (
     <Container>
-      <Google onClick={() => window.location.href = "https://saturituri.com/api/oauth2/authorization/google?redirect_uri=https://www.saturituri.com/login&mode=login"}></Google>
-      <Kakao onClick={() => window.location.href = "https://saturituri.com/api/oauth2/authorization/kakao?redirect_uri=https://www.saturituri.com/login/&mode=login"}></Kakao>
+      <Google onClick={() => window.location.href = "http://localhost:8080/oauth2/authorization/google?redirect_uri=http://localhost:3000/login&mode=login"}></Google>
+      <Kakao onClick={() => window.location.href = "http://localhost:8080/oauth2/authorization/kakao?redirect_uri=http://localhost:3000/login&mode=login"}></Kakao>
     </Container>
   );
 };

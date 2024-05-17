@@ -93,7 +93,7 @@ export const Nickname = styled.div`
     justify-content: center;
 `
 
-export const StartBtn = styled.div`
+export const StartBtn = styled.button`
     width: 281px;
     height: 66px;
     margin-top: 29px;

@@ -17,25 +17,28 @@ const PlayMainPage = () => {
   const navigate = useNavigate();
 
   interface Room {
-    readonly partyId: number;
-    password: string;
+    partyId: number;
     partyName: string;
     kind: number;
     po: number;
     to: number;
     isPublic: boolean;
-    readonly userId: number;
-    nickname: string;
-    profileImg: string;
+    password: string;
+    memberNickname: string;
+    memberProfileImg: string;
   }
-  const handleClick = (room:Room) => {
-    console.log("룸데이터 잘 있나요", roomData)
-    setSelectedRoom(room)
-    if (roomData[room.partyId-1].isPublic === false) {
-      setPasswordModalOpen(true)
+  const handleClick = (room: Room) => {
+    setSelectedRoom(room);
+    // 방을 찾을 때 직접적인 인덱스 접근 대신 필터링 사용
+    const selectedRoomData = roomData.find(r => r.partyId === room.partyId);
+
+    // 찾은 방의 공개 여부 확인
+    if (selectedRoomData && !selectedRoomData.isPublic) {
+        setPasswordModalOpen(true);
     } else {
-      navigate(`/jeju-play/${room.partyId}/wait`);
-    };}
+        navigate(`/jeju-play/${room.partyId}/wait`);
+    }
+};
    
   const submitPassword = () => {
     const enteredPassword = passwordRef.current?.value;
@@ -53,7 +56,8 @@ const PlayMainPage = () => {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json'
-          }
+          },
+          // credentials: 'include'
         });
         const data = await response.json();
         setRoomData(data);
@@ -90,7 +94,7 @@ const PlayMainPage = () => {
         {roomData.map((room:Room, index:number) => 
           <div className='waitiroom-container' onClick={() => handleClick(room)}
           style={{display:'flex', justifyContent:'space-between', alignItems:'center', margin:'1.19rem'}}>
-            <img className='profile' src={room.profileImg} alt="profile" />
+            <img className='profile' src={room.memberProfileImg} alt="profile" />
             <div className='party-title'>
               <div className='party-type'>
               {room.kind === 1 ? '스피드 퀴즈' : room.kind === 2 ? '노래 가사 퀴즈' : '영화/드라마 대사 퀴즈'}

@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import useStore from '../../store';
 import speedquiz from '../../assets/JejuPlay/speedquiz.png'
 import otherquiz from '../../assets/JejuPlay/otherquiz.png'
 import close from '../../assets/JejuPlay/close.png'
@@ -19,10 +20,10 @@ import {
   Slider,
   Switch
 } from './CreateWaitingRoom.styled'
-import { HtmlOptions } from 'istanbul-reports';
 
 const CreateWaitingRoom = () => {
   const navigate = useNavigate();
+  const store = useStore();
   const location = useLocation();
   const [isPublic, setIsPublic] = useState<boolean>(true);
   const [kind, setKind] = useState<number>(location.state?.kind);
@@ -43,12 +44,9 @@ const CreateWaitingRoom = () => {
       to: selectedCapacity,
       isPublic: isPublic,
     }
-    // 한 유저당 한 파티만 만들 수 있어서 자꾸 에러코드 나길래 잠시 막아뒀어요
 
     try {
-      console.log("왜 언디파인드?",bodyData.isPublic)
-      const memberId = 36
-      const response = await fetch(`http://www.localhost:8080/party/create/${memberId}`, {
+      const response = await fetch(`http://www.localhost:8080/party/create/${store.loginUserInfo?.memberId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,8 +54,12 @@ const CreateWaitingRoom = () => {
         body: JSON.stringify(bodyData)
       });
       console.log(response);
-      const partyId = await response.json();
-      navigate(`/jeju-play/${partyId}/wait`);
+      const data = await response.json();
+      if (response.ok) {
+        navigate(`/jeju-play/${data.partyId}/wait`);
+      } else {
+        console.log("방은 한번만 만들수 있음")
+      }
     } catch (error) {
       console.log(error);
     }
