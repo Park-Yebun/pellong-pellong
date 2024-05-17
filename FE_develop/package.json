@@ -1,6 +1,7 @@
 {
   "name": "pelong",
   "version": "0.1.0",
+  "proxy": "https://www.saturituri.com",
   "private": true,
   "dependencies": {
     "@babel/plugin-transform-class-properties": "^7.24.1",
@@ -79,6 +80,6 @@
   },
   "devDependencies": {
     "@types/react-slick": "^0.23.13"
-  },
-  "proxy": "https://www.saturituri.com/api"
+  }
 }
+
