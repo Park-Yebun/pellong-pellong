@@ -27,11 +27,15 @@ public class LearningProgressController {
         return ResponseEntity.ok(chapterNumber);
     }
 
-//    @PatchMapping("/learning/{memberId}/{chapterNumber}")
-//    public ResponseEntity<Integer> getChapterNumberByMemberId(@PathVariable Long memberId) {
-//        Integer chapterNumber = learningProgressService.getChapterNumberByMemberId(memberId);
-//        return ResponseEntity.ok(chapterNumber);
-//    }
+    @PatchMapping("/learning/{memberId}/{chapterNumber}")
+    public ResponseEntity<Void> updateChapterNumberByMemberId(
+            @PathVariable Long memberId,
+            @PathVariable Integer chapterNumber) {
+        // memberId로 LearningProgress 테이블을 찾고 chapterNumber를 업데이트합니다.
+        learningProgressService.updateChapterNumberByMemberId(memberId, chapterNumber);
+        return ResponseEntity.noContent().build();
+    }
+
 
 
 }

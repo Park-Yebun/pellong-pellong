@@ -43,4 +43,20 @@ public class LearningProgressService {
         // LearningProgress를 저장합니다.
         learningProgressRepository.save(learningProgress);
     }
+
+    public void updateChapterNumberByMemberId(Long memberId, Integer newChapterNumber) {
+        // memberId로 LearningProgress 엔티티를 찾습니다.
+        LearningProgress learningProgress = learningProgressRepository.findByMemberMemberId(memberId);
+        if (learningProgress != null) {
+            // 찾은 LearningProgress 엔티티의 chapterNumber를 새로운 값으로 업데이트합니다.
+            learningProgress.setChapterNumber(newChapterNumber);
+            learningProgressRepository.save(learningProgress);
+        } else {
+            // 해당 memberId에 해당하는 LearningProgress가 없을 경우 예외 처리를 수행할 수 있습니다.
+            throw new RuntimeException("LearningProgress not found for memberId: " + memberId);
+        }
+    }
+
+
+
 }
