@@ -34,7 +34,7 @@ public class Party {
     private int kind;
 
     @Column(nullable = false)
-    private int po = 1; // 현재 입장 인원
+    private int po = 0; // 현재 입장 인원
 
     @Column(nullable = false, name="`to`")
     private int to; // 최대 입장 인원
