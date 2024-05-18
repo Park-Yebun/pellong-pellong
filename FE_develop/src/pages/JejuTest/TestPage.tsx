@@ -216,7 +216,7 @@ const QuizApp: React.FC = () => {
           <p className="test-result">맞힌 문제 수: {score}</p>
           <div className='test-btn-container'>
             <Link to="/jeju-test" className="test-button">메인으로</Link>
-            <button className="test-button" onClick={handleShare}>공유하기</button>
+            <button className="test-button" onClick={handleShare}>카카오톡으로 결과 확인하기</button>
             {!isReviewingWrongAnswers && (
               <button className="test-button" onClick={handleRetryWrongAnswers}>틀린 문제 다시 풀어보기</button>
             )}
