@@ -61,7 +61,7 @@ const WaitingRoomPage = () => {
   };
 
   // 클라이언트 할당
-  const socket = new SockJS('http:/localhost:8080/ws');
+  const socket = new SockJS('https://www.saturituri.com/ws');
   let client = Stomp.over(socket);
 
   useEffect(() => {
