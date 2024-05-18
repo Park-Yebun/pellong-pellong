@@ -49,7 +49,7 @@ function App() {
         <Route path="/jeju-quiz/result" element={<QuizResultPage />} />
         <Route path="/jeju-test" element={<TestFirstPage />} />
         <Route path="/jeju-test/test-page" element={<TestPage />} />
-        <Route path="/jeju-test/test-result/:grade" element={<TestResultPage />} />
+        <Route path="/jeju-test/test-result/:score/:testnum/:name" element={<TestResultPage />} />
         <Route path="/jeju-edu" element={<ShadowingMainPage />} />
         <Route path="/jeju-edu/play-page/:videoId" element={<ShadowingPlayPage />} />
         <Route path="/jeju-edu/result" element={<ShadowingResultPage />} />
