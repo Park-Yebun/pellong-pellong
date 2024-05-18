@@ -77,7 +77,7 @@ public class GuestService {
                 party.getPo(),
                 party.getTo(),
                 party.getIsPublic(),
-                member.getMemberId(),
+                party.getMember.getMemberId(),
                 guestDTOs);
         
         // 웹소켓 송신 메세지 객체 타입으로 만들어서 보내주기
