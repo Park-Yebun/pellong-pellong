@@ -12,7 +12,7 @@
 }
 
 .RK-user-grid {
-    padding: 10px;
+    padding: 25px;
     overflow-y: auto; /* 수직 스크롤 추가 */
     max-height: calc(100vh - 180px); /* 최대 높이 설정 */
 }
@@ -59,7 +59,6 @@
 .RK-username {
     font-size: 18px;
     font-weight: bold;
-    margin: 0 10px; /* 좌우 여백 추가 */
     max-width: 100px; /* 최대 너비 설정 */
     white-space: nowrap; /* 줄바꿈 방지 */
     overflow: hidden; /* 넘치는 부분 숨기기 */

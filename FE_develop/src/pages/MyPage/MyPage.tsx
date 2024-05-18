@@ -8,8 +8,6 @@ import UserBadge from '../../components/MyPage/UserBadge'
 import BackButton from '../../components/BackButton';
 import logoutImg from '../../assets/logout.png'
 import {
-  EditBox,
-  EditBtn,
   Container,
   Email,
   InfoBox,
@@ -50,14 +48,6 @@ const MyPage: React.FC = () => {
     { id: 9, title: "사투리의 신", description: "위의 모든 뱃지를 획득함", imageUrl: "../../assets/badges/b8.jpg", isAcquired: false },
     // 추가 뱃지 데이터
   ]);
-
-  const goBack = () => {
-    navigate(-1); // 이전 페이지로 이동
-  };
-
-  const modifyProfile = () => {
-    navigate(`/my-page/${store.loginUserInfo?.memberId}/profile-edit`)
-  };
 
   const logout = () => {
     localStorage.removeItem("accessToken");
@@ -132,19 +122,15 @@ const MyPage: React.FC = () => {
                       <ProfileImg src={userData?.profileImg} alt="Profile" style={{ width: 124, borderRadius: '50%' }} />
                       <NicknameBox>
                         <Nickname>{userData?.nickname}</Nickname>
-                        <Logout src={logoutImg} alt='logout' onClick={() => logout()}/>
                       </NicknameBox>
                       <img src={getRankBadge(userData.sumExp)} alt=""/>
                       <p> {userData.tier}</p>
                       <p> 순위 : {userData.rank}</p>
                       <p> 누적 경험치 : {userData.sumExp}</p>
                   </InfoBox>
-                  <EditBox>
-                    <EditBtn onClick={() => modifyProfile()}>프로필 수정</EditBtn>
-     
-                  </EditBox>
               </UserProfile>
               <UserBadge badges={badges} /> 
+                        <Logout src={logoutImg} alt='logout' onClick={() => logout()}/>
           </UserProfileBox>
         )}
       {/* JSX 주석 내부에는 다른 JSX 태그를 포함하지 마세요

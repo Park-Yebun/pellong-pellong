@@ -1,64 +1,109 @@
 .test-container {
-    width: 100%;
-    height: 100vh;
-    margin: 0 auto;
-    background-color: #f8f8f8;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-  }
+  width: 100%;
+  height: 100vh;
+  margin: 0 auto;
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
 
-  .test-question-container {
-    padding: 20px;
-  }
-  
-  .test-question {
-    font-size: 20px;
-    margin-bottom: 20px;
-  }
-  
-  .test-options-list {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .test-option {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
-    cursor: pointer;
-  }
-  
-  .test-option:hover {
-    background-color: #e0e0e0;
-  }
-  
-  .test-result-container {
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  .test-result {
-    font-size: 24px;
-  }
+.test-question-container {
+  padding: 20px;
+}
 
-  .test-btn-container { 
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .test-result-buttons {
-    margin-top: 20px;
-  }
-  
-  .test-button {
-    background-color: #E3FFD0;
-    text-decoration: none;
-    color: black;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    margin-right: 10px;
-    cursor: pointer;
-  }
+.test-question {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.test-options-list {
+  list-style: none;
+  padding: 0;
+}
+
+.test-option {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.test-option:hover {
+  background-color: #e0e0e0;
+}
+
+.test-result-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.test-result {
+  font-size: 35px;
+}
+
+.test-result-text {
+  text-align: center;
+  font-size: 17px;
+  margin-top: 50px;
+  margin-bottom: 70px;
+}
+
+.test-btn-container { 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.test-result-buttons {
+  margin-top: 20px;
+}
+
+.tt-test-button {
+  width: 300px;
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #E3FFD0;
+  text-decoration: none;
+  color: black;
+  border: none;
+  border-radius: 50px;
+  padding: 20px;
+  cursor: pointer;
+}
+
+.tt-name-input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.tt-name-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tt-name-input {
+  width: 300px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.tt-name-submit-button {
+  width: 100px;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #E3FFD0;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

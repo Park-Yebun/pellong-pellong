@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom'; // Link 컴포넌트를 import 합니다.
+import BackButton from '../../components/BackButton';
 import './TestPage.css'; // CSS 파일을 import 합니다.
 
 interface Question {
@@ -103,12 +104,13 @@ const QuizApp: React.FC = () => {
     },
   ];
 
-
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [score, setScore] = useState<number>(0);
   const [showResult, setShowResult] = useState<boolean>(false);
   const [isReviewingWrongAnswers, setIsReviewingWrongAnswers] = useState<boolean>(false);
   const [wrongAnswersIndices, setWrongAnswersIndices] = useState<number[]>([]);
+  const [userName, setUserName] = useState<string>('');
+  const [isUserNameSubmitted, setIsUserNameSubmitted] = useState<boolean>(false);
 
   const handleAnswerSelection = (selectedOptionIndex: number) => {
     const currentQuestion = questions[currentQuestionIndex];
@@ -126,27 +128,19 @@ const QuizApp: React.FC = () => {
     }
   };
 
-  const handleRetryWrongAnswers = () => {
-    setCurrentQuestionIndex(wrongAnswersIndices[0]);
-    setScore(0);
-    setShowResult(false);
-    setIsReviewingWrongAnswers(true);
-  };
-
-  // 공유하기 함수
   const handleShare = () => {
-    // 공유 로직 추가
     console.log("공유하기 버튼이 클릭되었습니다!");
-    // 공유할 이미지, 추후 합의 필요
-    var resultImg = '../../icons/apple-touch-icon-152x152.png'
+    var resultImg = '../../icons/apple-touch-icon-152x152.png';
 
-    const shareTitle = '제주어 모의고사 결과'
-    const shareDes = '공유디스크립션'
-   
-
-
+    const shareTitle = '제주어 모의고사 결과';
+    const shareDes = '공유디스크립션';
+    // 공유 로직 추가
   };
 
+  const handleNameSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsUserNameSubmitted(true);
+  };
 
   const renderQuiz = () => {
     return (
@@ -164,18 +158,44 @@ const QuizApp: React.FC = () => {
     );
   };
 
+  const renderNameInput = () => {
+    return (
+      <div className="tt-name-input-container">
+        <h2>이름을 입력하세요</h2>
+        <form onSubmit={handleNameSubmit}>
+          <input
+            type="text"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+            required
+            className='tt-name-input'
+          />
+          <button type="submit" className="tt-name-submit-button">확인</button>
+        </form>
+      </div>
+    );
+  };
+
   return (
     <div className="test-container">
-      {showResult ? (
+      <BackButton />
+      {!isUserNameSubmitted ? (
+        renderNameInput()
+      ) : showResult ? (
         <div className="test-result-container">
           <h2 className="test-result">결과</h2>
-          <p className="test-result">맞힌 문제 수: {score}</p>
+          <p className='test-result-text'>
+            성적표가 발급되었습니다 <br />
+            <br />
+            제주도 사투리 모의고사에 <br />
+            응시하느라 고생 많았습니다 <br />
+            <br />
+            아래 공유하기를 누르시고 <br />
+            내 성적표를 확인해 보세요!
+          </p>
+          {/* <p className="test-result">맞힌 문제 수: {score}</p> */}
           <div className='test-btn-container'>
-            <Link to="/jeju-test" className="test-button">메인으로</Link>
-            <button className="test-button" onClick={handleShare}>공유하기</button>
-            {!isReviewingWrongAnswers && (
-              <button className="test-button" onClick={handleRetryWrongAnswers}>틀린 문제 다시 풀어보기</button>
-            )}
+            <button className="tt-test-button" onClick={handleShare}>공유하기</button>
           </div>
         </div>
       ) : (

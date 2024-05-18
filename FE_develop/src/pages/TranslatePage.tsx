@@ -2,18 +2,24 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FaExchangeAlt } from 'react-icons/fa';
 import background from '../assets/translate-background.png';
+import BackButton from '../components/BackButton';
 
-
-  
 // Container 스타일 컴포넌트
 const Container = styled.div`
-  // width: 360px;
-  height: 800px;
+  position: relative; /* To position the BackButtonContainer absolutely */
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background: url(${background}) center center / cover no-repeat;
+`;
+
+// BackButtonContainer 스타일 컴포넌트
+const BackButtonContainer = styled.div`
+  position: absolute;
+  top: 1px;
+  left: 1px;
 `;
 
 // Title 스타일 컴포넌트
@@ -31,13 +37,12 @@ const Subtitle = styled.h2`
   margin: 10px 0;
 `;
 
-// Subtitle 스타일 컴포넌트
+// Sub2title 스타일 컴포넌트
 const Sub2title = styled.h4`
   font-size: 15px;
   text-align: center;
   margin: 10px 0;
 `;
-
 
 // TextArea 스타일 컴포넌트
 const TextArea = styled.textarea`
@@ -162,6 +167,9 @@ const TranslatePage: React.FC = () => {
 
   return (
     <Container>
+      <BackButtonContainer>
+        <BackButton />
+      </BackButtonContainer>
       <Title>제주어 번역기</Title>
       {viewBoolean && <Sub2title>잠시만 기다려주세요.</Sub2title>}
       <Subtitle>{isStandardToJeju ? '표준어' : '제주어'}</Subtitle>

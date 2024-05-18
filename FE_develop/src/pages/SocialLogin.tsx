@@ -8,38 +8,38 @@ import google from '../assets/login-google.png';
 import kakao from '../assets/login-kakao.png';
 
 export const Container = styled.div`
-  width: 360px;
-  height: 800px;
-  position: relative;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100vh;
   background: url(${background}) center center / cover no-repeat;
-  // background-size: 360px 183px;
-  // background-position: center 617px;
-`
+`;
+
+export const ButtonsWrapper = styled.div`
+  margin-top: 250px; /* 상단에서 간격을 주기 위해 추가 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 export const Google = styled.div`
   width: 218px;
   height: 46px;
-  position: absolute;
-  margin-top: 179px;
-  margin-left: 71px;
+  margin: 10px 0; /* 간격을 주기 위해 margin 사용 */
 
   background: url(${google}) center center / cover no-repeat;
-  // background-size: 360px 183px;
-  // background-position: center 617px;
-`
+  cursor: pointer;
+`;
 
 export const Kakao = styled.div`
   width: 218px;
   height: 46px;
-  position: absolute;
-  margin-top: 240px;
-  margin-left: 71px;
+  margin: 10px 0; /* 간격을 주기 위해 margin 사용 */
 
   background: url(${kakao}) center center / cover no-repeat;
-  // background-size: 360px 183px;
-  // background-position: center 617px;
-`
+  cursor: pointer;
+`;
 
 interface JwtPayload {
   memberId: number;
@@ -55,16 +55,13 @@ const SocialLoginPage = () => {
   const accessToken = searchParams.get('access_token');
 
   useEffect(() => {
-    // console.log("패치데이터 작동!!")
     const fetchData = async () => {
-     if (accessToken) {
+      if (accessToken) {
         const decoded = jwtDecode(accessToken) as JwtPayload;
         localStorage.setItem('accessToken', accessToken);
         store.setLoginUserInfo(decoded);
 
         try {
-          // console.log(accessToken)
-          // console.log(typeof accessToken)
           const response = await fetch('https://www.saturituri.com/api/members/info', {
             method: 'GET',
             headers: {
@@ -84,10 +81,13 @@ const SocialLoginPage = () => {
     }
     fetchData();
   }, [accessToken]);
+  
   return (
     <Container>
-           <Google onClick={() => window.location.href = "http://localhost:8080/oauth2/authorization/google?redirect_uri=http://localhost:3000/login&mode=login"}></Google>
-      <Kakao onClick={() => window.location.href = "http://localhost:8080/oauth2/authorization/kakao?redirect_uri=http://localhost:3000/login&mode=login"}></Kakao>
+      <ButtonsWrapper>
+        <Google onClick={() => window.location.href = "http://localhost:8080/oauth2/authorization/google?redirect_uri=http://localhost:3000/login&mode=login"} />
+        <Kakao onClick={() => window.location.href = "http://localhost:8080/oauth2/authorization/kakao?redirect_uri=http://localhost:3000/login&mode=login"} />
+      </ButtonsWrapper>
     </Container>
   );
 };

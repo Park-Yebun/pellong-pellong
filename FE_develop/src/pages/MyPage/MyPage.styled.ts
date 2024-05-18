@@ -27,7 +27,6 @@ export const EditBtn = styled.div`
     letter-spacing: 0.02px;
 `
 export const Container = styled.div`
-    width: 360px;
     height: 800px;
 `
 export const UserProfileBox = styled.div`

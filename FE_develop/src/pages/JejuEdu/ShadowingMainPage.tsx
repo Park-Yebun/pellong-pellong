@@ -38,20 +38,19 @@ const goDetail = (videoId:string) => {
 
 
   return (
-    <div className='background'>
+    <div className='SH-background'>
+      <div className='SH-upperbar'>
       <BackButton />
-      <div className='upperbar'>
-        <div className='content-box'>CONTENTS</div>
-        <div className='description-box'>제주어를 발음해봐요</div>
+        <div className='SH-content-box'>CONTENTS</div>
+        <div className='SH-description-box'>제주어 영상을 보며 <br /> 제주도에 익숙해져요</div>
       </div>
-      <div>날짜순</div>
       {shadowingData.map(({id, snippet}) => (
-        <div key={id} className='yotube-box' onClick={() => goDetail(snippet.resourceId.videoId)}>
+        <div key={id} className='SH-yotube-box' onClick={() => goDetail(snippet.resourceId.videoId)}>
           <div><img src={snippet.thumbnails.medium.url} alt={`쉐도잉 리스트 : ${id}`} /></div>
           <div>
             <h5>{snippet.title}</h5>
           </div>
-      </div>
+        </div>
       ))}
     </div>
   );
