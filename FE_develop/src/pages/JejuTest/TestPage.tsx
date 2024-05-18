@@ -133,6 +133,21 @@ const QuizApp: React.FC = () => {
     setIsReviewingWrongAnswers(true);
   };
 
+  // 공유하기 함수
+  const handleShare = () => {
+    // 공유 로직 추가
+    console.log("공유하기 버튼이 클릭되었습니다!");
+    // 공유할 이미지, 추후 합의 필요
+    var resultImg = '../../icons/apple-touch-icon-152x152.png'
+
+    const shareTitle = '제주어 모의고사 결과'
+    const shareDes = '공유디스크립션'
+   
+
+
+  };
+
+
   const renderQuiz = () => {
     return (
       <div className='test-question-container'>
@@ -157,6 +172,7 @@ const QuizApp: React.FC = () => {
           <p className="test-result">맞힌 문제 수: {score}</p>
           <div className='test-btn-container'>
             <Link to="/jeju-test" className="test-button">메인으로</Link>
+            <button className="test-button" onClick={handleShare}>공유하기</button>
             {!isReviewingWrongAnswers && (
               <button className="test-button" onClick={handleRetryWrongAnswers}>틀린 문제 다시 풀어보기</button>
             )}
