@@ -10,14 +10,14 @@ import kakao from '../assets/login-kakao.png';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   height: 100vh;
   background: url(${background}) center center / cover no-repeat;
 `;
 
 export const ButtonsWrapper = styled.div`
-  margin-top: 250px; /* 상단에서 간격을 주기 위해 추가 */
+  margin-top: 2px; /* 상단에서 간격을 주기 위해 추가 */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -84,7 +84,7 @@ const SocialLoginPage = () => {
   
   return (
     <Container>
-           <Google onClick={() => window.location.href = "https://www.saturituri.com/api/oauth2/authorization/google?redirect_uri=https://www.saturituri.com/login&mode=login"}></Google>
+      <Google onClick={() => window.location.href = "https://www.saturituri.com/api/oauth2/authorization/google?redirect_uri=https://www.saturituri.com/login&mode=login"}></Google>
       <Kakao onClick={() => window.location.href = "https://www.saturituri.com/api/oauth2/authorization/kakao?redirect_uri=https://www.saturituri.com/login&mode=login"}></Kakao>
     </Container>
   );

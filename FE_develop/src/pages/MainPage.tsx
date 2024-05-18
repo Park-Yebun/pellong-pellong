@@ -72,10 +72,7 @@ function MainPage() {
         <a href="/jeju-play" onClick={(e) => handleClick(e, '/jeju-play')} className="rect-link bottom-left">
           <img src={cloudPlay} alt="사투리놀이터" className="cloud-image"/>
         </a>
-        <a href="/jeju-edu" onClick={(e) => handleClick(e, '/jeju-edu')} className="rect-link bottom-right">
-          <img src={cloudEdu} alt="사투리배움터" className="cloud-image" />
-        </a>
-        <a href="/ai" onClick={(e) => handleClick(e, '/ai')} className="rect-link bottom-middle">
+        <a href="/ai" onClick={(e) => handleClick(e, '/ai')} className="rect-link bottom-right">
           <img src={cloudTrans} alt="사투리번역기" className="cloud-image" />
         </a>
       </div>

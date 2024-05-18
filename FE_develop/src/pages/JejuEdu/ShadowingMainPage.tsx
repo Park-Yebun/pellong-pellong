@@ -41,8 +41,10 @@ const goDetail = (videoId:string) => {
     <div className='SH-background'>
       <div className='SH-upperbar'>
       <BackButton />
-        <div className='SH-content-box'>CONTENTS</div>
-        <div className='SH-description-box'>제주어 영상을 보며 <br /> 제주도에 익숙해져요</div>
+        <div className='SH-text-con'>
+          <div className='SH-content-box'>CONTENTS</div>
+          <div className='SH-description-box'>제주어 영상을 보며 <br /> 제주도에 익숙해져요</div>
+        </div>
       </div>
       {shadowingData.map(({id, snippet}) => (
         <div key={id} className='SH-yotube-box' onClick={() => goDetail(snippet.resourceId.videoId)}>
