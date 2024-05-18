@@ -30,8 +30,8 @@
   }
   
   .level-circle {
-    width: 90px;
-    height: 90px;
+    width: 70px;
+    height: 70px;
     background-color: white;
     border-radius: 50%;
     display: flex;
@@ -65,7 +65,7 @@
   
   .stones-1 { transform: translateX(-180%); }
   .stones-2 { transform: translateX(80%); }
-  .stones-3 { transform: translateX(450%); }
+  .stones-3 { transform: translateX(380%); }
   .stones-4 { transform: translateX(90%); }
   .stones-5 { transform: translateX(-180%); }
   .stones-6 { transform: translateX(-160%); }
@@ -82,7 +82,7 @@
     margin: 5px;
   }
   
-  .level-1 { transform: translateX(-150%); }
+  .level-1 { transform: translateX(-170%); }
   .level-2 { transform: translateX(-20%); }
   .level-3 { transform: translateX(120%); }
   .level-4 { transform: translateX(120%); }

@@ -19,7 +19,7 @@ const LevelPlayScreen: React.FC = () => {
       try {
         const response = await axios.get(`https://www.saturituri.com/api/quiz/${parsedChapterNo}`);
         const data = response.data;
-        console.log("응답 데이터:", response.data);
+        // console.log("응답 데이터:", response.data);
         setQuestions(data);
       } catch (error) {
         console.error("Error fetching questions:", error);
@@ -34,7 +34,7 @@ const LevelPlayScreen: React.FC = () => {
       setCurrentQuestionIndex(prevIndex => prevIndex + 1);
     } else {
       // 퀴즈가 끝났을 때 처리할 로직을 여기에 추가합니다.
-      alert(`Quiz completed! Your score: ${score}/${questions.length}`);
+      alert(`퀴즈 끝! 점수: ${score}/${questions.length}`);
       navigate("/jeju-quiz"); // 리디렉션
     }
   };
@@ -50,12 +50,12 @@ const LevelPlayScreen: React.FC = () => {
                 onNextQuestion={handleNextQuestion}
               />
             ) : (
-              <p>No more questions</p>
+              <p>더 이상 문제가 없습니다.</p>
             )}
           </div>
         </>
       ) : (
-        <p>Loading...</p>
+        <p>불러오는중...</p>
       )}
     </div>
   );

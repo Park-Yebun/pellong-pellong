@@ -1,3 +1,8 @@
+@font-face {
+  src: url("NanumBarunGothic-YetHangul.ttf");
+  font-family: "assey";
+}
+
 .QT1-container {
   background-color: #D1E9F9;
   padding: 10px;
@@ -47,6 +52,7 @@
   align-items: center;
   margin-bottom: 20px;
   gap: 20px;
+  font-family: "assey";
 }
 
 .QT1-dialect-container {
