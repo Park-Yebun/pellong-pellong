@@ -113,4 +113,7 @@ public class MemberVariableService {
             }
         }
     }
+    public void delete(long memberId) {
+        memberVariableRepository.deleteById(memberId);
+    }
 }

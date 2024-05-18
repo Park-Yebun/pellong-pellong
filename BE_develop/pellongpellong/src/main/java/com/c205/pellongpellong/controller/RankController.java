@@ -7,13 +7,12 @@ import com.c205.pellongpellong.entity.Rank;
 import com.c205.pellongpellong.repository.RankRepository;
 import com.c205.pellongpellong.repository.MemberRepository;
 import com.c205.pellongpellong.service.RankService;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,7 +24,7 @@ public class RankController {
 
     private final MemberRepository memberRepository;
     private final RankService rankService;
-
+    private final RedisTemplate<String, String> redisTemplate;
     @PostMapping("/ranking/{memberId}")
     public ResponseEntity<String> addRank(@PathVariable long memberId) {
         // memberId를 사용하여 member 엔티티를 조회
@@ -49,4 +48,9 @@ public class RankController {
 
     @GetMapping("/ranking")
     public List<RankDTO> getAllRank() {return rankService.getAllRankInRedis();}
+
+    @DeleteMapping("/ranking/{memberId}")
+    public void deleteRank(@PathVariable long memberId) {
+       redisTemplate.opsForZSet().remove("ranking", String.valueOf(memberId));
+    }
 }
