@@ -185,8 +185,6 @@ const QuizApp: React.FC = () => {
           grade = 1;
         } //
 
-        const name = '응시자'
-
         const currentDate = new Date(); // 현재 날짜 및 시간 정보를 가져옵니다.
         // 년, 월, 일, 시, 분, 초를 가져와서 숫자로 변환합니다.
         const year = currentDate.getFullYear();
@@ -233,11 +231,6 @@ const QuizApp: React.FC = () => {
     }
   };
 
-  const handleNameSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setIsUserNameSubmitted(true);
-  };
-
   const renderQuiz = () => {
     return (
       <div className='test-question-container'>
@@ -253,6 +246,12 @@ const QuizApp: React.FC = () => {
       </div>
     );
   };
+  const [name, setName] = useState<string>('');
+
+  const handleNameSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setIsUserNameSubmitted(true);
+  };
 
   const renderNameInput = () => {
     return (
@@ -261,8 +260,8 @@ const QuizApp: React.FC = () => {
         <form onSubmit={handleNameSubmit}>
           <input
             type="text"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             required
             className='tt-name-input'
           />
