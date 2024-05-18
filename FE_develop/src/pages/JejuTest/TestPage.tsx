@@ -183,9 +183,27 @@ const QuizApp: React.FC = () => {
           grade = 1;
         } //
 
+        const name = '응시자'
+
+        const currentDate = new Date(); // 현재 날짜 및 시간 정보를 가져옵니다.
+        // 년, 월, 일, 시, 분, 초를 가져와서 숫자로 변환합니다.
+        const year = currentDate.getFullYear();
+        const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // getMonth()는 0부터 시작하므로 1을 더하고, 두 자리로 만듭니다.
+        const day = currentDate.getDate();
+        const hour = currentDate.getHours();
+        const minute = currentDate.getMinutes();
+        const second = currentDate.getSeconds();
+
+        // 년월일시분초를 합쳐서 하나의 숫자로 만듭니다.
+        const testnum = parseInt(`${year}${month}${day}${hour}${minute}${second}`);
+
+        console.log(testnum); // testnum에 저장된 숫자를 출력합니다.
+
+
+
         const shareTitle = grade + '등급'
         const shareDes = '팰롱팰롱으로 알아보는 나의 제주어 실력!'
-        const shareURL = `https://www.saturituri.com/jeju-quiz/result/${grade}`;
+        const shareURL = `https://www.saturituri.com/jeju-quiz/result/${score}/${testnum}/${name}`;
 
         Kakao.Share.sendDefault({
           objectType: 'feed',
