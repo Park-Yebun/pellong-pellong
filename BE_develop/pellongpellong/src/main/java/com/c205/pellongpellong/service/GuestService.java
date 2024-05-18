@@ -60,8 +60,8 @@ public class GuestService {
         guest.setParty(party);
         guest = guestRepository.save(guest);
 
-//        party.setPo(party.getPo() + 1);
-//        partyRepository.save(party);
+        party.setPo(party.getPo() + 1);
+        partyRepository.save(party);
 
         List<GuestDTO> guestDTOs = party.getGuests().stream()
 //                .map(g -> new GuestDTO(g.getGuestId(), g.getMember().getNickname(), g.getMember().getProfileImg()))
