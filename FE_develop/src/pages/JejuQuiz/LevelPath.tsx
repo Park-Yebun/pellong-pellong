@@ -32,6 +32,11 @@ const LevelPath: React.FC = () => {
     fetchData();
   })
 
+  const handleOtherClick = () => {
+    // 그 외의 경우에 대한 클릭 이벤트 처리
+    alert('이전 챕터의 학습을 완료해주세요!');
+  };
+
   return (
     <div className="level-path-container">
       <div className="level-path-header">가족</div>
@@ -49,7 +54,7 @@ const LevelPath: React.FC = () => {
                 {level}
               </Link>
             ) : ( // 그 외의 경우
-              <div className={`level-circle level-${level}`}>
+              <div className={`level-circle level-${level}`} onClick={handleOtherClick}>
                 <div className="level-image">
                   <img src='../../assets/badges/00blind.png' alt="얍얍" />
                 </div>
