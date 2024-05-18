@@ -79,9 +79,20 @@ export const Example = styled.div`
 
     margin-bottom: 20px;
 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     border-radius: 10px;
     background: #FFF;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+    text-align: center;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    letter-spacing: 0.02px;
 `
 
 export const PlayerBox = styled.div`
