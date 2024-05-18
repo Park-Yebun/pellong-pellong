@@ -203,7 +203,7 @@ const QuizApp: React.FC = () => {
 
         const shareTitle = grade + '등급'
         const shareDes = '팰롱팰롱으로 알아보는 나의 제주어 실력!'
-        const shareURL = `https://www.saturituri.com/jeju-quiz/result/${score}/${testnum}/${name}`;
+        const shareURL = `https://www.saturituri.com/jeju-test/result/${score}/${testnum}/${name}`;
 
         Kakao.Share.sendDefault({
           objectType: 'feed',
