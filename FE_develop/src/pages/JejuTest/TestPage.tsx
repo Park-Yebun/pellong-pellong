@@ -138,11 +138,32 @@ const QuizApp: React.FC = () => {
     // 공유 로직 추가
     console.log("공유하기 버튼이 클릭되었습니다!");
     // 공유할 이미지, 추후 합의 필요
-    var resultImg = '../../icons/apple-touch-icon-152x152.png'
-
     const shareTitle = '제주어 모의고사 결과'
     const shareDes = '공유디스크립션'
-   
+    const shareImage = '../../icons/apple-touch-icon-152x152.png'
+    const shareURL = 'https://www.saturituri.com/'
+
+    Kakao.Share.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: shareTitle,
+        description: shareDes,
+        imageUrl: shareImage, 
+        link: {
+          mobileWebUrl: shareURL,
+          webUrl: shareURL,
+        },
+      },
+      buttons: [
+        {
+          title: '결과확인하기',
+          link: {
+            mobileWebUrl: shareURL,
+            webUrl: shareURL,
+          },
+        },
+      ]
+    });
 
 
   };
