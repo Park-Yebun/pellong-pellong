@@ -76,20 +76,20 @@ interface User {
     };
   
     return (
-      <div className="user-ranking-container">
+      <div className="RK-user-ranking-container">
         <BackButton />
-        <div className='ranking-title'>랭킹 조회</div>
-        <div className="user-grid">
+        <div className='RK-ranking-title'>랭킹 조회</div>
+        <div className="RK-user-grid">
           {users.map((user) => (
-            <div key={user.memberId} className="user-card">
-              <div className="user-info">
-                <span className="rank-number">{user.rankId}</span>
-                <span className="rank-badge">
+            <div key={user.memberId} className="RK-user-card">
+              <div className="RK-user-info">
+                <span className="RK-rank-number">{user.rankId}</span>
+                <span className="RK-rank-badge">
                   <img src={getRankBadge(user.sumExp)} alt=""/>
                 </span>
-                <img className="profile-picture" src={user.profileImg} alt={`Profile of ${user.nickname}`} />
-                <p className="username">{user.nickname}</p>
-                <p className="experience">{user.sumExp}xp</p>
+                <img className="RK-profile-picture" src={user.profileImg} alt={`Profile of ${user.nickname}`} />
+                <p className="RK-username">{user.nickname}</p>
+                <p className="RK-experience">{user.sumExp}xp</p>
               </div>
             </div>
           ))}

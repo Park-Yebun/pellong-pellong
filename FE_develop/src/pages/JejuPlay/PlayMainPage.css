@@ -1,5 +1,5 @@
 .play-main-container {
-    width: 360px;
+    /* width: 360px; */
     position: relative;
 }
 
@@ -15,13 +15,19 @@
     letter-spacing: 0.0015rem;
 }
 
+.play-btn-container {
+    bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .speed-quiz-btn {
     width: 20.0625rem;
     height: 6.625rem;
     flex-shrink: 0;
 
     margin-top: 0.81rem;
-    margin-left: 1.25rem;
 
     border-radius: 2.5rem;
     border: 6px solid rgba(255, 255, 255, 0.30);

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "./QuizType1.css"; // CSS 파일 임포트
 
-import hanrabong from '../../assets/hanrabong.png';
+import hanrabong from '../../assets/hanrabong.png'; // 이미지 파일 임포트
 
+// Voca 인터페이스 정의
 interface Voca {
   quizOrder: number;
   quizContent: string | null;
@@ -12,6 +13,7 @@ interface Voca {
   dialectImage: string;
 }
 
+// QuizData 인터페이스 정의
 interface QuizData {
   quizId: number;
   quizChapterNo: number;
@@ -21,23 +23,26 @@ interface QuizData {
   dialectVocas: Voca[];
 }
 
+// QuizType1 컴포넌트 정의
 const QuizType1: React.FC<{ quizData: QuizData; onNextQuestion: () => void }> = ({ quizData, onNextQuestion }) => {
-  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
-  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null); // 선택된 답 저장
+  const [isCorrect, setIsCorrect] = useState<boolean | null>(null); // 정답 여부 저장
 
+  // 사용자가 답을 선택했을 때 호출되는 함수
   const handleAnswer = (answerIndex: number) => {
-    setSelectedAnswer(answerIndex);
+    setSelectedAnswer(answerIndex); // 선택된 답 업데이트
     if (answerIndex === quizData.quizAnswer) {
-      setIsCorrect(true);
+      setIsCorrect(true); // 정답인 경우
     } else {
-      setIsCorrect(false);
+      setIsCorrect(false); // 오답인 경우
     }
   };
 
+  // 다음 문제로 넘어갈 때 호출되는 함수
   const handleNextQuestion = () => {
-    setIsCorrect(null);
-    setSelectedAnswer(null);
-    onNextQuestion();
+    setIsCorrect(null); // 정답 여부 초기화
+    setSelectedAnswer(null); // 선택된 답 초기화
+    onNextQuestion(); // 부모 컴포넌트의 onNextQuestion 함수 호출
   };
 
   return (
@@ -53,20 +58,22 @@ const QuizType1: React.FC<{ quizData: QuizData; onNextQuestion: () => void }> = 
         </div>
       </div>
       <div className="QT1-quiz-content">
+        {/* 표준어 문장을 보여주는 부분 (현재는 주석 처리됨) */}
         {/* <div className="QT1-standard-text">
           <p>표준어:</p>
           <div>{quizData.dialectVocas[0].standardText}</div>
         </div> */}
         <div className="QT1-dialect-container">
-          <img src={hanrabong} alt="" className="QT1-dialect-img" />
-          <div className="QT1-dialect-text">{quizData.dialectVocas[0].dialectText}</div>
+          <img src={hanrabong} alt="" className="QT1-dialect-img" /> {/* 방언 이미지 */}
+          <div className="QT1-dialect-text">{quizData.dialectVocas[0].dialectText}</div> {/* 방언 텍스트 */}
         </div>
+        {/* 방언 이미지 부분 (현재는 주석 처리됨) */}
         {/* <div className="QT1-image-container">
           <img src={quizData.dialectVocas[0].dialectImage} alt="Dialect Image" />
         </div> */}
         <div className="QT1-audio-container">
           <audio controls>
-            <source src={quizData.dialectVocas[0].dialectVoice} type="audio/mpeg" />
+            <source src={quizData.dialectVocas[0].dialectVoice} type="audio/mpeg" /> {/* 방언 오디오 */}
           </audio>
         </div>
       </div>
@@ -75,8 +82,8 @@ const QuizType1: React.FC<{ quizData: QuizData; onNextQuestion: () => void }> = 
           <div key={index} className="QT1-option-item">
             <button
               onClick={() => handleAnswer(index)}
-              disabled={selectedAnswer !== null}
-              className={`QT1-option-button ${selectedAnswer !== null && selectedAnswer === index ? (isCorrect ? "correct" : "incorrect") : ""}`}
+              disabled={selectedAnswer !== null} // 답이 선택된 후에는 버튼 비활성화
+              className={`QT1-option-button ${selectedAnswer !== null && selectedAnswer === index ? (isCorrect ? "correct" : "incorrect") : ""}`} // 선택된 답에 따라 버튼 스타일 변경
             >
               {voca.standardText}
             </button>
