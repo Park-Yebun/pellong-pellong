@@ -2,6 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'; // Link 컴포넌트를 import 합니다.
 import './TestPage.css'; // CSS 파일을 import 합니다.
 
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
+const { Kakao } = window;
+
+
 interface Question {
   id: number;
   question: string;
