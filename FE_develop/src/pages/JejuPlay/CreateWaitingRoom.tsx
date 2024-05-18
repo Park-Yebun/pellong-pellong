@@ -40,7 +40,7 @@ const CreateWaitingRoom = () => {
       partyName: titleRef.current?.value,
       password: passwordRef.current?.value,
       kind: kind,
-      po: 1,
+      po: 0,
       to: selectedCapacity,
       isPublic: isPublic,
     }
