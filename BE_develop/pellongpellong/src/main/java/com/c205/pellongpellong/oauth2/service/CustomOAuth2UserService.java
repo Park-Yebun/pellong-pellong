@@ -9,6 +9,7 @@ import com.c205.pellongpellong.controller.RankController;
 import com.c205.pellongpellong.controller.MemberBadgeController;
 import com.c205.pellongpellong.controller.DailyQuestController;
 import com.c205.pellongpellong.controller.MemberVariableController;
+import com.c205.pellongpellong.service.LearningProgressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -34,6 +35,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private final DailyQuestController dailyQuestController;
     private final MemberVariableController memberVariableController;
     private final RedisTemplate<String, String> redisTemplate;
+    private final LearningProgressService learningProgressService;
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
 
@@ -123,6 +125,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             dailyQuestController.addDailyQuest(savedMember.getMemberId());
             memberVariableController.addMemberVariable(savedMember.getMemberId());
             redisTemplate.opsForZSet().incrementScore("ranking", String.valueOf(savedMember.getMemberId()), 0);
+            learningProgressService.createLearningProgress(savedMember.getMemberId());
 
             return savedMember;
 
