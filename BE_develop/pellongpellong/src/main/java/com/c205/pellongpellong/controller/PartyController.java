@@ -81,7 +81,7 @@ public class PartyController {
     }
 
     @MessageMapping(value = "/party/{partyId}/start")
-    public void startGame(@Payload StartGameRequest startGameRequest, @PathVariable Long partyId) {
+    public void startGame(@PathVariable Long partyId) {
         Map<String, Object> message = new HashMap<>();
         message.put("type", "startGame");
         try {
@@ -93,17 +93,5 @@ public class PartyController {
             logger.error("JSON 직렬화 오류", e);
         }
 
-    }
-
-    public class StartGameRequest {
-        private String partyType;
-
-        public String getPartyType() {
-            return partyType;
-        }
-
-        public void setPartyType(String partyType) {
-            this.partyType = partyType;
-        }
     }
 }
