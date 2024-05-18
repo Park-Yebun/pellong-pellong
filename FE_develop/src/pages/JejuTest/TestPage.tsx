@@ -1,7 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'; // Link 컴포넌트를 import 합니다.
 import BackButton from '../../components/BackButton';
 import './TestPage.css'; // CSS 파일을 import 합니다.
+
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
+const { Kakao } = window;
+
 
 interface Question {
   id: number;
@@ -112,6 +120,14 @@ const QuizApp: React.FC = () => {
   const [userName, setUserName] = useState<string>('');
   const [isUserNameSubmitted, setIsUserNameSubmitted] = useState<boolean>(false);
 
+
+  useEffect(() => {
+    // Kakao 초기화
+    if (!window.Kakao.isInitialized()) {
+      window.Kakao.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
+    }
+  }, []);
+
   const handleAnswerSelection = (selectedOptionIndex: number) => {
     const currentQuestion = questions[currentQuestionIndex];
     if (selectedOptionIndex === currentQuestion.correctAnswerIndex) {
@@ -128,13 +144,93 @@ const QuizApp: React.FC = () => {
     }
   };
 
-  const handleShare = () => {
-    console.log("공유하기 버튼이 클릭되었습니다!");
-    var resultImg = '../../icons/apple-touch-icon-152x152.png';
+  const handleRetryWrongAnswers = () => {
+    setCurrentQuestionIndex(wrongAnswersIndices[0]);
+    setScore(0);
+    setShowResult(false);
+    setIsReviewingWrongAnswers(true);
+  };
 
-    const shareTitle = '제주어 모의고사 결과';
-    const shareDes = '공유디스크립션';
+  // 공유하기 함수
+  const handleShare = async () => {
     // 공유 로직 추가
+    console.log("공유하기 버튼이 클릭되었습니다!");
+
+    if(!Kakao.isInitialized()){
+      Kakao.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
+    }
+
+    try{
+        // 공유할 이미지, 추후 합의 필요
+        const shareImage = '/@/icons/apple-touch-icon-152x152.png'
+
+        let grade; // 사투리 모의고사 등급 결정
+        if (score <= 1) {
+          grade = 9;
+        } else if (score <= 2) {
+          grade = 8;
+        } else if (score <= 3) {
+          grade = 7;
+        } else if (score <= 4) {
+          grade = 6;
+        } else if (score <= 6) {
+          grade = 5;
+        } else if (score <= 8) {
+          grade = 4;
+        } else if (score <= 10) {
+          grade = 3;
+        } else if (score <= 12) {
+          grade = 2;
+        } else if (score <= 15) {
+          grade = 1;
+        } //
+
+        const name = '응시자'
+
+        const currentDate = new Date(); // 현재 날짜 및 시간 정보를 가져옵니다.
+        // 년, 월, 일, 시, 분, 초를 가져와서 숫자로 변환합니다.
+        const year = currentDate.getFullYear();
+        const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // getMonth()는 0부터 시작하므로 1을 더하고, 두 자리로 만듭니다.
+        const day = currentDate.getDate();
+        const hour = currentDate.getHours();
+        const minute = currentDate.getMinutes();
+        const second = currentDate.getSeconds();
+
+        // 년월일시분초를 합쳐서 하나의 숫자로 만듭니다.
+        const testnum = parseInt(`${year}${month}${day}${hour}${minute}${second}`);
+
+        console.log(testnum); // testnum에 저장된 숫자를 출력합니다.
+
+
+
+        const shareTitle = grade + '등급'
+        const shareDes = '팰롱팰롱으로 알아보는 나의 제주어 실력!'
+        const shareURL = `https://www.saturituri.com/jeju-quiz/result/${score}/${testnum}/${name}`;
+
+        Kakao.Share.sendDefault({
+          objectType: 'feed',
+          content: {
+            title: shareTitle,
+            description: shareDes,
+            imageUrl: shareImage, 
+            link: {
+              mobileWebUrl: shareURL,
+              webUrl: shareURL,
+            },
+          },
+          buttons: [
+            {
+              title: '나도 테스트하기',
+              link: {
+                mobileWebUrl: shareURL,
+                webUrl: shareURL,
+              },
+            },
+          ]
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleNameSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -195,7 +291,11 @@ const QuizApp: React.FC = () => {
           </p>
           {/* <p className="test-result">맞힌 문제 수: {score}</p> */}
           <div className='test-btn-container'>
-            <button className="tt-test-button" onClick={handleShare}>공유하기</button>
+            <Link to="/jeju-test" className="test-button">메인으로</Link>
+            <button className="test-button" onClick={handleShare}>카카오톡으로 결과 확인하기</button>
+            {!isReviewingWrongAnswers && (
+              <button className="test-button" onClick={handleRetryWrongAnswers}>틀린 문제 다시 풀어보기</button>
+            )}
           </div>
         </div>
       ) : (

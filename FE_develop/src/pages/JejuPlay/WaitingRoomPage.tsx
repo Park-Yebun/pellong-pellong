@@ -42,40 +42,23 @@ const WaitingRoomPage = () => {
   const { partyId } = useParams();
   const store = useStore();
   const navigate = useNavigate();
+  const roomType = roomData?.kind === 1? "speed" : "other"
   const isOwner  = roomData?.hostId === store.loginUserInfo?.memberId;
   const isReady = roomData?.po === roomData?.to;
 
-  const startGame = (event: any) => {
-    navigate('/jeju-play/speed/' + partyId);
-  //   console.log("내가 방장이니?",isOwner)
-  //   if (client && client.connected) {
-  //   client.send(`/app/party/${partyId}/start`, {}, JSON.stringify({partyType: "speed"}));
-  //   } else {
-  //     console.log("웹소켓 연결이 끊어져서 게임 시작 못함")
-  //     const socket = new SockJS('http://localhost:8080/ws');
-  //     let client = Stomp.over(socket);
-  //     client.connect({}, () => {
-  //       client.subscribe("/topic/party/" + partyId, function(message){
-  //         if (message.body === "other") {
-  //           navigate('/jeju-play/other/' + partyId);
-  //         } else if (message.body === "speed") {
-  //           navigate('/jeju-play/speed/' + partyId);
-  //         }
-  //       });
-  //     })
-  //   }
-    // if (!isOwner) {
-    //   event.preventDefault();
-    //   console.log("퀴즈 시작 권한이 없습니다.") //추후 alert나 모달로 구현할 것
-    // } else {
-    //   if (!isReady) {
-    //     console.log("인원이 준비되지 않았습니다.") //추후 alert나 모달로 구현할 것
-    //   } else if (isReady && roomData?.kind === 2 || roomData?.kind === 3) {
-    //     client.send(`/app/party/${partyId}/start`, {}, JSON.stringify({partyType: "other"}));
-    //   } else if (isReady && roomData?.kind === 1) {
-    //     client.send(`/app/party/${partyId}/start`, {}, JSON.stringify({partyType: "speed"}));
-    // };};
-  }
+
+  // 게임 시작 함수
+  const startGame = (event:any) => {
+    if (!isOwner) {
+      event.preventDefault();
+      console.log("퀴즈 시작 권한이 없습니다.") //추후 alert나 모달로 구현할 것
+    } else {
+      if (!isReady) {
+        console.log("인원이 준비되지 않았습니다.") //추후 alert나 모달로 구현할 것
+      } else {
+        client.send(`/app/party/${partyId}/start`, {}, '');
+      }}
+  };
 
   // 클라이언트 할당
   const socket = new SockJS('https://www.saturituri.com/ws');
@@ -85,24 +68,26 @@ const WaitingRoomPage = () => {
     // 소켓 연결
     client.connect({}, () => {
       console.log("웹소켓이 연결되었습니다.")
-      console.log("방번호", partyId)
 
       // 구독 요청
       client.subscribe("/topic/party/" + partyId, function(message){
         const data = JSON.parse(message.body);
         console.log("구독 요청 후 응답 데이터!!", data);
-        if (message.body === "other") {
-          navigate('/jeju-play/other/' + partyId);
-        } else if (message.body === "speed") {
-          navigate('/jeju-play/speed/' + partyId);
-        }
-        setRoomData(data);
-      });
-      // 클라이언트 > 서버 메세지 보내기(참여자 입장요청)
-      console.log("로그인 유저: ", store.loginUserInfo?.memberId)
-      client.send(`/app/party/guest`, {},JSON.stringify({partyId: partyId, memberId: store.loginUserInfo?.memberId}));
-    })
+        // 1. 파티 디테일 정보를 받아올 경우 데이터 업데이트
+        if (data.type === "updateData") {setRoomData(data.partyDetail)}
+
+        // 2. 게임 시작 메세지를 받을 경우
+        else if (data.type === "startGame") {
+          navigate(`/jeju-play/${roomType}/${partyId}`)
+        };
+    });
+    // 구독 요청 완료후에
+    // 클라이언트 > 서버 메세지 보내기(참여자 입장요청)
+    client.send(`/app/party/guest`, {},JSON.stringify({partyId: partyId, memberId: store.loginUserInfo?.memberId}));
+  });
+
     return () => {
+      console.log("언마운트됨")
       // 클라이언트 > 서버 메세지 보내기(참여자 퇴장요청)
       try{
         client.send(`/app/party/guest/delete`, {},JSON.stringify({partyId: partyId, memberId: store.loginUserInfo?.memberId}));
@@ -110,13 +95,14 @@ const WaitingRoomPage = () => {
       } catch (error) {
         console.error("메세지 전송 중 오류가 발생했습니다:", error);
       }
-      
 
-      client.disconnect(() => {
-        console.log("웹소켓 연결이 해제되었습니다.")
-      });
+      setTimeout(() => {
+        client.disconnect(() => {
+          console.log("웹소켓 연결이 해제되었습니다.");
+        });
+      }, 500); // 연결 해제를 500ms 지연
     };
-  }, [partyId]);
+  }, []);
 
   return (
     <Container>
