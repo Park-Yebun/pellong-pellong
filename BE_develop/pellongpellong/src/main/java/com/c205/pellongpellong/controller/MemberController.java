@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 //import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -101,9 +102,10 @@ public class MemberController {
     public ProfileDTO getProfile(@PathVariable long memberId) {
         ProfileMemberDTO profileMemberDTO = memberService.getProfileMember(memberId);
         ProfileMemberVarDTO profileMemberVarDTO = memberVariableService.getProfileMemberVar(memberId);
+        int myRank = Objects.requireNonNull(redisTemplate.opsForZSet().reverseRank("ranking", String.valueOf(memberId))).intValue()  + 1;
         ProfileRankDTO profileRankDTO = rankService.getProfileRank(memberId);
         List<ProfileMemberBadgeDTO> badgeArray = memberBadgeService.getMemberBadges(memberId);
-        return new ProfileDTO(profileMemberDTO.getNickname(), profileMemberDTO.getProfileImg(), profileMemberVarDTO.getTier(), profileRankDTO.getSumExp(), badgeArray);
+        return new ProfileDTO(profileMemberDTO.getNickname(), profileMemberDTO.getProfileImg(), profileMemberVarDTO.getTier(), myRank, profileRankDTO.getSumExp(), badgeArray);
     }
 
     @DeleteMapping("/members/{memberId}")
