@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'; // Link 컴포넌트를 import 합니다.
-import BackButton from '../../components/BackButton';
 import './TestPage.css'; // CSS 파일을 import 합니다.
 
 declare global {
@@ -273,7 +272,6 @@ const QuizApp: React.FC = () => {
 
   return (
     <div className="test-container">
-      <BackButton />
       {!isUserNameSubmitted ? (
         renderNameInput()
       ) : showResult ? (
@@ -289,11 +287,11 @@ const QuizApp: React.FC = () => {
             내 성적표를 확인해 보세요!
           </p>
           {/* <p className="test-result">맞힌 문제 수: {score}</p> */}
-          <div className='test-btn-container'>
-            <Link to="/jeju-test" className="test-button">메인으로</Link>
-            <button className="test-button" onClick={handleShare}>카카오톡으로 결과 확인하기</button>
+          <div className='tt-test-btn-container'>
+            <Link to="/jeju-test" className="tt-test-button">메인으로</Link>
+            <button className="tt-test-button" onClick={handleShare}>카카오톡으로 결과 확인하기</button>
             {!isReviewingWrongAnswers && (
-              <button className="test-button" onClick={handleRetryWrongAnswers}>틀린 문제 다시 풀어보기</button>
+              <button className="tt-test-button" onClick={handleRetryWrongAnswers}>틀린 문제 다시 풀어보기</button>
             )}
           </div>
         </div>
