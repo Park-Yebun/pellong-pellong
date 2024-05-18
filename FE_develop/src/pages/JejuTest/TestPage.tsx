@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'; // Link 컴포넌트를 import 합니다.
 import './TestPage.css'; // CSS 파일을 import 합니다.
 
@@ -110,6 +110,14 @@ const QuizApp: React.FC = () => {
   const [isReviewingWrongAnswers, setIsReviewingWrongAnswers] = useState<boolean>(false);
   const [wrongAnswersIndices, setWrongAnswersIndices] = useState<number[]>([]);
 
+
+  useEffect(() => {
+    // Kakao 초기화
+    if (!window.Kakao.isInitialized()) {
+      window.Kakao.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
+    }
+  }, []);
+
   const handleAnswerSelection = (selectedOptionIndex: number) => {
     const currentQuestion = questions[currentQuestionIndex];
     if (selectedOptionIndex === currentQuestion.correctAnswerIndex) {
@@ -134,38 +142,45 @@ const QuizApp: React.FC = () => {
   };
 
   // 공유하기 함수
-  const handleShare = () => {
+  const handleShare = async () => {
     // 공유 로직 추가
     console.log("공유하기 버튼이 클릭되었습니다!");
-    // 공유할 이미지, 추후 합의 필요
-    const shareTitle = '제주어 모의고사 결과'
-    const shareDes = '공유디스크립션'
-    const shareImage = '../../icons/apple-touch-icon-152x152.png'
-    const shareURL = 'https://www.saturituri.com/'
 
-    Kakao.Share.sendDefault({
-      objectType: 'feed',
-      content: {
-        title: shareTitle,
-        description: shareDes,
-        imageUrl: shareImage, 
-        link: {
-          mobileWebUrl: shareURL,
-          webUrl: shareURL,
-        },
-      },
-      buttons: [
-        {
-          title: '결과확인하기',
-          link: {
-            mobileWebUrl: shareURL,
-            webUrl: shareURL,
+    if(!Kakao.isInitialized()){
+      Kakao.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
+    }
+
+    try{
+        // 공유할 이미지, 추후 합의 필요
+        const shareTitle = '제주어 모의고사 결과'
+        const shareDes = '공유디스크립션'
+        const shareImage = '../../icons/apple-touch-icon-152x152.png'
+        const shareURL = 'https://www.saturituri.com/'
+
+        Kakao.Share.sendDefault({
+          objectType: 'feed',
+          content: {
+            title: shareTitle,
+            description: shareDes,
+            imageUrl: shareImage, 
+            link: {
+              mobileWebUrl: shareURL,
+              webUrl: shareURL,
+            },
           },
-        },
-      ]
-    });
-
-
+          buttons: [
+            {
+              title: '결과확인하기',
+              link: {
+                mobileWebUrl: shareURL,
+                webUrl: shareURL,
+              },
+            },
+          ]
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
 
