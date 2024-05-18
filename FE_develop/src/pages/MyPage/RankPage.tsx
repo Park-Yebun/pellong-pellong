@@ -1,8 +1,8 @@
 // RankPage.tsx
 import React, { useState, useEffect } from 'react';
 import './RankPage.css';
-
 import BackButton from '../../components/BackButton';
+import close from '../../assets/JejuPlay/close.png'
 
 interface User {
   memberId: number;
@@ -12,6 +12,8 @@ interface User {
   // rankBadge: string;
   rankId: number;
 }
+
+
 
 
   const sortAndRankUsers = (users: User[]): User[] => {
@@ -36,6 +38,8 @@ interface User {
   
   const UserRanking: React.FC = () => {
     const [users, setUsers] = useState<User[]>([]);
+    const [passwordModalOpen, setPasswordModalOpen] = useState<boolean>(false); // 이 부분을 함수 컴포넌트 내부로 이동
+    const [selectedUser, setSelectedUser] = useState<User | null>(null); // 클릭된 유저 정보를 상태로 관리
   
     useEffect(() => {
       console.log("페치데이터 동작!!")
@@ -74,14 +78,31 @@ interface User {
       else if (sumExp > 1000)
         return '../../assets/badge/brilliant.png';
     };
-  
+
+    const handleUserClick = async (user: User) => {
+      setSelectedUser(user); // 클릭된 유저 정보 설정
+      setPasswordModalOpen(true); // 모달 열기
+      try {
+        const response = await fetch(`https://www.saturituri.com/api/userInfo/exp/comparison`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        /// 여기서부터 내일함
+        const userInfo: string = await response.json();
+      } catch (error) {
+        console.log("유저 정보 로드 실패", error)
+      }
+    };
+
     return (
       <div className="RK-user-ranking-container">
         <BackButton />
         <div className='RK-ranking-title'>랭킹 조회</div>
         <div className="RK-user-grid">
           {users.map((user) => (
-            <div key={user.memberId} className="RK-user-card">
+            <div key={user.memberId} className="RK-user-card" onClick={() => handleUserClick(user)}>
               <div className="RK-user-info">
                 <span className="RK-rank-number">{user.rankId}</span>
                 <span className="RK-rank-badge">
@@ -94,6 +115,16 @@ interface User {
             </div>
           ))}
         </div>
+        {passwordModalOpen && (
+          <div className='password-modal'>
+            <img className='close' src={close} alt="closebtn" onClick={() => {setPasswordModalOpen(false);}}/>
+            <div className='password-txt'>
+              {/* 클릭된 유저 정보를 모달 내에서 표시 */}
+              {selectedUser && `${selectedUser.nickname}과 나의 지난 3일간 누적 경험치 비교`}
+
+            </div>
+          </div>
+        )}
       </div>
     );
   };
