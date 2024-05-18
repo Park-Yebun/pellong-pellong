@@ -24,7 +24,7 @@ interface User {
   nickname: string;
   profileImg: string;
   tier: string;
-  rank: number;
+  myRank: number;
   sumExp: number;
   representativeBadgeId: number;
 }
@@ -125,7 +125,7 @@ const MyPage: React.FC = () => {
                       </NicknameBox>
                       <img src={getRankBadge(userData.sumExp)} alt=""/>
                       <p> {userData.tier}</p>
-                      <p> 순위 : {userData.rank}</p>
+                      <p> 순위 : {userData.myRank}</p>
                       <p> 누적 경험치 : {userData.sumExp}</p>
                   </InfoBox>
               </UserProfile>
