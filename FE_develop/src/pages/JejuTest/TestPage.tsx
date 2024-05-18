@@ -160,9 +160,7 @@ const QuizApp: React.FC = () => {
 
     try{
         // 공유할 이미지, 추후 합의 필요
-        const shareTitle = '제주어 모의고사 결과'
-        const shareDes = '공유디스크립션'
-        const shareImage = '../../icons/apple-touch-icon-152x152.png'
+        const shareImage = '/@/icons/apple-touch-icon-152x152.png'
 
         let grade; // 사투리 모의고사 등급 결정
         if (score <= 1) {
@@ -185,7 +183,8 @@ const QuizApp: React.FC = () => {
           grade = 1;
         } //
 
-
+        const shareTitle = grade + '등급'
+        const shareDes = '팰롱팰롱으로 알아보는 나의 제주어 실력!'
         const shareURL = `https://www.saturituri.com/jeju-quiz/result/${grade}`;
 
         Kakao.Share.sendDefault({
@@ -201,7 +200,7 @@ const QuizApp: React.FC = () => {
           },
           buttons: [
             {
-              title: '결과확인하기',
+              title: '나도 테스트하기',
               link: {
                 mobileWebUrl: shareURL,
                 webUrl: shareURL,
