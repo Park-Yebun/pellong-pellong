@@ -20,11 +20,13 @@ import {
 // 웹소켓 통신
 import SockJS from 'sockjs-client';
 import {Stomp, Frame} from '@stomp/stompjs';
+import { json } from 'stream/consumers';
 
 const SpeedPlayPage = () => {
 const [count, setCount] = useState(10);
 const [quizList, setQuizList] = useState<any[]>([]);
 const [quiz, setQuiz] = useState<any|null>(null);
+const [userInfo, setUserInfo] = useState<any[]>([]);
 const { partyId } = useParams();
 const navigate = useNavigate();
 const store = useStore();
@@ -45,7 +47,9 @@ const store = useStore();
         setTimeout(() => {
           client.send(`/app/party/guest`, {}, JSON.stringify({partyId: partyId, memberId: store.loginUserInfo?.memberId}));
         }, 500); // 500밀리초 후에 실행
-       }
+       } else {
+        setUserInfo(JSON.parse(message.body).guests);
+       };
      });
      
    })
@@ -72,26 +76,34 @@ useEffect(() => {
 }, []);
 
 
-// useEffect(() => {
-//   const fetchData = async () => {
-//     try {
-//       const response = await fetch('https://www.saturituri.com/dialect/speed/quiz', {
-//         method: 'GET',
-//         headers: {
-//           'Content-Type': 'application/json',
-//         }
-//       });
-//       const data = await response.json();
-//       setQuizList(data);
-//       const randomIndex = Math.floor(Math.random() * 10);
-//       setQuiz(quizList[randomIndex]);
-//       console.log('데이터 로드 성공')
-//     } catch (error) {
-//       console.log('데이터 로드 실패', error)
-//     }
-//   }
-//   fetchData()
-// }, []);
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/dialect/speed/quiz', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      const data = await response.json();
+      setQuizList(data);
+      console.log('데이터 로드 성공')
+    } catch (error) {
+      console.log('데이터 로드 실패', error)
+    }
+  }
+  fetchData()
+}, []);
+
+useEffect(() => {
+  if (quizList.length > 0) {
+    const randomIndex = Math.floor(Math.random() * 10);
+    setQuiz(quizList[randomIndex]);
+    console.log('선택된 랜덤 퀴즈:', quizList[randomIndex]);
+  } else {
+    console.log('퀴즈 리스트가 비어있습니다.');
+  }
+}, [quizList]);
 
   return (
     <Container>
@@ -101,10 +113,10 @@ useEffect(() => {
         <Description>뜻이 다른 한 장을 <br/>
           제외한 카드를 터치하세요.</Description>
         <ExampleBox>
-            <Example></Example>
-            <Example></Example>
-            <Example></Example>
-            <Example></Example>
+            <Example>{quiz ? quiz.dialectText : 'Loading...'}</Example>
+            <Example>{quiz ? quiz.standardText : 'Loading...'}</Example>
+            <Example>{quiz ? quiz.false : 'Loading...'}</Example>
+            <Example>{quiz ? quiz.dialectImage : 'Loading...'}</Example>
         </ExampleBox>
         <PlayerBox>
             <Player>
