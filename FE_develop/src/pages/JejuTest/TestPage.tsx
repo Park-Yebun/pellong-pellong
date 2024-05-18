@@ -163,7 +163,30 @@ const QuizApp: React.FC = () => {
         const shareTitle = '제주어 모의고사 결과'
         const shareDes = '공유디스크립션'
         const shareImage = '../../icons/apple-touch-icon-152x152.png'
-        const shareURL = 'https://www.saturituri.com/'
+
+        let grade; // 사투리 모의고사 등급 결정
+        if (score <= 1) {
+          grade = 9;
+        } else if (score <= 2) {
+          grade = 8;
+        } else if (score <= 3) {
+          grade = 7;
+        } else if (score <= 4) {
+          grade = 6;
+        } else if (score <= 6) {
+          grade = 5;
+        } else if (score <= 8) {
+          grade = 4;
+        } else if (score <= 10) {
+          grade = 3;
+        } else if (score <= 12) {
+          grade = 2;
+        } else if (score <= 15) {
+          grade = 1;
+        } //
+
+
+        const shareURL = `https://www.saturituri.com/jeju-quiz/result/${grade}`;
 
         Kakao.Share.sendDefault({
           objectType: 'feed',

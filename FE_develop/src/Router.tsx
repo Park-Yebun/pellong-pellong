@@ -46,7 +46,7 @@ function App() {
         <Route path="/jeju-quiz" element={<JejuQuizListPage />} />
         <Route path="/jeju-quiz/level/:level" element={<JejuQuizPage />} />
         <Route path="/jeju-quiz/resolve" element={<QuizResolvePage />} />
-        <Route path="/jeju-quiz/result" element={<QuizResultPage />} />
+        <Route path="/jeju-quiz/result/:score" element={<QuizResultPage />} />
         <Route path="/jeju-test" element={<TestFirstPage />} />
         <Route path="/jeju-test/test-page" element={<TestPage />} />
         <Route path="/jeju-test/test-result" element={<TestResultPage />} />
