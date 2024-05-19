@@ -24,7 +24,7 @@ interface QuizData {
 }
 
 // QuizType1 컴포넌트 정의
-const QuizType1: React.FC<{ quizData: QuizData; onNextQuestion: () => void }> = ({ quizData, onNextQuestion }) => {
+const QuizType1: React.FC<{ quizData: QuizData; onNextQuestion: () => void; onCorrectAnswer: () => void }> = ({ quizData, onNextQuestion, onCorrectAnswer }) => {
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null); // 선택된 답 저장
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null); // 정답 여부 저장
 
@@ -34,6 +34,7 @@ const QuizType1: React.FC<{ quizData: QuizData; onNextQuestion: () => void }> = 
     const selectedVoca = quizData.dialectVocas[answerIndex];
     if (selectedVoca.quizOrder === quizData.quizAnswer) {
       setIsCorrect(true); // 정답인 경우
+      onCorrectAnswer(); // 정답 맞췄을 때 부모 컴포넌트로 콜백 호출
     } else {
       setIsCorrect(false); // 오답인 경우
     }
