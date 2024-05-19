@@ -95,6 +95,18 @@ export const Example = styled.div`
     letter-spacing: 0.02px;
 `
 
+export const ExampleImg = styled.img`
+    width: 142px;
+    height: 117px;
+
+    box-sizing: border-box;
+    padding: 10px;
+
+    border-radius: 10px;
+    background: #FFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+`
+
 export const PlayerBox = styled.div`
     display: flex;
     flex-direction: row;
@@ -118,9 +130,22 @@ export const PlayerBox = styled.div`
     }
 `
 
-export const Player = styled.div``
+export const Player = styled.div`
+    position: relative;
+`
 
-export const ExpBadge = styled.div``
+export const ExpBadge = styled.div`
+    position: absolute;
+    top: -23px;
+    left: -37px;
+
+    color: #F5002C;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    letter-spacing: 0.02px;
+`
 
 export const ProfileImg = styled.img`
     width: 58px;
@@ -140,5 +165,3 @@ export const Nickname = styled.div`
     line-height: normal;
     letter-spacing: 0.015px;
 `
-
-
