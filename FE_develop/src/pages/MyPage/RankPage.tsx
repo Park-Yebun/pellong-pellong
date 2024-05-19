@@ -112,16 +112,7 @@ const UserRanking: React.FC = () => {
     }
   });
 
-  const [chartSeries, setChartSeries] = useState<any>([
-    {
-      name: `${selectedUser?.nickname}`,
-      data: [28, 29, 33]
-    },
-    {
-      name: "Low - 2013",
-      data: [12, 11, 14]
-    }
-  ]);
+  const [chartSeries, setChartSeries] = useState<any>([]); 
 
 
   useEffect(() => {
