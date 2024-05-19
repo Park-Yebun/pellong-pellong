@@ -34,6 +34,18 @@
   .top-right-links a {
     margin-left: 10px;
   }
+
+  .top-mini-text {
+    margin-left: 5px;
+    font-size: 10px;
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  .image-link {
+    text-decoration: none;
+    color: inherit;
+  }
   
   .image-link img {
     width: 30px;
