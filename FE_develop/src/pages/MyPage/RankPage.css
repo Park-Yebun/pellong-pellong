@@ -82,27 +82,29 @@
     font-weight: bold;
     margin-right: 10px; /* 오른쪽에 여백 추가 */
 }
-.password-modal {
-    width: 278px;
-    height: 199px;
-    position: absolute;
-    top: 300px;
-    left: 40px;
-
+.RK-password-modal {
+    width: 300px;
+    height: 600px;
+    position: fixed; /* 기존의 absolute 대신 fixed를 사용합니다. */
+    top: 50%; /* 화면 세로 중앙에 위치시키기 위해 50%로 설정합니다. */
+    left: 50%; /* 화면 가로 중앙에 위치시키기 위해 50%로 설정합니다. */
+    transform: translate(-50%, -50%); /* 중앙 정렬을 위해 translate를 사용합니다. */
     border-radius: 10px;
     border: 0.3px solid #D8D8D8;
     background: #FFF;
 }
-.close {
+
+.RK-close {
     position: absolute;
     right: 7px;
     top: 9px;
 }
 
-.password-txt {
+.RK-password-txt {
     position: absolute;
+    width: 250px;
     top: 39px;
-    left: 60px;
+    left: 25px;
 
     color: #000;
     text-align: center;
@@ -114,7 +116,7 @@
     letter-spacing: 0.015px;
 }
 
-.password {
+.RK-password {
     width: 207px;
     height: 43px;
     position: absolute;
