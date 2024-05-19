@@ -21,7 +21,8 @@ import CreateWaitingRoom from './pages/JejuPlay/CreateWaitingRoom';
 import GameOverPage from './pages/JejuPlay/GameOverPage';
 import OtherPlayPage from './pages/JejuPlay/Other/OtherPlayPage';
 import SpeedPlayPage from './pages/JejuPlay/Speed/SpeedPlayPage';
-import PlayResultPage from './pages/JejuPlay/PlayResultPage';
+import SpeedPlayResultPage from './pages/JejuPlay/Speed/SpeedPlayResultPage';
+import OtherPlayResultPage from './pages/JejuPlay/Other/OtherPlayResultPage';
 import WaitingRoomPage from './pages/JejuPlay/WaitingRoomPage';
 //철환추가
 import TranslatePage from './pages/TranslatePage';
@@ -61,7 +62,8 @@ function App() {
         <Route path="/jeju-play/gameover" element={<GameOverPage />} />  
         <Route path="/jeju-play/other/:partyId" element={<OtherPlayPage />} />
         <Route path="/jeju-play/speed/:partyId" element={<SpeedPlayPage />} />
-        <Route path="/jeju-play/:partyId/result" element={<PlayResultPage />} />
+        <Route path="/jeju-play/speed/:partyId/result" element={<SpeedPlayResultPage />} />
+        <Route path="/jeju-play/other/:partyId/result" element={<OtherPlayResultPage />} />
         <Route path="/jeju-play/:partyId/wait" element={<WaitingRoomPage />} />
         <Route path="/ai" element={<TranslatePage />} /> {/* TranslatePage 철환 라우터 추가 */}
         {/* component */}
