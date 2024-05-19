@@ -40,6 +40,16 @@ const UserRanking: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [passwordModalOpen, setPasswordModalOpen] = useState<boolean>(false); // 이 부분을 함수 컴포넌트 내부로 이동
   const [selectedUser, setSelectedUser] = useState<User | null>(null); // 클릭된 유저 정보를 상태로 관리
+
+  const today = new Date();
+  const lastThreeDays = [];
+  for (let i = 2; i >= 0; i--) {
+      const date = new Date(today);
+      date.setDate(today.getDate() - i);
+      const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+      lastThreeDays.push(formattedDate);
+  }
+
   const [chartOptions, setChartOptions] = useState<any>({
     chart: {
       height: 350,
@@ -81,18 +91,18 @@ const UserRanking: React.FC = () => {
       size: 1
     },
     xaxis: {
-      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-      title: {
-        text: 'Month'
-      }
+      categories: lastThreeDays,
+      // title: {
+      //   text: 'Month'
+      // } X축 제목 삭제
     },
-    yaxis: {
-      title: {
-        text: 'Temperature'
-      },
-      min: 5,
-      max: 40
-    },
+    // yaxis: {
+    //   // title: {
+    //   //   text: 'Temperature'
+    //   // }, Y축 제목 삭제
+    //   min: 5,
+    //   max: 40
+    // },
     legend: {
       position: 'top',
       horizontalAlign: 'right',
@@ -105,11 +115,11 @@ const UserRanking: React.FC = () => {
   const [chartSeries, setChartSeries] = useState<any>([
     {
       name: `${selectedUser?.nickname}`,
-      data: [28, 29, 33, 36, 32, 32, 33]
+      data: [28, 29, 33]
     },
     {
       name: "Low - 2013",
-      data: [12, 11, 14, 18, 17, 13, 13]
+      data: [12, 11, 14]
     }
   ]);
 
@@ -171,11 +181,11 @@ const UserRanking: React.FC = () => {
       setChartSeries([
         {
           name: user.nickname,
-          data: [28, 29, 33, 36, 32, 32, 33]
+          data: [28, 29, 33]
         },
         {
           name: store.loginUserInfo?.nickname,
-          data: [12, 11, 14, 18, 17, 13, 13]
+          data: [12, 11, 14]
         }
       ]);
 
