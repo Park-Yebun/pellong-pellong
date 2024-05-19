@@ -7,6 +7,7 @@ import myPageIcon from '../assets/mypage-icon.png';
 import rankIcon from '../assets/rank-icon.png';
 import sunsetIcon from '../assets/sunset.png';
 import jejuImage from '../assets/jeju.png';
+import Bang from '../assets/bang.png';
 import XButton from '../assets/x_button.png';
 import cloudQuiz from '../assets/cloud-quiz.png';
 import cloudTest from '../assets/cloud-test.png';
@@ -85,6 +86,9 @@ function MainPage() {
           <img src={myPageIcon} alt="마이페이지" />
           <div className='top-mini-text'>마이</div>
         </a>
+      </div>
+      <div>
+        <img src={Bang} alt="느낌표" />
       </div>
       <div className="jeju-image-container">
         <img src={jejuImage} alt="제주도" className="jeju-image" onClick={toggleModal} />
