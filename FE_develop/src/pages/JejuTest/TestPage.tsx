@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import useStore from '../../store';
 import { Link } from 'react-router-dom'; // Link 컴포넌트를 import 합니다.
 import './TestPage.css'; // CSS 파일을 import 합니다.
 
@@ -18,6 +19,7 @@ interface Question {
 }
 
 const QuizApp: React.FC = () => {
+  const store = useStore();
   const questions: Question[] = [
     {
       id: 1,
@@ -198,7 +200,21 @@ const QuizApp: React.FC = () => {
 
         console.log(testnum); // testnum에 저장된 숫자를 출력합니다.
 
-
+        const fetchData = async () => {
+          try {
+            const response = await fetch('https://www.saturituri.com/api//exp/test-sharing/' + store.loginUserInfo?.memberId, {
+              method: 'PATCH',
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            });
+            // 데이터에 숫자 잘들어옴
+            console.log('성공');
+          } catch (error) {
+            console.log("실패", error)
+          }
+        }
+        fetchData();
 
         const shareTitle = grade + '등급'
         const shareDes = '팰롱팰롱으로 알아보는 나의 제주어 실력!'
@@ -228,6 +244,7 @@ const QuizApp: React.FC = () => {
     } catch (error) {
       console.log(error);
     }
+
   };
 
   const renderQuiz = () => {
