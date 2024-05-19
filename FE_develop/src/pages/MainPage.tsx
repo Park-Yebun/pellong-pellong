@@ -139,7 +139,7 @@ function MainPage() {
                 </div>
               </div>
               <div className='main-quest-box'>
-                {/* {dailyQuests.length > 0 ? (
+                {dailyQuests.length > 0 ? (
                   dailyQuests.map((quest) => (
                     <div key={quest.dailyQuestId}>
                       <div>일일 경험치: {quest.dailyExp}</div>
@@ -151,13 +151,7 @@ function MainPage() {
                 ) : (
                   <div>데이터가 없습니다.</div>
                   // 로딩 중 메시지 대신 데이터 없음 메시지를 표시합니다.
-                )} */}
-                      <div >
-                      <div>일일 경험치:</div>
-                      <div>90점 이상 통과 여부:</div>
-                      <div>일일 퀘스트 완료 여부:</div>
-                      <div>사투리 모의고사 공유 여부:</div>
-                    </div>
+                )}
               </div>
             </div>
           </div>
