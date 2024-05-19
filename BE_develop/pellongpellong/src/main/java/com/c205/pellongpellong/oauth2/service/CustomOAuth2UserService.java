@@ -1,14 +1,11 @@
 package com.c205.pellongpellong.oauth2.service;
 
+import com.c205.pellongpellong.controller.*;
 import com.c205.pellongpellong.entity.Member;
 import com.c205.pellongpellong.oauth2.exception.OAuth2AuthenticationProcessingException;
 import com.c205.pellongpellong.oauth2.user.OAuth2UserInfo;
 import com.c205.pellongpellong.oauth2.user.OAuth2UserInfoFactory;
 import com.c205.pellongpellong.repository.MemberRepository;
-import com.c205.pellongpellong.controller.RankController;
-import com.c205.pellongpellong.controller.MemberBadgeController;
-import com.c205.pellongpellong.controller.DailyQuestController;
-import com.c205.pellongpellong.controller.MemberVariableController;
 import com.c205.pellongpellong.service.LearningProgressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -21,6 +18,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
 
@@ -36,6 +34,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private final MemberVariableController memberVariableController;
     private final RedisTemplate<String, String> redisTemplate;
     private final LearningProgressService learningProgressService;
+    private final ExpController expController;
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
 
@@ -102,7 +101,26 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             existingMember.setNickname(newNickname);
             existingMember.setProfileImg(oAuth2UserInfo.getProfileImageUrl());
             memberRepository.save(existingMember);  // 변경된 정보 저장
+
+            // 기존 사용자 로그인시 출석체크 경험치 부여할지 말지 체크
+            // 현재 일시 가져오기
+            LocalDateTime currentDateTime = LocalDateTime.now();
+
+            // 기존 로그인 이력 가져오기
+            LocalDateTime lastLoginDateTime = memberVariableController.getLoginHistoryByMemberId(existingMember.getMemberId());
+
+            // 로그인 이력이 없는 경우 또는 마지막 로그인 날짜가 오늘과 같은 경우에는 최근 로그인 일시만 업데이트
+            if (lastLoginDateTime == null || lastLoginDateTime.toLocalDate().isEqual(currentDateTime.toLocalDate())) {
+                memberVariableController.updateLoginTime(existingMember.getMemberId());
+
+            } else { // 마지막 로그인 날짜가 오늘이 아닌 경우에는 경험치 적립 및 최근 로그인 일시 업데이트
+
+                expController.earnAttendanceExp(existingMember.getMemberId());
+                memberVariableController.updateLoginTime(existingMember.getMemberId());
+
+            }
             return existingMember;
+
         } else {
             // 새로운 사용자라면 엔티티에 저장
             String nickname = oAuth2UserInfo.getNickname();
