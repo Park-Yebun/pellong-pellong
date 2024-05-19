@@ -128,8 +128,8 @@ const MyPage: React.FC = () => {
                       </NicknameBox>
                       <RankBox>
                         <RankImg>
-                          <img src={getRankBadge(userData.sumExp)} alt=""/>
-                          {/* <img src={logoutImg} alt=""/> */}
+                          {/* <img src={getRankBadge(userData.sumExp)} alt="" style={{ width: 90, height: 90 }}/> */}
+                          <img src={logoutImg} alt=""/>
                         </RankImg>
                         <RankText>
                           <div> {userData.tier}</div>

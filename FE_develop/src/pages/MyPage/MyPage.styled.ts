@@ -38,9 +38,9 @@ export const UserProfileBox = styled.div`
 `
 export const UserProfile = styled.div``
 export const InfoBox = styled.div`
-    // display: flex;
-    // flex-direction: column;
-    // align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `
 export const ProfileImg = styled.img``
 export const Email = styled.div``
@@ -58,18 +58,23 @@ export const NicknameBox = styled.div`
     display: flex;
 `
 export const RankBox = styled.div`
-    dispaly: flex;
-    flex-direction: row;
-    font-weight: bold;
-`
+  display: flex; /* 수정된 부분 */
+  flex-direction: row; /* 수평 정렬 */
+  font-weight: bold;
+  align-items: center; /* 수직 정렬 */
+`;
+
 export const RankImg = styled.div`
+  width: 130px;
+  height: 130px;
+  font-weight: bold;
+  margin-right: 10px; /* 이미지와 텍스트 사이의 간격 */
+`;
 
-    font-weight: bold;
-`
 export const RankText = styled.div`
+  font-weight: bold;
+`;
 
-    font-weight: bold;
-`
 export const Logout = styled.img`
-    margin-top: 20px;
-`
+  margin-top: 20px;
+`;
