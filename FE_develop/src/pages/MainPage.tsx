@@ -108,10 +108,29 @@ function MainPage() {
           <div className='top-mini-text'>마이</div>
         </a>
       </div>
-      <div>
-        <img src={Bang} alt="느낌표" />
-      </div>
+      {/*<div*/}
+      {/*style={*/}
+      {/*  {*/}
+
+      {/*    width: '100%',*/}
+      {/*    backgroundColor: 'black',*/}
+      {/*  }*/}
+      {/*}>*/}
+      {/*  <img src={Bang} alt="느낌표" />*/}
+      {/*</div>*/}
       <div className="jeju-image-container">
+        <div
+            style={
+              {
+                top: '6rem',
+                position: 'absolute',
+                // width: '5rem',
+                // height: '4rem',
+                // backgroundColor: 'black',
+              }
+            }
+            onClick={toggleModal}
+        ><img src={Bang} alt="느낌표"/></div>
         <img src={jejuImage} alt="제주도" className="jeju-image" onClick={toggleModal} />
       </div>
       <div className="quiz-links">

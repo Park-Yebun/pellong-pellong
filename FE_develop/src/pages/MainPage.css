@@ -55,6 +55,9 @@
   .jeju-image-container {
     position: relative;
     z-index: 0;
+    display: flex;
+    fiex-direction: column;
+    justify-content: center;
   }
   
   .jeju-image {
