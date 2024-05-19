@@ -49,7 +49,7 @@ function MainPage() {
         const data = await response.json();
         setDailyQuests([data]);
         // console.log("됐다", data)
-        console.log(dailyQuests)
+        // console.log(dailyQuests)
 
       } catch (error) {
         console.error('Error fetching daily quests:', error);

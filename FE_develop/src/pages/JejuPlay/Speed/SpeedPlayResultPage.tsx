@@ -18,7 +18,7 @@ import {
   BackBtn
 } from './SpeedPlayResultPage.styled'
 
-const PlayResultPage = () => {
+const SpeedPlayResultPage = () => {
   return (
     <Container>
       <Result>게임 결과</Result>
@@ -61,4 +61,4 @@ const PlayResultPage = () => {
   );
 };
 
-export default PlayResultPage;
+export default SpeedPlayResultPage;
