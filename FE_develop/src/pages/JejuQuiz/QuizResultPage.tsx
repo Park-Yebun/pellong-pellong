@@ -18,8 +18,15 @@ const QuizResultPage: React.FC = () => {
 
     const fetchData = async () => {
       try {
-        console.log(store.loginUserInfo?.memberId)
-        const response = await fetch(`https://www.saturituri.com/api/exp/quiz-solving/${store.loginUserInfo?.memberId}`, {
+        let apiUrl = `https://www.saturituri.com/api/exp/quiz-solving/${store.loginUserInfo?.memberId}`;
+      
+        // score와 totalQuestions를 비교하여 조건에 따라 apiUrl을 설정
+        if (score / totalQuestions >= 0.9) {
+          apiUrl = `https://www.saturituri.com/api/exp/quiz-solving-passed/${store.loginUserInfo?.memberId}`;
+        }
+
+
+        const response = await fetch(apiUrl, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json'
