@@ -4,13 +4,15 @@ import React, { useEffect, useState} from 'react';
 import './DailyQuote.css';
 
 interface Props {
-    lifeQuoteId: number;
-    lifeQuoteContent: string;
+    jejuProverbId: number;
+    pbJeju: string;
+    pbStandard: string;
 }
 
 // export const DailyQuote = ({robot} : Props) => {
 export const DailyQuote = () => {
-    const [ dailyQuote, setDailyQuote] = useState<string | null>(null);
+    const [ pbS, setPbS] = useState<string | null>(null);
+    const [ pbJ, setPbJ] = useState<string | null>(null);
     const [isHidden, setIsHidden] = useState<boolean>(true);
     const handleMouseOver = () => {
         setIsHidden(false);
@@ -34,14 +36,17 @@ export const DailyQuote = () => {
 
         const fetchDailyQuote = async () => {
             try {
-                const response = await fetch('https://www.saturituri.com/api/life-quotes', {
+                const response = await fetch('https://www.saturituri.com/api/jeju-proverb', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 });
                 const dailyQuote: Props  = await response.json();
-                setDailyQuote(dailyQuote.lifeQuoteContent)
+                console.log("제주", dailyQuote.pbJeju);
+                console.log("표준", dailyQuote.pbStandard);
+                setPbJ(dailyQuote.pbJeju);
+                setPbS(dailyQuote.pbStandard);
                 console.log("데이터 로드 완료", dailyQuote);
             } catch (error) {
                 console.log("데이터 로드 실패", error)
@@ -53,10 +58,15 @@ export const DailyQuote = () => {
         <>
             <div className={isHidden ? 'daily-quote' : 'daily-quote2'} onMouseOver={handleMouseOver}
                  onMouseOut={handleMouseOut}>
-                <h1>오늘의 명언</h1>
+                {/*<h1>오늘의 속담</h1>*/}
+                <h1>{pbJ}</h1>
             </div>
-            <div className={!isHidden ? 'gomugomu' : 'gomu'}>
-                <p>{dailyQuote}</p>
+            <div className={!isHidden ? 'gomugomu' : 'gomu'}
+            style={{textAlign: 'center',
+                fontSize: '0.5rem',
+                fontWeight: '500'}}
+            >
+                <h1>{pbS}</h1>
             </div>
         </>
     );
