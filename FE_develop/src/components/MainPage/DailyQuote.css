@@ -1,7 +1,23 @@
+@font-face {
+    src: url("NanumBarunGothic-YetHangul.ttf");
+    font-family: "assey";
+}
+
+div > h1 {
+    font-family: 'assey';
+
+}
+
+
+h1::before {
+    content: "제주속담:  ";
+}
+
 .daily-quote {
+
     /*display: flex;*/
     position: fixed;
-    top: 4rem;
+    top: 4.5rem;
     justify-content: center;
     align-items: center;
     height: 3rem;
@@ -22,9 +38,10 @@
 }
 
 .daily-quote2 {
+
     /*display: flex;*/
     position: fixed;
-    top: 4rem;
+    top: 4.5rem;
     justify-content: center;
     align-items: center;
     height: 3rem;
@@ -45,7 +62,7 @@
 
 .gomu {
     position: fixed;
-    top: 7rem;
+    top: 7.5rem;
     width: 100%;
     height: 0rem;
     font-size: 1rem;
@@ -61,7 +78,7 @@
 
 .gomugomu {
     position: fixed;
-    top: 7rem;
+    top: 7.5rem;
     width: 100%;
     height: 10rem;
     background-color: #A9DBFE;
@@ -72,11 +89,23 @@
     color:rgba(0,0,0, 0.5);
     transition-property: height;
     transition-duration: 1s;
+    /*margin-top: 1rem;*/
 }
 
-.gomugomu > p {
+.gomugomu > h1 {
+    padding-top: 4em;
     font-size: 1rem;
     color: rgba(0,0,0, 1);
     transition-duration: 2s;
     z-index: 100;
+
 }
+
+.gomugomu > h1::before {
+    content: "해석:  ";
+}
+
+/*.gomugomu > div > p {*/
+/*    font-family: 'assey';*/
+/*    color: blue;*/
+/*}*/
