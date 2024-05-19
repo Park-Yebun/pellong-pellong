@@ -120,9 +120,7 @@ const UserRanking: React.FC = () => {
         <div className='RK-password-modal'>
           <img className='RK-close' src={close} alt="closebtn" onClick={() => {setPasswordModalOpen(false);}}/>
           <div className='RK-password-txt'>
-            {/* 클릭된 유저 정보를 모달 내에서 표시 */}
             {selectedUser && `${selectedUser.nickname}과 나의 지난 3일간 누적 경험치 비교`}
-
           </div>
         </div>
       )}

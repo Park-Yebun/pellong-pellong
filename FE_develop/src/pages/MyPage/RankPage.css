@@ -84,7 +84,7 @@
 }
 .RK-password-modal {
     width: 300px;
-    height: 600px;
+    height: 500px;
     position: fixed; /* 기존의 absolute 대신 fixed를 사용합니다. */
     top: 50%; /* 화면 세로 중앙에 위치시키기 위해 50%로 설정합니다. */
     left: 50%; /* 화면 가로 중앙에 위치시키기 위해 50%로 설정합니다. */

@@ -109,10 +109,12 @@
   }
   
   .mainpage-modal {
+    display: flex;
     background-color: white;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    background-color: #A9DBFE;
   }
   
   .mainpage-close {
@@ -124,4 +126,21 @@
     cursor: pointer;
     border-radius: 20px;
     background-color: white;
+  }
+
+  .main-quest-head {
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    padding-top: 10px;
+  }
+
+  .main-quest-container {
+    width: 300px;
+    height: 100px;
+  }
+
+  .main-quest-box {
+    background-color: white;
+    height: 400px;
   }

@@ -105,21 +105,25 @@ function MainPage() {
       {showModal && (
         <div className="mainpage-modal-overlay" onClick={handleModalClose}>
           <div className="mainpage-modal">
-            <div className="mainpage-close">
-              <img src={XButton} alt="" onClick={handleModalClose} />
-            </div>
             <div className="mainpage-modal-content">
-              <p>일일 퀘스트 목록:</p>
-              <ul>
-                {dailyQuests.map((quest) => (
-                  <li key={quest.dailyQuestId}>
-                    <p>일일 경험치: {quest.dailyExp}</p>
-                    <p>90점 이상 통과 여부: {quest.passed ? '통과' : '미통과'}</p>
-                    <p>일일 퀘스트 완료 여부: {quest.accomplished ? '완료' : '미완료'}</p>
-                    <p>사투리 모의고사 공유 여부: {quest.shared ? '공유됨' : '미공유'}</p>
-                  </li>
-                ))}
-              </ul>
+              <div className='main-quest-container'>
+                <div className='main-quest-head'>
+                  DAILY QUEST
+                  <br />
+                  <br />
+                  매일의 목표를 달성해보세요
+                </div>
+                </div>
+                <div className='main-quest-box'>
+                  {dailyQuests.map((quest) => (
+                    <div key={quest.dailyQuestId}>
+                      <div>일일 경험치: {quest.dailyExp}</div>
+                      <div>90점 이상 통과 여부: {quest.passed ? '통과' : '미통과'}</div>
+                      <div>일일 퀘스트 완료 여부: {quest.accomplished ? '완료' : '미완료'}</div>
+                      <div>사투리 모의고사 공유 여부: {quest.shared ? '공유됨' : '미공유'}</div>
+                    </div>
+                  ))}
+                </div>
             </div>
           </div>
         </div>
