@@ -47,7 +47,9 @@ const SpeedPlayPage = () => {
   const navigate = useNavigate();
   const store = useStore();
   const location = useLocation();
+  const [selectedOptions, setSelectedOptions] = useState(new Set());
   const [isDone, setIsDone] = useState<boolean>(false);
+  const [level, setLevel] = useState<number>(0);
 
   // 유저 관련 변수들
   const userInfos = location.state?.userInfos;
@@ -59,24 +61,82 @@ const SpeedPlayPage = () => {
 
 
 const handleClick = (option:any) => {
-  if (option === quiz.false && client) {
-    const numPartyId = Number(partyId)
-    client.publish({
-      destination: `/app/party/${numPartyId}/correct/${store.loginUserInfo?.memberId}`,
-      body: ''
-    });
-  } else if (option !== quiz.false && client) {
-    const numPartyId = Number(partyId)
-    client.publish({
-      destination: `/app/party/${numPartyId}/wrong/${store.loginUserInfo?.memberId}`,
-      body: ''
-    });
+  if (selectedOptions.has(option)) {
+    return; // 선택된 옵션이면 아무 일도 일어나지 않음
+  } else {
+    setSelectedOptions(new Set([...selectedOptions, option]));
+    if (option === quiz.false && client) {
+      const numPartyId = Number(partyId)
+      client.publish({
+        destination: `/app/party/${numPartyId}/correct/${store.loginUserInfo?.memberId}`,
+        body: ''
+      });
+    } else if (option !== quiz.false && client) {
+      const numPartyId = Number(partyId)
+      client.publish({
+        destination: `/app/party/${numPartyId}/wrong/${store.loginUserInfo?.memberId}`,
+        body: ''
+      });
+    }
   }
 }
 
+// 웹소켓 연결 유지
 useEffect(() => {
   connect();
 }, [connect]);
+
+// 모든 문제가 선택되었나?
+useEffect(() => {
+  if (selectedOptions.size >= 4) {
+    setIsDone(true);
+  }
+}, [selectedOptions]);
+
+// 방 삭제 함수
+const deleteRoom = async () => {
+  try {
+    await fetch(`http://localhost:8080/api/room/${partyId}`, {
+      method: 'DELETE'
+    });
+    navigate('/home'); // 삭제 후 홈으로 리다이렉트
+  } catch (error) {
+    console.error('Failed to delete room:', error);
+  }
+};
+
+// isDone이 true이거나 count가 0이면 quiz 데이터 및 관련변수 초기화(다음 레벨)
+useEffect(() => {
+  if (isDone || count === 0) {
+    setCount(10); // 시간을 다시 설정
+    setPlayers(players.map(player => ({ ...player, correctCount: 0, alert: '' }))); // 플레이어 정보 초기화
+    setIsDone(false); // isDone 상태 초기화
+    setLevel(prevLevel => prevLevel + 1); // 레벨 증가
+
+    if (quizList) {
+      // 무작위 퀴즈 선택
+      const randomIndex = Math.floor(Math.random() * quizList.length);
+      const selectedQuiz = quizList[randomIndex];
+      setQuiz(selectedQuiz);
+
+      // 선택된 퀴즈를 제외한 나머지 퀴즈를 quizList 상태에 저장
+      const newQuizList = quizList.filter((_, index) => index !== randomIndex);
+      setQuizList(newQuizList);
+  };
+}
+}, [isDone, count]);
+
+// 퀴즈 결과 페이지로 이동
+useEffect(() => {
+  if (level >= 10) {
+    if (client) {
+      client.publish({
+        destination: `/app/party/result`,
+        body: ''
+      });
+  };
+}
+})
 
 // 시간 제한
 useEffect(() => {
@@ -95,7 +155,7 @@ useEffect(() => {
       console.log('구독 요청 후 응답 데이터!!', data);
 
       // 1. 정답/오답 메세지 받아올경우
-      if (data.type == 'correct' || data.type == 'wrong') {
+      if (data.type === 'correct' || data.type === 'wrong') {
         setPlayers(prevPlayers => prevPlayers.map(player => {
           console.log(player.memberId)
           if (player.memberId === data.memberId) {
@@ -108,8 +168,9 @@ useEffect(() => {
           return player;
         }));
       }
-      console.log(players)
-
+      else if (data.type === 'result') {
+        navigate(`/jeju-play/speed/${partyId}/result`)
+      }
     });
   }
 }, [connected]);
@@ -125,8 +186,14 @@ useEffect(() => {
       });
       const data = await response.json();
       if (data.length > 0) {
-        const quiz = data[Math.floor(Math.random() * data.length)];
-        setQuiz(quiz);
+        // 무작위 퀴즈 선택
+        const randomIndex = Math.floor(Math.random() * data.length);
+        const selectedQuiz = data[randomIndex];
+        setQuiz(selectedQuiz);
+
+        // 선택된 퀴즈를 제외한 나머지 퀴즈를 quizList 상태에 저장
+        const newQuizList = data.filter((_:any, index:number) => index !== randomIndex);
+        setQuizList(newQuizList);
       }
     } catch (error) {
       console.error('Data load failed:', error);

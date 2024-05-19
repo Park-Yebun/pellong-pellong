@@ -12,7 +12,7 @@ import {
   Nickname
 } from './OtherPlayResultPage.styled'
 
-const PlayResultPage = () => {
+const OtherPlayResultPage = () => {
   return (
     <Container>
       <Result>게임 결과</Result>
@@ -30,4 +30,4 @@ const PlayResultPage = () => {
   );
 };
 
-export default PlayResultPage;
+export default OtherPlayResultPage;
