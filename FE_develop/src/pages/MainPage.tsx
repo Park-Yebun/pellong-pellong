@@ -48,9 +48,9 @@ function MainPage() {
   
         });
         const data = await response.json();
-setDailyQuests([data]);
+        setDailyQuests([data]);
         // console.log("됐다", data)
-        console.log(dailyQuests)
+        // console.log(dailyQuests[0].accomplished)
 
       } catch (error) {
         console.error('Error fetching daily quests:', error);
@@ -115,7 +115,8 @@ setDailyQuests([data]);
               }
             }
             onClick={toggleModal}
-        ><img src={Bang} alt="느낌표"/></div>
+        >
+        <img src={Bang} alt="느낌표"/></div>
         <img src={jejuImage} alt="제주도" className="jeju-image" onClick={toggleModal} />
       </div>
       <div className="quiz-links">
@@ -147,7 +148,17 @@ setDailyQuests([data]);
               <div className='main-quest-box'>
                 {dailyQuests.map((quest) => (
                   <div key={quest.dailyQuestId}>
-                    <div>일일 경험치: {quest.dailyExp}</div>
+
+                    <div className="user-wrap">
+                        <div className="user-image">
+                        <img src={quest.dailyExp > 200 ? success : fail} alt={quest.dailyExp > 200 ? "Success" : "Fail"} />
+                        </div>
+                        <div className="user-text">
+                          <p>일일 경험치 200xp 달성 {quest.dailyExp}/200</p>
+                        </div>
+                    </div>
+
+
 
                     <div className="user-wrap">
                         <div className="user-image">
@@ -166,12 +177,7 @@ setDailyQuests([data]);
                             <p>모의고사 결과 공유 {quest.shared ? '1/1' : '0/1'}</p>
                         </div>
                     </div>
-              
-      
-              
-                    
-                    <div>일일 퀘스트 완료 여부: {quest.accomplished ? '완료' : '미완료'}</div>
-
+            
                   </div>
                 ))}
               </div>
