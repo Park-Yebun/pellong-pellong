@@ -31,12 +31,15 @@ const PlayMainPage = () => {
     setSelectedRoom(room);
     // 방을 찾을 때 직접적인 인덱스 접근 대신 필터링 사용
     const selectedRoomData = roomData.find(r => r.partyId === room.partyId);
-
-    // 찾은 방의 공개 여부 확인
-    if (selectedRoomData && !selectedRoomData.isPublic) {
-        setPasswordModalOpen(true);
+    if (selectedRoomData.po === selectedRoomData.to) {
+      window.alert("정원이 다 찼습니다.")
     } else {
-        navigate(`/jeju-play/${room.partyId}/wait`);
+      // 찾은 방의 공개 여부 확인
+      if (selectedRoomData && !selectedRoomData.isPublic) {
+          setPasswordModalOpen(true);
+      } else {
+          navigate(`/jeju-play/${room.partyId}/wait`);
+      };
     }
 };
    

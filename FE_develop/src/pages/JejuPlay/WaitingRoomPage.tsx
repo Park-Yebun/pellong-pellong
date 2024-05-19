@@ -33,9 +33,11 @@ const WaitingRoomPage = () => {
   const store = useStore();
   const { connected, connect, disconnect, client } = useWebsocket();
   const navigate = useNavigate();
-  const roomType = roomData?.kind === 1 ? 'speed' : 'other';
+  const [roomType, setRoomType] = useState<string | null>(null);
   const isOwner = roomData?.hostId === store.loginUserInfo?.memberId;
   const isReady = roomData?.po === roomData?.to;
+  // const isOwenerOut = roomData?.guests
+  const isEmpty = roomData?.po === 0 ? true : false;
 
   const startGame = (event:any) => {
     const numPartyId = Number(partyId)
@@ -73,11 +75,17 @@ const WaitingRoomPage = () => {
         console.log('구독 요청 후 응답 데이터!!', data);
 
         // 1. 파티 디테일 정보를 받아올 경우 데이터 업데이트
-        if (data.type === "updateData") {setRoomData(data.partyDetail)}
-
+        if (data.type === "updateData") {
+          setRoomData(data.partyDetail);
+          setRoomType(data.partyDetail.kind === 1 ? 'speed' : 'other');
+        }
+        
         // 2. 게임 시작 메세지를 받을 경우
         else if (data.type === "startGame") {
-          navigate(`/jeju-play/${roomType}/${partyId}`)
+          navigate(`/jeju-play/${roomType}/${partyId}`, { 
+            state: {
+              userInfos: roomData?.guests
+            }})
         };
       });
 
@@ -90,7 +98,7 @@ const WaitingRoomPage = () => {
         subscription.unsubscribe();
       };
     }
-  }, [connected, partyId]);
+  }, [connected, roomType]);
 
   const handleBackButtonClick = () => {
     if (client) {
