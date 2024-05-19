@@ -65,15 +65,19 @@ public class PartyController {
     }
 
 
-    @DeleteMapping("/party/delete/{memberId}")
-    public ResponseEntity<?> deletePartyByMemberId(@PathVariable Long memberId) {
+    @MessageMapping("/party/delete/{memberId}")
+    @SendTo("/topic/party/{partyId}")
+    public Map<String, Object> deletePartyByMemberId(@DestinationVariable("memberId") Long memberId) {
         Optional<Party> party = partyService.findPartyByMemberId(memberId);
         if (!party.isPresent()) {
-            return ResponseEntity.notFound().build();
+            Map<String, Object> message = new HashMap<>();
+            message.put("type", "deleteError");
+            return message;
         }
-
         partyService.deleteParty(party.get().getPartyId());
-        return ResponseEntity.ok().build();
+        Map<String, Object> message = new HashMap<>();
+        message.put("type", "delete");
+        return message;
     }
 
 
@@ -116,4 +120,15 @@ public class PartyController {
 
         return message;
     }
+
+    @MessageMapping(value = "/party/result")
+    @SendTo("/topic/party/{partyId}")
+    public Map<String, Object> result() {
+        logger.info("퀴즈 종료");
+        Map<String, Object> message = new HashMap<>();
+        message.put("type", "result");
+
+        return message;
+    }
+
 }
