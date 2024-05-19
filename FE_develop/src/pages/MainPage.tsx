@@ -108,9 +108,21 @@ function MainPage() {
           <div className='top-mini-text'>마이</div>
         </a>
       </div>
+
       <div className="jeju-image-container">
+        <div
+            style={
+              {
+                top: '6rem',
+                position: 'absolute',
+                // width: '5rem',
+                // height: '4rem',
+                // backgroundColor: 'black',
+              }
+            }
+            onClick={toggleModal}
+        ><img src={Bang} alt="느낌표"/></div>
         <img src={jejuImage} alt="제주도" className="jeju-image" onClick={toggleModal} />
-        <img src={Bang} alt="느낌표" className='bang-img'/>
       </div>
       <div className="quiz-links">
         <a href="/jeju-quiz" onClick={(e) => handleClick(e, '/jeju-quiz')} className="rect-link top-right">
