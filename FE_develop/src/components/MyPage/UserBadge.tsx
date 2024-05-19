@@ -85,7 +85,7 @@ const UserBadge: React.FC<UserBadgeProps> = ({ badges }) => {
         <div className="badge-description">
           <h2>{selectedBadge.title}</h2>
           <p>{selectedBadge.description}</p>
-          <button onClick={() => setSelectedBadge(null)}>Close</button>
+          <button onClick={() => setSelectedBadge(null)}>닫기</button>
           {selectedBadge.isAcquired && (
             <button onClick={handleSetRepresentativeBadge}>대표 뱃지로 변경</button>
           )}

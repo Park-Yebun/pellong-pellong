@@ -48,11 +48,11 @@ const MyPage: React.FC = () => {
   // badges 배열과 해당 상태를 업데이트할 함수 선언
   const [badges, setBadges] = useState([
     { id: 1, title: "팰롱팰롱", description: "✨팰롱팰롱에 혼저옵서예✨", imageUrl: "../../assets/badges/01pellongpellong.png", isAcquired: false },
-    { id: 2, title: "퀘스트 탐험가", description: "데일리 퀘스트를 XX개 완료함", imageUrl: "../../assets/badges/02dailyquest.png", isAcquired: false },
-    { id: 3, title: "종달새 학습자", description: "오전 5시 - 오전 9시 사이에 퀴즈 XX개 완료함", imageUrl: "../../assets/badges/03earlybird.png", isAcquired: false },
-    { id: 4, title: "올빼미 학습자", description: "오후 9시 - 오전 5시 사이에 퀴즈 xx개 완료함", imageUrl: "../../assets/badges/04owl.png", isAcquired: false },
-    { id: 5, title: "exp 메달리스트", description: "누적 경험치 000000 xp를 획득함", imageUrl: "../../assets/badges/b5.jpg", isAcquired: false },
-    { id: 6, title: "무결점학습자", description: "만점 챕터 xxx개를 달성함", imageUrl: "../../assets/badges/b6.jpg", isAcquired: false },
+    { id: 2, title: "퀘스트 탐험가", description: "데일리 퀘스트를 10개 이상 완료함", imageUrl: "../../assets/badges/02dailyquest.png", isAcquired: false },
+    { id: 3, title: "종달새 학습자", description: "오전 5시 - 오전 9시 사이에 퀴즈 10개 완료함", imageUrl: "../../assets/badges/03earlybird.png", isAcquired: false },
+    { id: 4, title: "올빼미 학습자", description: "오후 9시 - 오전 5시 사이에 퀴즈 10개 완료함", imageUrl: "../../assets/badges/04owl.png", isAcquired: false },
+    { id: 5, title: "exp 메달리스트", description: "누적 경험치 10000 xp를 획득함", imageUrl: "../../assets/badges/b5.jpg", isAcquired: false },
+    { id: 6, title: "무결점학습자", description: "만점 챕터 10개를 달성함", imageUrl: "../../assets/badges/b6.jpg", isAcquired: false },
     { id: 7, title: "랭커", description: "전체 랭킹 1위 ~ 10위를 달성함", imageUrl: "../../assets/badges/b7.jpg", isAcquired: false },
     { id: 8, title: "탐나는 도다", description: "제주도에 방문함", imageUrl: "../../assets/badges/b8.jpg", isAcquired: false },
     { id: 9, title: "사투리의 신", description: "위의 모든 뱃지를 획득함", imageUrl: "../../assets/badges/b8.jpg", isAcquired: false },
@@ -167,7 +167,7 @@ const MyPage: React.FC = () => {
       {isModalOpen && (
         <ModalBackground>
           <ModalContent>
-            <CloseButton onClick={closeModal}>Close</CloseButton>
+            <CloseButton onClick={closeModal}>닫기</CloseButton>
             <UserExplog/>
           </ModalContent>
         </ModalBackground>
