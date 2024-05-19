@@ -154,3 +154,21 @@
     background-color: white;
     height: 400px;
   }
+
+  .user-wrap {
+    width: 100%;
+    margin: 10px auto;
+    position: relative;
+  }
+  .user-wrap img {
+    width: 100%;
+    vertical-align: middle;
+  }
+  .user-text {
+    position: absolute;
+    top: 50%;
+    left: 80%;
+    width: 100%;
+    transform: translate( -50%, -50% );
+  }
+

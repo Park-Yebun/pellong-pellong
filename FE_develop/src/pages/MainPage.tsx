@@ -15,7 +15,8 @@ import cloudPlay from '../assets/cloud-play.png';
 import cloudEdu from '../assets/cloud-edu.png';
 import cloudTrans from '../assets/cloud-trans.png';
 import DailyQuote from '../components/MainPage/DailyQuote';
-import DailyQuoteNight from "../components/MainPage/DailyQuoteNight";
+import success from '../assets/Success.png';
+import fail from '../assets/fail.png';
 
 
 interface DailyQuest {
@@ -47,7 +48,7 @@ function MainPage() {
   
         });
         const data = await response.json();
-        setDailyQuests([data]);
+setDailyQuests([data]);
         // console.log("됐다", data)
         console.log(dailyQuests)
 
@@ -86,8 +87,7 @@ function MainPage() {
 
   return (
     <div className={`main-container ${nightMode ? 'night-mode' : ''}`}>
-      {!nightMode && <DailyQuote />}
-      {nightMode && <DailyQuoteNight/>}
+      <DailyQuote />
       <div className="top-right-links">
         <a onClick={toggleNightMode} className="image-link">
           <img src={sunsetIcon} alt="" />
@@ -109,6 +109,9 @@ function MainPage() {
               {
                 top: '6rem',
                 position: 'absolute',
+                // width: '5rem',
+                // height: '4rem',
+                // backgroundColor: 'black',
               }
             }
             onClick={toggleModal}
@@ -145,9 +148,30 @@ function MainPage() {
                 {dailyQuests.map((quest) => (
                   <div key={quest.dailyQuestId}>
                     <div>일일 경험치: {quest.dailyExp}</div>
-                    <div>90점 이상 통과 여부: {quest.passed ? '통과' : '미통과'}</div>
+
+                    <div className="user-wrap">
+                        <div className="user-image">
+                        <img src={quest.passed ? success : fail} alt={quest.passed ? "Success" : "Fail"} />
+                        </div>
+                        <div className="user-text">
+                            <p>정답률 90% 이상 {quest.passed ? '1/1' : '0/1'}</p>
+                        </div>
+                    </div>
+
+                    <div className="user-wrap">
+                        <div className="user-image">
+                        <img src={quest.shared ? success : fail} alt={quest.shared ? "Success" : "Fail"} />
+                        </div>
+                        <div className="user-text">
+                            <p>모의고사 결과 공유 {quest.shared ? '1/1' : '0/1'}</p>
+                        </div>
+                    </div>
+              
+      
+              
+                    
                     <div>일일 퀘스트 완료 여부: {quest.accomplished ? '완료' : '미완료'}</div>
-                    <div>사투리 모의고사 공유 여부: {quest.shared ? '공유됨' : '미공유'}</div>
+
                   </div>
                 ))}
               </div>
