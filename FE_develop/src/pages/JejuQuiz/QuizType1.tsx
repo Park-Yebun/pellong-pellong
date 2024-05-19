@@ -31,7 +31,8 @@ const QuizType1: React.FC<{ quizData: QuizData; onNextQuestion: () => void }> = 
   // 사용자가 답을 선택했을 때 호출되는 함수
   const handleAnswer = (answerIndex: number) => {
     setSelectedAnswer(answerIndex); // 선택된 답 업데이트
-    if (answerIndex === quizData.quizAnswer) {
+    const selectedVoca = quizData.dialectVocas[answerIndex];
+    if (selectedVoca.quizOrder === quizData.quizAnswer) {
       setIsCorrect(true); // 정답인 경우
     } else {
       setIsCorrect(false); // 오답인 경우
@@ -53,7 +54,7 @@ const QuizType1: React.FC<{ quizData: QuizData; onNextQuestion: () => void }> = 
           <div className="QT1-quiz-nums">문제 {quizData.quizNo}번</div>
         </div>
         <div className="QT1-quiz-text">
-          뜻이 일치하는<br />
+          음성과 뜻이 일치하는<br />
           문장을 고르시오
         </div>
       </div>
@@ -64,8 +65,8 @@ const QuizType1: React.FC<{ quizData: QuizData; onNextQuestion: () => void }> = 
           <div>{quizData.dialectVocas[0].standardText}</div>
         </div> */}
         <div className="QT1-dialect-container">
-          <img src={hanrabong} alt="" className="QT1-dialect-img" /> {/* 방언 이미지 */}
-          <div className="QT1-dialect-text">{quizData.dialectVocas[0].dialectText}</div> {/* 방언 텍스트 */}
+          <img src={hanrabong} alt="" className="QT1-dialect-img" />
+          <div className="QT1-dialect-text">{quizData.dialectVocas[0].dialectText}</div>
         </div>
         {/* 방언 이미지 부분 (현재는 주석 처리됨) */}
         {/* <div className="QT1-image-container">

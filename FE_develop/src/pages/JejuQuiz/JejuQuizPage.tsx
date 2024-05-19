@@ -3,7 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import QuizType1 from "./QuizType1";
-// 다른 유형의 퀴즈 컴포넌트들을 가져옵니다.
+import QuizType2 from "./QuizType2";
+import QuizType3 from "./QuizType3";
 
 const LevelPlayScreen: React.FC = () => {
   const { chapterNo } = useParams<{ chapterNo: string }>();
@@ -19,7 +20,6 @@ const LevelPlayScreen: React.FC = () => {
       try {
         const response = await axios.get(`https://www.saturituri.com/api/quiz/${parsedChapterNo}`);
         const data = response.data;
-        // console.log("응답 데이터:", response.data);
         setQuestions(data);
       } catch (error) {
         console.error("Error fetching questions:", error);
@@ -39,21 +39,30 @@ const LevelPlayScreen: React.FC = () => {
     }
   };
 
+  const renderQuizComponent = (index: number, quizData: any) => {
+    const quizTypeIndex = index % 3;
+    switch (quizTypeIndex) {
+      case 0:
+        return <QuizType1 quizData={quizData} onNextQuestion={handleNextQuestion} />;
+      case 1:
+        return <QuizType2 quizData={quizData} onNextQuestion={handleNextQuestion} />;
+      case 2:
+        return <QuizType3 quizData={quizData} onNextQuestion={handleNextQuestion} />;
+      default:
+        return <p>알 수 없는 퀴즈 유형입니다.</p>;
+    }
+  };
+
   return (
     <div className="level-play-container">
       {questions.length > 0 ? (
-        <>
-          <div className="question-list">
-            {currentQuestionIndex < questions.length ? (
-              <QuizType1
-                quizData={questions[currentQuestionIndex]}
-                onNextQuestion={handleNextQuestion}
-              />
-            ) : (
-              <p>더 이상 문제가 없습니다.</p>
-            )}
-          </div>
-        </>
+        <div className="question-list">
+          {currentQuestionIndex < questions.length ? (
+            renderQuizComponent(currentQuestionIndex, questions[currentQuestionIndex])
+          ) : (
+            <p>더 이상 문제가 없습니다.</p>
+          )}
+        </div>
       ) : (
         <p>불러오는중...</p>
       )}

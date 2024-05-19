@@ -1,84 +1,104 @@
-import React, { useState } from 'react';
-import './QuizType3.css'; // CSS 파일 추가
+import React, { useState } from "react";
+import "./QuizType1.css"; // CSS 파일 임포트
 
-interface QuizType3Props {
-  onAnswer: (isCorrect: boolean) => void;  // 이 부분이 필요함
+import hanrabong from '../../assets/hanrabong.png'; // 이미지 파일 임포트
+
+// Voca 인터페이스 정의
+interface Voca {
+  quizOrder: number;
+  quizContent: string | null;
+  standardText: string;
+  dialectText: string;
+  dialectVoice: string;
+  dialectImage: string;
 }
 
-const QuizType3: React.FC<QuizType3Props> = ({ onAnswer }) =>{
-  // 더미 데이터 정의
-  const dummyData = [
-    {
-      word: '사과',
-      images: [
-        '/path/to/apple1.jpg',
-        '/path/to/apple2.jpg',
-        '/path/to/apple3.jpg',
-        '/path/to/apple4.jpg',
-      ],
-      correctIndex: 0, // 정답 이미지의 인덱스
-    },
-    {
-      word: '고양이',
-      images: [
-        '/path/to/cat1.jpg',
-        '/path/to/cat2.jpg',
-        '/path/to/cat3.jpg',
-        '/path/to/cat4.jpg',
-      ],
-      correctIndex: 1, // 정답 이미지의 인덱스
-    },
-    // 다른 더미 데이터들 추가 가능
-  ];
+// QuizData 인터페이스 정의
+interface QuizData {
+  quizId: number;
+  quizChapterNo: number;
+  quizNo: number;
+  quizCategory: number;
+  quizAnswer: number;
+  dialectVocas: Voca[];
+}
 
-  // 상태 설정
-  const [currentGame, setCurrentGame] = useState(0);
-  const [selectedImage, setSelectedImage] = useState<number | null>(null);
-  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+// QuizType1 컴포넌트 정의
+const QuizType1: React.FC<{ quizData: QuizData; onNextQuestion: () => void }> = ({ quizData, onNextQuestion }) => {
+  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null); // 선택된 답 저장
+  const [isCorrect, setIsCorrect] = useState<boolean | null>(null); // 정답 여부 저장
 
-  // 게임 데이터 가져오기
-  const { word, images, correctIndex } = dummyData[currentGame];
-
-  // 정답 확인 함수
-  const checkAnswer = () => {
-    if (selectedImage === correctIndex) {
-      setIsCorrect(true);
+  // 사용자가 답을 선택했을 때 호출되는 함수
+  const handleAnswer = (answerIndex: number) => {
+    setSelectedAnswer(answerIndex); // 선택된 답 업데이트
+    const selectedVoca = quizData.dialectVocas[answerIndex];
+    if (selectedVoca.quizOrder === quizData.quizAnswer) {
+      setIsCorrect(true); // 정답인 경우
     } else {
-      setIsCorrect(false);
+      setIsCorrect(false); // 오답인 경우
     }
   };
 
-  // 다음 게임으로 이동 함수
-  const nextGame = () => {
-    setCurrentGame(currentGame + 1);
-    setSelectedImage(null);
-    setIsCorrect(null);
+  // 다음 문제로 넘어갈 때 호출되는 함수
+  const handleNextQuestion = () => {
+    setIsCorrect(null); // 정답 여부 초기화
+    setSelectedAnswer(null); // 선택된 답 초기화
+    onNextQuestion(); // 부모 컴포넌트의 onNextQuestion 함수 호출
   };
 
   return (
-    <div className="QT3-container">
-      <h3>Game Type 3</h3>
-      <div>
-        <div className='QT3-word-box'>단어: {word}</div>
-        {images.map((image, index) => (
-          <img
-            key={index}
-            src={image}
-            alt={`Image ${index + 1}`}
-            onClick={() => setSelectedImage(index)}
-            className="QT3-image" // 이미지 클래스 추가
-          />
-        ))}
-        <button onClick={checkAnswer} className="QT3-button">제출</button>
-        {isCorrect !== null && (
-          <p className="QT3-message">{isCorrect ? '정답입니다!' : '틀렸습니다!'}</p>
-        )}
-        {isCorrect !== null && (
-          <button onClick={nextGame} className="QT3-button">다음 문제</button>
-        )}
+    <div className="QT1-container">
+      <div className="QT1-quiz-header">
+        <div className="QT1-tinum">
+          <div className="QT1-quiz-title">Quiz</div>
+          <div className="QT1-quiz-nums">문제 {quizData.quizNo}번</div>
+        </div>
+        <div className="QT1-quiz-text">
+          음성과 뜻이 일치하는<br />
+          문장을 고르시오
+        </div>
       </div>
+      <div className="QT1-quiz-content">
+        {/* 표준어 문장을 보여주는 부분 (현재는 주석 처리됨) */}
+        {/* <div className="QT1-standard-text">
+          <p>표준어:</p>
+          <div>{quizData.dialectVocas[0].standardText}</div>
+        </div> */}
+        {/* <div className="QT1-dialect-container">
+          <img src={hanrabong} alt="" className="QT1-dialect-img" />
+          <div className="QT1-dialect-text">{quizData.dialectVocas[0].dialectText}</div>
+        </div> */}
+        {/* 방언 이미지 부분 (현재는 주석 처리됨) */}
+        <div className="QT1-image-container">
+          <img src={quizData.dialectVocas[0].dialectImage} alt="Dialect Image" />
+        </div>
+        {/* <div className="QT1-audio-container">
+          <audio controls>
+            <source src={quizData.dialectVocas[0].dialectVoice} type="audio/mpeg" /> 
+          </audio>
+        </div> */}
+      </div>
+      <div className="QT1-options-container">
+        {quizData.dialectVocas.map((voca, index) => (
+          <div key={index} className="QT1-option-item">
+            <button
+              onClick={() => handleAnswer(index)}
+              disabled={selectedAnswer !== null} // 답이 선택된 후에는 버튼 비활성화
+              className={`QT1-option-button ${selectedAnswer !== null && selectedAnswer === index ? (isCorrect ? "correct" : "incorrect") : ""}`} // 선택된 답에 따라 버튼 스타일 변경
+            >
+              {voca.standardText}
+            </button>
+          </div>
+        ))}
+      </div>
+      {selectedAnswer !== null && (
+        <div className="QT1-answer-feedback">
+          {isCorrect ? <p className="QT1-correct-feedback">맞았읍니다!</p> : <p className="QT1-incorrect-feedback">틀렸어용!</p>}
+          <button onClick={handleNextQuestion} className="QT1-next-button">다음 문제로</button>
+        </div>
+      )}
     </div>
   );
 };
 
-export default QuizType3;
+export default QuizType1;
