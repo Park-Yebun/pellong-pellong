@@ -12,6 +12,8 @@ import cloudTest from '../assets/cloud-test.png';
 import cloudPlay from '../assets/cloud-play.png';
 import cloudEdu from '../assets/cloud-edu.png';
 import cloudTrans from '../assets/cloud-trans.png';
+import DailyQuote from '../components/MainPage/DailyQuote';
+
 
 function MainPage() {
   const navigate = useNavigate(); // useNavigate hook 사용
@@ -48,6 +50,7 @@ function MainPage() {
 
   return (
     <div className={`main-container ${nightMode ? 'night-mode' : ''}`}>
+      <DailyQuote />
       <div className="top-right-links">
         <a onClick={toggleNightMode}  className="image-link">
           <img src={sunsetIcon} alt="" />
