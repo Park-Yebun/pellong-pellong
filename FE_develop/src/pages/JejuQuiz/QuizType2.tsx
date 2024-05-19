@@ -91,7 +91,7 @@ const QuizType2: React.FC<{ quizData: QuizData; onNextQuestion: () => void; onCo
       </div>
       {selectedAnswer !== null && (
         <div className="QT1-answer-feedback">
-          {isCorrect ? <p className="QT1-correct-feedback">맞았읍니다!</p> : <p className="QT1-incorrect-feedback">틀렸어용!</p>}
+          {isCorrect ? <p className="QT1-correct-feedback">맞아수다!</p> : <p className="QT1-incorrect-feedback">틀렸수다!</p>}
           <button onClick={handleNextQuestion} className="QT1-next-button">다음 문제로</button>
         </div>
       )}
