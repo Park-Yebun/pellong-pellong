@@ -80,7 +80,9 @@ public class PartyService {
 //                .map(guest -> new GuestDTO(guest.getGuestId(), guest.getMember().getNickname(), guest.getMember().getProfileImg()))
                 .map(g -> new GuestDTO(g.getGuestId(),
                         memberRepository.getNicknameByMemberId(g.getMemberId()).orElseThrow(),
-                        memberRepository.findMemberByMemberId(g.getMemberId()).orElseThrow().getProfileImg()))
+                        memberRepository.findMemberByMemberId(g.getMemberId()).orElseThrow().getProfileImg(),
+                        g.getMemberId()
+                ))
                 .collect(Collectors.toList());
 
         PartyDetailDTO partydetail = new PartyDetailDTO(party.getPartyId(), party.getPartyName(), party.getKind(),
