@@ -100,21 +100,34 @@ const OtherPlayPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const response = await fetch(``, {
-        //   method: 'GET',
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //   }
-        // });
+        let apiUrl = '';
+        if (kind === 2) {
+          apiUrl = 'https://www.saturituri.com/api/kpop';
+        } else if (kind === 3) {
+          apiUrl = 'https://www.saturituri.com/api/drama';
+        } 
+        
+        const response = await fetch(apiUrl, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+  
+        const data = response
         // const data = await response.json();
-        setQuizList(dummydata);
+        // setQuizList(data);
         setQuiz(selectRandomQuiz());
-        console.log('데이터 로드 성공')
+        console.log('데이터 로드 성공', data);
       } catch (error) {
-        console.log('데이터 로드 실패', error)
+        console.log('데이터 로드 실패', error);
       }
-    }
-    fetchData()
+    };
+    fetchData();
   }, []);
   
   useEffect(() => {
