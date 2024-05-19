@@ -43,7 +43,6 @@ const QuizResultPage: React.FC = () => {
     const fetchLP = async () => {
       try {
         const updatedChapterNo = parsedChapterNo + 1;
-        console.log("nan이면 안돼", {parsedChapterNo})
         const response = await fetch(`https://www.saturituri.com/api/learning/${store.loginUserInfo?.memberId}/${updatedChapterNo}`, {
           method: 'PATCH',
           headers: {
