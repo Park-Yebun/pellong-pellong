@@ -33,21 +33,24 @@ const LevelPlayScreen: React.FC = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(prevIndex => prevIndex + 1);
     } else {
-      // 퀴즈가 끝났을 때 처리할 로직을 여기에 추가합니다.
-      alert(`퀴즈 끝! 점수: ${score}/${questions.length}`);
-      navigate("/jeju-quiz"); // 리디렉션
+      // 퀴즈가 끝났을 때 결과 페이지로 이동
+      navigate("/jeju-quiz/result", { state: { score, totalQuestions: questions.length } });
     }
+  };
+
+  const handleCorrectAnswer = () => {
+    setScore(prevScore => prevScore + 1); // 정답 맞췄을 때 점수 업데이트
   };
 
   const renderQuizComponent = (index: number, quizData: any) => {
     const quizTypeIndex = index % 3;
     switch (quizTypeIndex) {
       case 0:
-        return <QuizType1 quizData={quizData} onNextQuestion={handleNextQuestion} />;
+        return <QuizType1 quizData={quizData} onNextQuestion={handleNextQuestion} onCorrectAnswer={handleCorrectAnswer} />;
       case 1:
-        return <QuizType2 quizData={quizData} onNextQuestion={handleNextQuestion} />;
+        return <QuizType2 quizData={quizData} onNextQuestion={handleNextQuestion} onCorrectAnswer={handleCorrectAnswer} />;
       case 2:
-        return <QuizType3 quizData={quizData} onNextQuestion={handleNextQuestion} />;
+        return <QuizType3 quizData={quizData} onNextQuestion={handleNextQuestion} onCorrectAnswer={handleCorrectAnswer} />;
       default:
         return <p>알 수 없는 퀴즈 유형입니다.</p>;
     }

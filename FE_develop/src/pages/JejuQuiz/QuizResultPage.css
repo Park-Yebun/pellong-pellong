@@ -1,0 +1,39 @@
+.quiz-result-container {
+    background-color: #D1E9F9;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 100vh;
+    max-width: 600px;
+    margin: auto;
+    text-align: center; /* 중앙 정렬 */
+  }
+  
+  .quiz-result-container h1 {
+    font-size: 25px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .quiz-result-container p {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .quiz-result-container button {
+    background-color: #0056b3;
+    color: white;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+  }
+  
+  .quiz-result-container button:hover {
+    background-color: #003d80;
+  }
+  
