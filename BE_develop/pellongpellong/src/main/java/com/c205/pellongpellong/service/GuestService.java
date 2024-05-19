@@ -77,20 +77,21 @@ public class GuestService {
                 party.getPo(),
                 party.getTo(),
                 party.getIsPublic(),
+//                member.getMemberId(),
                 party.getMember().getMemberId(),
                 guestDTOs);
         
         // 웹소켓 송신 메세지 객체 타입으로 만들어서 보내주기
-        Map<String, Object> message = new HashMap<>();
-        message.put("type", "updateData");
-        message.put("partyDetail", partydetail);
-        try {
-            String jsonMessage = new ObjectMapper().writeValueAsString(message);
-            messagingTemplate.convertAndSend("/topic/party/" + party.getPartyId(), jsonMessage);
-        } catch (JsonProcessingException e) {
-            // 로깅 및 오류 처리
-            logger.error("JSON 직렬화 오류", e);
-        }
+//        Map<String, Object> message = new HashMap<>();
+//        message.put("type", "updateData");
+//        message.put("partyDetail", partydetail);
+//        try {
+//            String jsonMessage = new ObjectMapper().writeValueAsString(message);
+//            messagingTemplate.convertAndSend("/topic/party/" + party.getPartyId(), jsonMessage);
+//        } catch (JsonProcessingException e) {
+//            // 로깅 및 오류 처리
+//            logger.error("JSON 직렬화 오류", e);
+//        }
         return partydetail;
     }
 

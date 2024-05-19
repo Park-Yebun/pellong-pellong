@@ -9,8 +9,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,6 +64,7 @@ public class PartyController {
         return ResponseEntity.ok(partyDTOs);
     }
 
+
     @DeleteMapping("/party/delete/{memberId}")
     public ResponseEntity<?> deletePartyByMemberId(@PathVariable Long memberId) {
         Optional<Party> party = partyService.findPartyByMemberId(memberId);
@@ -73,25 +77,51 @@ public class PartyController {
     }
 
 
-    @GetMapping("/party/{partyId}")
-    public void enterUser(@PathVariable Long partyId) {
-        String enterMessage =  "대기방에 입장하셨습니다.";
+    @MessageMapping("/party/{partyId}")
+    public void enterUser(@DestinationVariable("partyId") Long partyId) {
+        String enterMessage = "대기방에 입장하셨습니다.";
+        logger.info("");
+
+        // 동적으로 대상 경로를 설정하여 메시지 전송
         messagingTemplate.convertAndSend("/topic/party/" + partyId, enterMessage);
-        logger.info("Sent message to /topic/party/" + partyId + ": " + enterMessage);
     }
 
-    @MessageMapping(value = "/party/{partyId}/start")
-    public void startGame(@PathVariable Long partyId) {
+    @MessageMapping("/party/{partyId}/start")
+    @SendTo("/topic/party/{partyId}")
+    public Map<String, Object> startGame(@DestinationVariable Long partyId) {
         Map<String, Object> message = new HashMap<>();
         message.put("type", "startGame");
+
+        return message;
+    }
+
+    @MessageMapping(value = "/party/{partyId}/correct/{memberId}")
+    public void correctMSG(@PathVariable Long partyId, Long memberId) {
+        Map<String, Object> message = new HashMap<>();
+        message.put("type", "correct");
+        message.put("memberId", memberId);
         try {
             String jsonMessage = new ObjectMapper().writeValueAsString(message);
             messagingTemplate.convertAndSend("/topic/party/" + partyId, jsonMessage);
-            logger.info("Sent message to /topic/party/" + partyId + ": start");
+            logger.info("Sent message to /topic/party/" + partyId + ": correctMSG");
         } catch (JsonProcessingException e) {
             // 로깅 및 오류 처리
             logger.error("JSON 직렬화 오류", e);
         }
+    }
 
+    @MessageMapping(value = "/party/{partyId}/wrong/{memberId}")
+    public void wrongMSG(@PathVariable Long partyId, Long memberId) {
+        Map<String, Object> message = new HashMap<>();
+        message.put("type", "wrong");
+        message.put("memberId", memberId);
+        try {
+            String jsonMessage = new ObjectMapper().writeValueAsString(message);
+            messagingTemplate.convertAndSend("/topic/party/" + partyId, jsonMessage);
+            logger.info("Sent message to /topic/party/" + partyId + ": wrongMSG");
+        } catch (JsonProcessingException e) {
+            // 로깅 및 오류 처리
+            logger.error("JSON 직렬화 오류", e);
+        }
     }
 }
