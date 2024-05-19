@@ -29,18 +29,18 @@ const ExperienceLog: React.FC = () => {
 
   return (
     <div>
-      <h2>Experience Log for Member ID: {memberId}</h2>
+      <h2>경험치 적립 내역 </h2>
       <ul>
         {experienceLog.map((log) => (
           <li key={log.expId}>
             <div>
-              <strong>Experience Name:</strong> {log.expName}
+              <strong>내역 : </strong> {log.expName}
             </div>
             <div>
-              <strong>Experience:</strong> {log.exp}
+              <strong>경험치 : </strong> {log.exp}
             </div>
             <div>
-              <strong>Date:</strong> {new Date(log.expAt).toLocaleDateString()}
+              <strong>일자 : </strong> {new Date(log.expAt).toLocaleDateString()}
             </div>
           </li>
         ))}

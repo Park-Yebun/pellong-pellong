@@ -61,6 +61,21 @@
   margin-top: 20px;
 }
 
+.tt-test-buttons {
+  width: 300px;
+  padding-bottom: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #E3FFD0;
+  text-decoration: none;
+  color: black;
+  border: none;
+  border-radius: 50px;
+  padding: 20px;
+  cursor: pointer;
+
+}
+
 .tt-test-button {
   width: 300px;
   margin-bottom: 20px;

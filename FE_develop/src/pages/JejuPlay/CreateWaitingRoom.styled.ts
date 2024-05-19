@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import background from '../../assets/JejuPlay/background.png'
 
 export const Container = styled.div`
-    width: 360px;
+    // width: 360px;
     height: 800px;
     position: relative;
 
