@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import './RankPage.css';
 import BackButton from '../../components/BackButton';
 import close from '../../assets/JejuPlay/close.png'
+import useStore from '../../store';
 
 interface User {
   memberId: number;
@@ -13,120 +14,120 @@ interface User {
   rankId: number;
 }
 
+const sortAndRankUsers = (users: User[]): User[] => {
+  const sortedUsers = users.sort((a, b) => b.sumExp - a.sumExp);
+  let rank = 1;
+  let prevExperience = sortedUsers[0].sumExp;
 
-
-
-  const sortAndRankUsers = (users: User[]): User[] => {
-    const sortedUsers = users.sort((a, b) => b.sumExp - a.sumExp);
-    let rank = 1;
-    let prevExperience = sortedUsers[0].sumExp;
+  console.log("=== 랭크 부여 과정 ===");
+  console.log("랭크\t아이디\t유저네임\t경험치");
   
-    console.log("=== 랭크 부여 과정 ===");
-    console.log("랭크\t아이디\t유저네임\t경험치");
-    
-    const rankedUsers = sortedUsers.map((user, index) => {
-      if (index > 0 && user.sumExp !== prevExperience) {
-        rank++;
-      }
-      console.log(`${rank}\t${user.memberId}\t${user.nickname}\t${user.sumExp}`);
-      prevExperience = user.sumExp;
-      return { ...user, rank };
-    });
-  
-    return rankedUsers;
-  };
-  
-  const UserRanking: React.FC = () => {
-    const [users, setUsers] = useState<User[]>([]);
-    const [passwordModalOpen, setPasswordModalOpen] = useState<boolean>(false); // 이 부분을 함수 컴포넌트 내부로 이동
-    const [selectedUser, setSelectedUser] = useState<User | null>(null); // 클릭된 유저 정보를 상태로 관리
-  
-    useEffect(() => {
-      console.log("페치데이터 동작!!")
-      const fetchUsers = async () => {
-        try {
-          const response = await fetch('https://www.saturituri.com/api/ranking', {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          });
-          const data: User[] = await response.json();
-          const rankedUsers = sortAndRankUsers(data);
-          setUsers(rankedUsers);
-          console.log("데이터 로드 완료", data);
-        } catch (error) {
-          console.log("데이터 로드 실패", error)
-        }
-      }
-      fetchUsers();
-    }, []);
+  const rankedUsers = sortedUsers.map((user, index) => {
+    if (index > 0 && user.sumExp !== prevExperience) {
+      rank++;
+    }
+    console.log(`${rank}\t${user.memberId}\t${user.nickname}\t${user.sumExp}`);
+    prevExperience = user.sumExp;
+    return { ...user, rank };
+  });
 
-    const getRankBadge = (sumExp: number) => {
-      if (sumExp >= 0 && sumExp < 100) {
-        return '../../assets/badge/small.png';
-      }
-      else if (sumExp >= 100 && sumExp < 300) {
-        return '../../assets/badge/middle.png';
-      }
-      else if (sumExp >= 300 && sumExp < 500) {
-        return '../../assets/badge/big.png';
-      }
-      else if (sumExp >= 500 && sumExp < 1000) {
-        return '../../assets/badge/sobig.png';
-      }
-      else if (sumExp > 1000)
-        return '../../assets/badge/brilliant.png';
-    };
+  return rankedUsers;
+};
 
-    const handleUserClick = async (user: User) => {
-      setSelectedUser(user); // 클릭된 유저 정보 설정
-      setPasswordModalOpen(true); // 모달 열기
+const UserRanking: React.FC = () => {
+  const store = useStore();
+  const [users, setUsers] = useState<User[]>([]);
+  const [passwordModalOpen, setPasswordModalOpen] = useState<boolean>(false); // 이 부분을 함수 컴포넌트 내부로 이동
+  const [selectedUser, setSelectedUser] = useState<User | null>(null); // 클릭된 유저 정보를 상태로 관리
+
+  useEffect(() => {
+    console.log("페치데이터 동작!!")
+    console.log(store.loginUserInfo?.memberId)
+    const fetchUsers = async () => {
       try {
-        const response = await fetch(`https://www.saturituri.com/api/userInfo/exp/comparison`, {
+        const response = await fetch('https://www.saturituri.com/api/ranking', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json'
           }
         });
-        /// 여기서부터 내일함
-        const userInfo: string = await response.json();
+        const data: User[] = await response.json();
+        const rankedUsers = sortAndRankUsers(data);
+        setUsers(rankedUsers);
+        console.log("데이터 로드 완료", data);
       } catch (error) {
-        console.log("유저 정보 로드 실패", error)
+        console.log("데이터 로드 실패", error)
       }
-    };
+    }
+    fetchUsers();
+  }, []);
 
-    return (
-      <div className="RK-user-ranking-container">
-        <BackButton />
-        <div className='RK-ranking-title'>랭킹 조회</div>
-        <div className="RK-user-grid">
-          {users.map((user) => (
-            <div key={user.memberId} className="RK-user-card" onClick={() => handleUserClick(user)}>
-              <div className="RK-user-info">
-                <span className="RK-rank-number">{user.rankId}</span>
-                <span className="RK-rank-badge">
-                  <img src={getRankBadge(user.sumExp)} alt=""/>
-                </span>
-                <img className="RK-profile-picture" src={user.profileImg} alt={`Profile of ${user.nickname}`} />
-                <p className="RK-username">{user.nickname}</p>
-                <p className="RK-experience">{user.sumExp}xp</p>
-              </div>
-            </div>
-          ))}
-        </div>
-        {passwordModalOpen && (
-          <div className='password-modal'>
-            <img className='close' src={close} alt="closebtn" onClick={() => {setPasswordModalOpen(false);}}/>
-            <div className='password-txt'>
-              {/* 클릭된 유저 정보를 모달 내에서 표시 */}
-              {selectedUser && `${selectedUser.nickname}과 나의 지난 3일간 누적 경험치 비교`}
+  const getRankBadge = (sumExp: number) => {
+    if (sumExp >= 0 && sumExp < 100) {
+      return '../../assets/badge/small.png';
+    }
+    else if (sumExp >= 100 && sumExp < 300) {
+      return '../../assets/badge/middle.png';
+    }
+    else if (sumExp >= 300 && sumExp < 500) {
+      return '../../assets/badge/big.png';
+    }
+    else if (sumExp >= 500 && sumExp < 1000) {
+      return '../../assets/badge/sobig.png';
+    }
+    else if (sumExp > 1000)
+      return '../../assets/badge/brilliant.png';
+  };
 
+  const handleUserClick = async (user: User) => {
+    setSelectedUser(user); // 클릭된 유저 정보 설정
+    setPasswordModalOpen(true); // 모달 열기
+    try {  
+      const response = await fetch(`https://www.saturituri.com/api/exp/${store.loginUserInfo?.memberId}/${user.memberId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+  
+      const userInfo: string = await response.json();
+      console.log("찍혀라", userInfo)
+    } catch (error) {
+      console.log("유저 정보 로드 실패", error)
+    }
+  };
+
+  return (
+    <div className="RK-user-ranking-container">
+      <BackButton />
+      <div className='RK-ranking-title'>랭킹 조회</div>
+      <div className="RK-user-grid">
+        {users.map((user) => (
+          <div key={user.memberId} className="RK-user-card" onClick={() => handleUserClick(user)}>
+            <div className="RK-user-info">
+              <span className="RK-rank-number">{user.rankId}</span>
+              <span className="RK-rank-badge">
+                <img src={getRankBadge(user.sumExp)} alt=""/>
+              </span>
+              <img className="RK-profile-picture" src={user.profileImg} alt={`Profile of ${user.nickname}`} />
+              <p className="RK-username">{user.nickname}</p>
+              <p className="RK-experience">{user.sumExp}xp</p>
             </div>
           </div>
-        )}
+        ))}
       </div>
-    );
-  };
+      {passwordModalOpen && (
+        <div className='password-modal'>
+          <img className='close' src={close} alt="closebtn" onClick={() => {setPasswordModalOpen(false);}}/>
+          <div className='password-txt'>
+            {/* 클릭된 유저 정보를 모달 내에서 표시 */}
+            {selectedUser && `${selectedUser.nickname}과 나의 지난 3일간 누적 경험치 비교`}
+
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 
 export default UserRanking;
