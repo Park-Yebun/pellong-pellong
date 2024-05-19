@@ -33,18 +33,21 @@ public class MemberVariableService {
     }
 
     public ProfileMemberVarDTO getProfileMemberVar(long memberId){
-        MemberVariable memberVariable = memberVariableRepository.findById(memberId).orElseThrow(() -> new RuntimeException("User not found"));
+//        MemberVariable memberVariable = memberVariableRepository.findById(memberId).orElseThrow(() -> new RuntimeException("User not found"));
+        MemberVariable memberVariable = memberVariableRepository.findByMember_MemberId(memberId).orElseThrow(() -> new RuntimeException("User not found"));
         return new ProfileMemberVarDTO(memberVariable.getTier());
     }
 
     public LocalDateTime getLoginedAtByMemberId(long memberId) {
-        MemberVariable memberVariable = memberVariableRepository.findById(memberId)
+//        MemberVariable memberVariable = memberVariableRepository.findById(memberId)
+        MemberVariable memberVariable = memberVariableRepository.findByMember_MemberId(memberId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         return memberVariable.getLoginedAt();
     }
 
     public void updateLoginedAt(long memberId, LocalDateTime loginedAt)  {
-        MemberVariable memberVariable = memberVariableRepository.findById(memberId)
+//        MemberVariable memberVariable = memberVariableRepository.findById(memberId)
+        MemberVariable memberVariable = memberVariableRepository.findByMember_MemberId(memberId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         memberVariable.setLoginedAt(loginedAt);
         memberVariableRepository.save(memberVariable);
@@ -109,5 +112,8 @@ public class MemberVariableService {
                 System.out.println(player.getPlayerId() + " 번 회원의 누적 일일퀘스트가 갱신되었습니다.");
             }
         }
+    }
+    public void delete(long memberId) {
+        memberVariableRepository.deleteById(memberId);
     }
 }

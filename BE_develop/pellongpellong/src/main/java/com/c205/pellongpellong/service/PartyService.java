@@ -7,10 +7,12 @@ import com.c205.pellongpellong.entity.Guest;
 import com.c205.pellongpellong.entity.Member;
 import com.c205.pellongpellong.entity.Party;
 import com.c205.pellongpellong.repository.GuestRepository;
+import com.c205.pellongpellong.repository.MemberRepository;
 import com.c205.pellongpellong.repository.PartyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,9 +29,9 @@ public class PartyService {
 
     @Autowired
     private GuestRepository guestRepository;
-
+    private MemberRepository memberRepository;
     public Optional<Party> findPartyByMemberId(Long memberId) {
-        return partyRepository.findById(memberId);
+        return partyRepository.findByMemberMemberId(memberId);
     }
     // 웹소켓적용
     public Party createParty(Party party) {
@@ -44,6 +46,7 @@ public class PartyService {
     }
 
     // 웹소켓적용
+    @Transactional
     public void deleteParty(Long partyId) {
         Party party = partyRepository.findById(partyId).orElseThrow(() -> new RuntimeException("파티를 찾을 수 없습니다."));
 
@@ -71,8 +74,13 @@ public class PartyService {
     }
     public PartyDetailDTO getPartyDetail(Long partyId) {
         Party party = partyRepository.findById(partyId).orElseThrow(() -> new RuntimeException("Party not found"));
+
         List<GuestDTO> guestDTOs = party.getGuests().stream()
-                .map(guest -> new GuestDTO(guest.getGuestId(), guest.getMember().getNickname(), guest.getMember().getProfileImg()))
+//                .map(guest -> new GuestDTO(guest.getGuestId(), guest.getMember().getNickname(), guest.getMember().getProfileImg()))
+//                .map(guest -> new GuestDTO(guest.getGuestId(), guest.getMember().getNickname(), guest.getMember().getProfileImg()))
+                .map(g -> new GuestDTO(g.getGuestId(),
+                        memberRepository.getNicknameByMemberId(g.getMemberId()).orElseThrow(),
+                        memberRepository.findMemberByMemberId(g.getMemberId()).orElseThrow().getProfileImg()))
                 .collect(Collectors.toList());
 
         PartyDetailDTO partydetail = new PartyDetailDTO(party.getPartyId(), party.getPartyName(), party.getKind(),
@@ -81,4 +89,6 @@ public class PartyService {
         messagingTemplate.convertAndSend("/topic/party/" + party.getPartyId(), partydetail);
         return partydetail;
     }
+
+
 }

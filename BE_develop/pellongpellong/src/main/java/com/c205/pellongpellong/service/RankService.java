@@ -32,14 +32,14 @@ public class RankService {
         return new ProfileRankDTO(rank.getSumExp());
     }
 
-    public List<RankDTO> getAllRank() {
-        List<Rank> ranks = rankRepository.findAll();  // 모든 Rank 조회
-        List<RankDTO> rankDTOs = ranks.stream()
-                .map(rank -> rank.of(rank))
-                .toList();
-
-        return rankDTOs;
-    }
+//    public List<RankDTO> getAllRank() {
+//        List<Rank> ranks = rankRepository.findAll();  // 모든 Rank 조회
+//        List<RankDTO> rankDTOs = ranks.stream()
+//                .map(rank -> rank.of(rank))
+//                .toList();
+//
+//        return rankDTOs;
+//    }
 
     public List<RankDTO> getAllRankInRedis() {
         Set<ZSetOperations.TypedTuple<String>> typedTuples = redisTemplate.opsForZSet().reverseRangeWithScores("ranking", 0, -1);
@@ -59,8 +59,9 @@ public class RankService {
                     int sumExp = Objects.requireNonNull(typedTuple.getScore()).intValue();
                     String nickName = memberRepository.getNicknameByMemberId(memberId).orElseThrow(() -> new RuntimeException("해당 memberId에 해당하는 회원의 닉네임이 존재하지 않습니다."));
 //                    int sumExp = Integer.parseInt(Double.toString(typedTuple.getScore()));
-
-                    RankDTO rankDTO = new  RankDTO(rankId.get(), memberId, sumExp, nickName);
+                    String profileImg = memberRepository.getProfileImgByMemberId(memberId)
+                            .orElseThrow(() -> new RuntimeException("해당 memberId에 해당하는 회원의 프로필 이미지가 존재하지 않습니다."));
+                    RankDTO rankDTO = new  RankDTO(rankId.get(), memberId, sumExp, nickName, profileImg);
                     rankId.addAndGet(1);
                     return rankDTO;
                 }).toList();
