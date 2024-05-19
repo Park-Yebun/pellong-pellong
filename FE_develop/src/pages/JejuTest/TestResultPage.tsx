@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import './TestResultPage.css'
 
 const ResultPage: React.FC = () => {
   // useParams 훅을 사용하여 URL에서 전달된 경로 매개변수를 가져옴

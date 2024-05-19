@@ -8,7 +8,7 @@ const TestFirstPage = () => {
   return (
     <div className="test-first-container">
       <BackButton />
-      <h1 className="test-title">사투리 모의고사</h1>
+      <div className="test-title">사투리 모의고사</div>
       <img className="examImage" src={Exam} alt="Exam image" />
       <div className='descri-container'>
         <div className="descri">1. 본 모의고사는 총 15문제로 이루어져 있습니다.</div>
