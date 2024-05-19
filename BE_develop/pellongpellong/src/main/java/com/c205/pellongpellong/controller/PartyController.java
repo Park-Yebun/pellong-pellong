@@ -96,32 +96,24 @@ public class PartyController {
     }
 
     @MessageMapping(value = "/party/{partyId}/correct/{memberId}")
-    public void correctMSG(@PathVariable Long partyId, Long memberId) {
+    @SendTo("/topic/party/{partyId}")
+    public Map<String, Object>  correctMSG(@DestinationVariable("partyId")  Long partyId, @DestinationVariable("memberId")  Long memberId) {
+        logger.info("정답 요청 옴");
         Map<String, Object> message = new HashMap<>();
         message.put("type", "correct");
         message.put("memberId", memberId);
-        try {
-            String jsonMessage = new ObjectMapper().writeValueAsString(message);
-            messagingTemplate.convertAndSend("/topic/party/" + partyId, jsonMessage);
-            logger.info("Sent message to /topic/party/" + partyId + ": correctMSG");
-        } catch (JsonProcessingException e) {
-            // 로깅 및 오류 처리
-            logger.error("JSON 직렬화 오류", e);
-        }
+
+        return message;
     }
 
     @MessageMapping(value = "/party/{partyId}/wrong/{memberId}")
-    public void wrongMSG(@PathVariable Long partyId, Long memberId) {
+    @SendTo("/topic/party/{partyId}")
+    public Map<String, Object> wrongMSG(@DestinationVariable("partyId") Long partyId, @DestinationVariable("memberId") Long memberId) {
+        logger.info("오답 요청 옴");
         Map<String, Object> message = new HashMap<>();
         message.put("type", "wrong");
         message.put("memberId", memberId);
-        try {
-            String jsonMessage = new ObjectMapper().writeValueAsString(message);
-            messagingTemplate.convertAndSend("/topic/party/" + partyId, jsonMessage);
-            logger.info("Sent message to /topic/party/" + partyId + ": wrongMSG");
-        } catch (JsonProcessingException e) {
-            // 로깅 및 오류 처리
-            logger.error("JSON 직렬화 오류", e);
-        }
+
+        return message;
     }
 }
