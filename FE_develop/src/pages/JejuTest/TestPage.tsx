@@ -202,7 +202,7 @@ const QuizApp: React.FC = () => {
 
         const fetchData = async () => {
           try {
-            const response = await fetch('https://www.saturituri.com/api//exp/test-sharing/' + store.loginUserInfo?.memberId, {
+            const response = await fetch('https://www.saturituri.com/api/exp/test-sharing/' + store.loginUserInfo?.memberId, {
               method: 'PATCH',
               headers: {
                 'Content-Type': 'application/json'

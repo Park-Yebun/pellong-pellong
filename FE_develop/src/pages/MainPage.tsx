@@ -59,6 +59,24 @@ function MainPage() {
 
   function toggleModal() {
     setShowModal(!showModal);
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://www.saturituri.com/api/daily-quest/' + store.loginUserInfo?.memberId, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        const data = await response.json();
+        // 데이터에 숫자 잘들어옴
+        console.log('성공', data);
+      } catch (error) {
+        console.log("실패", error)
+      }
+    }
+    fetchData();
+
+
   }
 
   function handleModalClose(e: React.MouseEvent<HTMLDivElement>) {
