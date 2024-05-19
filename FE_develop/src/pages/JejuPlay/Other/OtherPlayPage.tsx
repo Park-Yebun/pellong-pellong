@@ -36,30 +36,14 @@ const OtherPlayPage = () => {
   const [alert, setAlert] = useState<string>('');
   const [lifeCnt, setLifeCnt] = useState<number>(3);
   const { partyId } = useParams();
-
-  // 클라이언트 할당
-  const socket = new SockJS('http://localhost:8080/ws');
-  let client = Stomp.over(socket);
+  const location = useLocation();
+  const [kind, setKind] = useState<number>(location.state?.kind);
 
   interface Quiz {
     readonly dramaId: number,
     content: string,
     title: string
   }
-
-  useEffect(() => {
-    // 소켓 연결
-    client.connect({}, () => {
-      // 구독 요청
-      client.subscribe("/topic/party/" + partyId, function(message){});
-
-    return () => {
-      client.disconnect(() => {
-        console.log("웹소켓 연결이 해제되었습니다.")
-      });
-    };
-  }, []);
-  });
 
   const selectRandomQuiz = () => {
     if (dummydata.length > 0) {
@@ -98,21 +82,34 @@ const OtherPlayPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const response = await fetch(``, {
-        //   method: 'GET',
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //   }
-        // });
+        let apiUrl = '';
+        if (kind === 2) {
+          apiUrl = 'https://www.saturituri.com/api/kpop';
+        } else if (kind === 3) {
+          apiUrl = 'https://www.saturituri.com/api/drama';
+        } 
+        
+        const response = await fetch(apiUrl, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+  
+        const data = response
         // const data = await response.json();
-        setQuizList(dummydata);
+        // setQuizList(data);
         setQuiz(selectRandomQuiz());
-        console.log('데이터 로드 성공')
+        console.log('데이터 로드 성공', data);
       } catch (error) {
-        console.log('데이터 로드 실패', error)
+        console.log('데이터 로드 실패', error);
       }
-    }
-    fetchData()
+    };
+    fetchData();
   }, []);
   
   useEffect(() => {

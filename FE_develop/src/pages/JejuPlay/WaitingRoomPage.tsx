@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
-import BackButton from '../../components/BackButton'
-import useStore from '../../store' 
+import { useParams, useNavigate } from 'react-router-dom';
+import useStore from '../../store';
+import useWebsocket from '../../contexts/useWebsocket';
+
 import {
   Container,
   MainTextBox,
@@ -11,68 +12,66 @@ import {
   SubTextBox,
   UpperBox,
   Nickname,
-  ProfileImg
-} from './WaitingRoomPage.styled'
-import { Interface }
- from 'readline';
-
-// 웹소켓 통신
-import SockJS from 'sockjs-client';
-import {Stomp, Frame} from '@stomp/stompjs';
+  ProfileImg,
+  BackBtn
+} from './WaitingRoomPage.styled';
 
 interface Room {
-  readonly partyId: number,
-  partyName: string,
-  kind: number,
-  po: number,
-  to: number,
-  isPublic: boolean,
-  hostId: number,
-  guests: any
-}
-
-interface Guest {
-  readonly guestId: number,
-  nickname: string,
-  profileImg: string
+  readonly partyId: number;
+  partyName: string;
+  kind: number;
+  po: number;
+  to: number;
+  isPublic: boolean;
+  hostId: number;
+  guests: any;
 }
 
 const WaitingRoomPage = () => {
-  const [roomData, setRoomData] = useState<Room|undefined>();
+  const [roomData, setRoomData] = useState<Room | undefined>();
   const { partyId } = useParams();
   const store = useStore();
+  const { connected, connect, disconnect, client } = useWebsocket();
   const navigate = useNavigate();
-  const roomType = roomData?.kind === 1? "speed" : "other"
-  const isOwner  = roomData?.hostId === store.loginUserInfo?.memberId;
+  const roomType = roomData?.kind === 1 ? 'speed' : 'other';
+  const isOwner = roomData?.hostId === store.loginUserInfo?.memberId;
   const isReady = roomData?.po === roomData?.to;
 
-
-  // 게임 시작 함수
   const startGame = (event:any) => {
-    if (!isOwner) {
-      event.preventDefault();
-      console.log("퀴즈 시작 권한이 없습니다.") //추후 alert나 모달로 구현할 것
-    } else {
-      if (!isReady) {
-        console.log("인원이 준비되지 않았습니다.") //추후 alert나 모달로 구현할 것
-      } else {
-        client.send(`/app/party/${partyId}/start`, {}, '');
-      }}
+    const numPartyId = Number(partyId)
+    if (client) {
+      client.publish({
+        destination: `/app/party/${numPartyId}/start`,
+        body: ''
+      });
+    }
+    // if (!isOwner) {
+    //   event.preventDefault();
+    //   console.log("퀴즈 시작 권한이 없습니다.") //추후 alert나 모달로 구현할 것
+    // } else {
+    //   if (!isReady && client) {
+    //     console.log("인원이 준비되지 않았습니다.") //추후 alert나 모달로 구현할 것
+    //   } else if (isReady && client) {
+    //     const numPartyId = Number(partyId)
+    //     client.publish({
+    //       destination: `/app/party/${numPartyId}/start`,
+    //       body: ''
+    //     });
+    //   }}
   };
 
-  // 클라이언트 할당
-  const socket = new SockJS('https://www.saturituri.com/ws');
-  let client = Stomp.over(socket);
+  useEffect(() => {
+    connect();
+  }, [connect]);
 
   useEffect(() => {
-    // 소켓 연결
-    client.connect({}, () => {
-      console.log("웹소켓이 연결되었습니다.")
-
-      // 구독 요청
-      client.subscribe("/topic/party/" + partyId, function(message){
+    if (connected && client) {
+      console.log("구독 요청을 보냅니다.");
+      const numPartyId = Number(partyId)
+      const subscription = client.subscribe(`/topic/party/` + numPartyId, (message) => {
         const data = JSON.parse(message.body);
-        console.log("구독 요청 후 응답 데이터!!", data);
+        console.log('구독 요청 후 응답 데이터!!', data);
+
         // 1. 파티 디테일 정보를 받아올 경우 데이터 업데이트
         if (data.type === "updateData") {setRoomData(data.partyDetail)}
 
@@ -80,55 +79,56 @@ const WaitingRoomPage = () => {
         else if (data.type === "startGame") {
           navigate(`/jeju-play/${roomType}/${partyId}`)
         };
-    });
-    // 구독 요청 완료후에
-    // 클라이언트 > 서버 메세지 보내기(참여자 입장요청)
-    client.send(`/app/party/guest`, {},JSON.stringify({partyId: partyId, memberId: store.loginUserInfo?.memberId}));
-  });
+      });
 
-    return () => {
-      console.log("언마운트됨")
-      // 클라이언트 > 서버 메세지 보내기(참여자 퇴장요청)
-      try{
-        client.send(`/app/party/guest/delete`, {},JSON.stringify({partyId: partyId, memberId: store.loginUserInfo?.memberId}));
-        console.log("퇴장 메세지를 전송했습니다.", store.loginUserInfo?.memberId);
-      } catch (error) {
-        console.error("메세지 전송 중 오류가 발생했습니다:", error);
-      }
+      client.publish({
+        destination: '/app/party/guest/' + numPartyId,
+        body: JSON.stringify({partyId: numPartyId, memberId: store.loginUserInfo?.memberId})
+      });
 
-      setTimeout(() => {
-        client.disconnect(() => {
-          console.log("웹소켓 연결이 해제되었습니다.");
-        });
-      }, 500); // 연결 해제를 500ms 지연
-    };
-  }, []);
+      return () => {
+        subscription.unsubscribe();
+      };
+    }
+  }, [connected, partyId]);
+
+  const handleBackButtonClick = () => {
+    if (client) {
+      const numPartyId = Number(partyId)
+      client.publish({
+        destination: '/app/party/guest/delete',
+        body: JSON.stringify({partyId: numPartyId, memberId: store.loginUserInfo?.memberId})
+      });
+    }
+    navigate('/'); // 뒤로가기
+  };
 
   return (
     <Container>
       <UpperBox>
-        <BackButton/>
+        <BackBtn onClick={handleBackButtonClick}></BackBtn>
         <SubTextBox>PLAY !!</SubTextBox>
         <MainTextBox>인원이 모이면 퀴즈를 시작해요</MainTextBox>
       </UpperBox>
       <PlayerContainer>
-      {roomData && Array.from({ length: roomData.to }, (_, index) => (
-        <Player key={index}>
-          {roomData.guests[index] ? (
-            <>
-              <ProfileImg src={roomData.guests[index].profileImg} />
-              <Nickname>{roomData.guests[index].nickname}</Nickname>
-            </>
-          ) : (
-            <>
-            <ProfileImg/>
-            <Nickname></Nickname>
-            </>
-          )}
-        </Player>
-      ))}
+        {roomData &&
+          Array.from({ length: roomData.to }, (_, index) => (
+            <Player key={index}>
+              {roomData.guests[index] ? (
+                <>
+                  <ProfileImg src={roomData.guests[index].profileImg} />
+                  <Nickname>{roomData.guests[index].nickname}</Nickname>
+                </>
+              ) : (
+                <>
+                  <ProfileImg />
+                  <Nickname></Nickname>
+                </>
+              )}
+            </Player>
+          ))}
       </PlayerContainer>
-      <StartBtn onClick={(e) => startGame(e)}>퀴즈 시작</StartBtn>
+      <StartBtn onClick={startGame}>퀴즈 시작</StartBtn>
     </Container>
   );
 };

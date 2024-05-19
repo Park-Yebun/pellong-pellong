@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import background from '../../assets/JejuPlay/background2.png'
+import BackArrow from '../../assets/back-arrow.png'
 
 export const Container = styled.div`
     width: 360px;
@@ -111,4 +112,14 @@ export const StartBtn = styled.button`
     line-height: 24px; /* 120% */
     letter-spacing: 0.1px;
 
+`
+
+export const BackBtn = styled.div`
+    background: url(${BackArrow}) center center / cover no-repeat;
+
+    width: 24px;
+    height: 24px;
+
+    padding-top: 15px;
+    margin-left: 15px;
 `

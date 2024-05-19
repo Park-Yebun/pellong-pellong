@@ -79,7 +79,7 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  
+  font-family: "assey";
 }
 
 .QT1-image-container {
@@ -112,10 +112,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-family: "assey";
 }
 
 .QT1-option-item {
   margin-bottom: 10px;
+  font-family: "assey";
 }
 
 .QT1-option-button {
@@ -128,6 +130,7 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  font-family: "assey";
 }
 
 .QT1-option-button:disabled {
