@@ -62,12 +62,12 @@ const ProfileEdit: React.FC = () => {
   const logout = () => {
     localStorage.removeItem("accessToken");
     useStore.getState().setLoginUserInfo(undefined);
-    console.log("로그아웃되었습니다.") // 추후에 모달로 구현할 것
+    // console.log("로그아웃되었습니다.") // 추후에 모달로 구현할 것
     navigate('/')
   }
 
   useEffect(() => {
-    console.log("페치데이터 동작!!")
+    // console.log("페치데이터 동작!!")
     const fetchData = async () => {
       try {
         const response = await fetch('https://www.saturituri.com/api/profiles/' + store.loginUserInfo?.memberId, {
@@ -76,7 +76,7 @@ const ProfileEdit: React.FC = () => {
             'Content-Type': 'application/json'
           }
         });
-        console.log(response)
+        // console.log(response)
         const data = await response.json();
         setUserData(data);
 
@@ -95,11 +95,11 @@ const ProfileEdit: React.FC = () => {
 
 
 
-        console.log("뭐", acquiredBadgeIds)
-        console.log("데이터 로드 완료", response);
-        console.log(data);
+        // console.log("뭐", acquiredBadgeIds)
+        // console.log("데이터 로드 완료", response);
+        // console.log(data);
       } catch (error) {
-        console.log("데이터 로드 실패", error)
+        // console.log("데이터 로드 실패", error)
       }
     }
     fetchData()

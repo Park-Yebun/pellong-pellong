@@ -49,7 +49,7 @@ export const DailyQuote = () => {
                 setPbS(dailyQuote.pbStandard);
                 // console.log("데이터 로드 완료", dailyQuote);
             } catch (error) {
-                console.log("데이터 로드 실패", error)
+                // console.log("데이터 로드 실패", error)
             }
         }
         fetchDailyQuote();

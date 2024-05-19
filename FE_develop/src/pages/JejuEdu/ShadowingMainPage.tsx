@@ -23,9 +23,9 @@ useEffect(() => {
       });
       const data = await response.json();
       setShadowingData(data.items);
-      console.log('데이터 로드 성공', data.items)
+      // console.log('데이터 로드 성공', data.items)
     } catch (error) {
-      console.log('데이터 로드 실패', error)
+      // console.log('데이터 로드 실패', error)
       
     }
   }

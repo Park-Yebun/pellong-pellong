@@ -16,21 +16,21 @@ export const DailyQuote = () => {
     const [isHidden, setIsHidden] = useState<boolean>(true);
     const handleMouseOver = () => {
         setIsHidden(false);
-        console.log("마우스 오버!!")
+        // console.log("마우스 오버!!")
     };
 
     const handleMouseOut = () => {
         setIsHidden(true);
-        console.log("마우스 아웃!!")
+        // console.log("마우스 아웃!!")
     };
 
     const handleClick = (event: React.MouseEvent) => {
         event.stopPropagation();
         setIsHidden(!isHidden);
-        console.log("클릭!!")
+        // console.log("클릭!!")
     }
     useEffect(() => {
-        console.log("페치데이터 동작!!")
+        // console.log("페치데이터 동작!!")
 
 
 
@@ -43,13 +43,13 @@ export const DailyQuote = () => {
                     }
                 });
                 const dailyQuote: Props  = await response.json();
-                console.log("제주", dailyQuote.pbJeju);
-                console.log("표준", dailyQuote.pbStandard);
+                // console.log("제주", dailyQuote.pbJeju);
+                // console.log("표준", dailyQuote.pbStandard);
                 setPbJ(dailyQuote.pbJeju);
                 setPbS(dailyQuote.pbStandard);
-                console.log("데이터 로드 완료", dailyQuote);
+                // console.log("데이터 로드 완료", dailyQuote);
             } catch (error) {
-                console.log("데이터 로드 실패", error)
+                // console.log("데이터 로드 실패", error)
             }
         }
         fetchDailyQuote();

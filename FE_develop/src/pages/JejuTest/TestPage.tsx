@@ -155,7 +155,7 @@ const QuizApp: React.FC = () => {
   // 공유하기 함수
   const handleShare = async () => {
     // 공유 로직 추가
-    console.log("공유하기 버튼이 클릭되었습니다!");
+    // console.log("공유하기 버튼이 클릭되었습니다!");
 
     if(!Kakao.isInitialized()){
       Kakao.init(process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY);
@@ -198,7 +198,7 @@ const QuizApp: React.FC = () => {
         // 년월일시분초를 합쳐서 하나의 숫자로 만듭니다.
         const testnum = parseInt(`${year}${month}${day}${hour}${minute}${second}`);
 
-        console.log(testnum); // testnum에 저장된 숫자를 출력합니다.
+        // console.log(testnum); // testnum에 저장된 숫자를 출력합니다.
 
         const fetchData = async () => {
           try {
@@ -209,9 +209,9 @@ const QuizApp: React.FC = () => {
               }
             });
             // 데이터에 숫자 잘들어옴
-            console.log('성공');
+            // console.log('성공');
           } catch (error) {
-            console.log("실패", error)
+            // console.log("실패", error)
           }
         }
         fetchData();
@@ -242,7 +242,7 @@ const QuizApp: React.FC = () => {
           ]
         });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
 
   };

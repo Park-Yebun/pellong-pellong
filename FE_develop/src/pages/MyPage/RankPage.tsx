@@ -20,14 +20,14 @@ const sortAndRankUsers = (users: User[]): User[] => {
   let rank = 1;
   let prevExperience = sortedUsers[0].sumExp;
 
-  console.log("=== 랭크 부여 과정 ===");
-  console.log("랭크\t아이디\t유저네임\t경험치");
+  // console.log("=== 랭크 부여 과정 ===");
+  // console.log("랭크\t아이디\t유저네임\t경험치");
   
   const rankedUsers = sortedUsers.map((user, index) => {
     if (index > 0 && user.sumExp !== prevExperience) {
       rank++;
     }
-    console.log(`${rank}\t${user.memberId}\t${user.nickname}\t${user.sumExp}`);
+    // console.log(`${rank}\t${user.memberId}\t${user.nickname}\t${user.sumExp}`);
     prevExperience = user.sumExp;
     return { ...user, rank };
   });
@@ -116,8 +116,8 @@ const UserRanking: React.FC = () => {
 
 
   useEffect(() => {
-    console.log("페치데이터 동작!!")
-    console.log(store.loginUserInfo?.memberId)
+    // console.log("페치데이터 동작!!")
+    // console.log(store.loginUserInfo?.memberId)
     const fetchUsers = async () => {
       try {
         const response = await fetch('https://www.saturituri.com/api/ranking', {
@@ -129,9 +129,9 @@ const UserRanking: React.FC = () => {
         const data: User[] = await response.json();
         const rankedUsers = sortAndRankUsers(data);
         setUsers(rankedUsers);
-        console.log("데이터 로드 완료", data);
+        // console.log("데이터 로드 완료", data);
       } catch (error) {
-        console.log("데이터 로드 실패", error)
+        // console.log("데이터 로드 실패", error)
       }
     }
     fetchUsers();
@@ -166,7 +166,7 @@ const UserRanking: React.FC = () => {
       });
   
       const userData = await response.json();
-      console.log("찍혀라", userData)
+      // console.log("찍혀라", userData)
 
       // 유저의 dailyExpDTOList에서 날짜와 경험치 추출
       const data1 = userData[0].dailyExpDTOList
@@ -191,7 +191,7 @@ const UserRanking: React.FC = () => {
         }
       ]);
     } catch (error) {
-      console.log("유저 정보 로드 실패", error)
+      // console.log("유저 정보 로드 실패", error)
     }
   };
 

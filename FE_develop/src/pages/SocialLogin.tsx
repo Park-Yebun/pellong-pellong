@@ -72,10 +72,10 @@ const SocialLoginPage = () => {
           });
           const userInfo = await response.json();
           store.setLoginUserInfo(userInfo)
-          console.log("로그인 데이터 저장 완료", userInfo)
+          // console.log("로그인 데이터 저장 완료", userInfo)
           navigate('/')
         } catch (error) {
-          console.log(error)
+          // console.log(error)
         };
       };
     }

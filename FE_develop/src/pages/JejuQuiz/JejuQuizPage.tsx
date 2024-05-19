@@ -8,7 +8,7 @@ import QuizType3 from "./QuizType3";
 
 const LevelPlayScreen: React.FC = () => {
   const { level } = useParams<{ level: string }>();
-  console.log("챕터", level)
+  // console.log("챕터", level)
   const parsedChapterNo = parseInt(level ?? "1", 10); // 문자열을 숫자로 변환
   const navigate = useNavigate(); // useNavigate 훅 사용
 

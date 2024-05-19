@@ -32,7 +32,7 @@ const QuizResultPage: React.FC = () => {
             'Content-Type': 'application/json'
           }
         });
-        console.log(response)
+        // console.log(response)
         // 데이터 처리
       } catch (error) {
         console.error("API 호출에 실패했습니다:", error);
@@ -49,7 +49,7 @@ const QuizResultPage: React.FC = () => {
             'Content-Type': 'application/json'
           }
         });
-        console.log("성공얍", response)
+        // console.log("성공얍", response)
         // 데이터 처리
       } catch (error) {
         console.error("API 호출에 실패했습니다:", error);

@@ -41,9 +41,9 @@ const updateRepresentativeBadge = async (memberId: number, badgeId: number) => {
     }
 
     const data = await response.json();
-    console.log('Representative badge updated successfully', data);
+    // console.log('Representative badge updated successfully', data);
   } catch (error) {
-    console.error('Error updating representative badge:', error);
+    // console.error('Error updating representative badge:', error);
   }
 };
 
@@ -54,7 +54,7 @@ const UserBadge: React.FC<UserBadgeProps> = ({ badges }) => {
 
   const handleBadgeClick = (badge: Badge) => {
     setSelectedBadge(badge);
-    console.log('Selected Badge:', badge);
+    // console.log('Selected Badge:', badge);
   };
 
   const handleSetRepresentativeBadge = async () => {

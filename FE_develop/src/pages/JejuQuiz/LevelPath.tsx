@@ -11,7 +11,7 @@ const LevelPath: React.FC = () => {
 
   useEffect(() => {
     // store.loginUserInfo?.memberId 값이 변경될 때마다 콘솔에 출력
-    console.log("Member ID:", store.loginUserInfo?.memberId);
+    // console.log("Member ID:", store.loginUserInfo?.memberId);
 
     const fetchData = async () => {
       try {
@@ -23,10 +23,10 @@ const LevelPath: React.FC = () => {
         });
         const data = await response.json();
         // 데이터에 숫자 잘들어옴
-        console.log('데이터', data);
+        // console.log('데이터', data);
         setData(data); // 데이터 상태 업데이트
       } catch (error) {
-        console.log("데이터 로드 실패", error)
+        // console.log("데이터 로드 실패", error)
       }
     }
     fetchData();
