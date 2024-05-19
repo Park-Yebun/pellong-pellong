@@ -1,5 +1,6 @@
 package com.c205.pellongpellong.service;
 
+import com.c205.pellongpellong.controller.LearningProgressController;
 import com.c205.pellongpellong.entity.LearningProgress;
 import com.c205.pellongpellong.entity.Member;
 import com.c205.pellongpellong.repository.LearningProgressRepository;
@@ -48,9 +49,13 @@ public class LearningProgressService {
         // memberId로 LearningProgress 엔티티를 찾습니다.
         LearningProgress learningProgress = learningProgressRepository.findByMemberMemberId(memberId);
         if (learningProgress != null) {
-            // 찾은 LearningProgress 엔티티의 chapterNumber를 새로운 값으로 업데이트합니다.
-            learningProgress.setChapterNumber(newChapterNumber);
-            learningProgressRepository.save(learningProgress);
+            // 기존 챕터 번호와 새로운 챕터 번호를 비교합니다.
+            Integer currentChapterNumber = learningProgress.getChapterNumber();
+            if (currentChapterNumber < newChapterNumber) {
+                // 새로운 챕터 번호가 더 큰 경우에만 업데이트를 수행합니다.
+                learningProgress.setChapterNumber(newChapterNumber);
+                learningProgressRepository.save(learningProgress);
+            }
         } else {
             // 해당 memberId에 해당하는 LearningProgress가 없을 경우 예외 처리를 수행할 수 있습니다.
             throw new RuntimeException("LearningProgress not found for memberId: " + memberId);
