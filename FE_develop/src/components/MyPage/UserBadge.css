@@ -17,6 +17,18 @@
   transition: transform 0.2s;
 }
 
+.badge.representative::after {
+  content: "대표";
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: gold;
+  color: black;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 12px;
+}
+
 .badge:hover {
   transform: scale(1.1);
 }

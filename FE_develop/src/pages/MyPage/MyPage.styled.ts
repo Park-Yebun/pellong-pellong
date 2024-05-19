@@ -62,6 +62,7 @@ export const RankBox = styled.div`
   flex-direction: row; /* 수평 정렬 */
   font-weight: bold;
   align-items: center; /* 수직 정렬 */
+  margin-top: 20px;
 `;
 
 export const RankImg = styled.div`

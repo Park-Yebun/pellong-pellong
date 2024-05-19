@@ -8,15 +8,16 @@ interface Badge {
   description: string;
   imageUrl: string;
   isAcquired: boolean;
+  isRepresentative?: boolean; // 선택적으로 변경
 }
 
 interface UserBadgeProps {
   badges: Badge[];
 }
 
-const BadgeComponent: React.FC<{ badge: Badge; onClick: (badge: Badge) => void; isAcquired: boolean }> = ({ badge, onClick, isAcquired }) => {
+const BadgeComponent: React.FC<{ badge: Badge; onClick: (badge: Badge) => void; isAcquired: boolean; isRepresentative: boolean }> = ({ badge, onClick, isAcquired, isRepresentative }) => {
   return (
-    <div className="badge" onClick={() => onClick(badge)}>
+    <div className={`badge ${isRepresentative ? 'representative' : ''}`} onClick={() => onClick(badge)}>
       <img src={isAcquired ? badge.imageUrl : '../../assets/badges/00blind.png'} alt={badge.title} />
     </div>
   );
@@ -49,7 +50,7 @@ const updateRepresentativeBadge = async (memberId: number, badgeId: number) => {
 const UserBadge: React.FC<UserBadgeProps> = ({ badges }) => {
   const store = useStore();
   const [selectedBadge, setSelectedBadge] = useState<Badge | null>(null);
-  const [updatedBadges, setUpdatedBadges] = useState<Badge[]>(badges);
+  const [updatedBadges, setUpdatedBadges] = useState<Badge[]>(badges.map(badge => ({ ...badge, isRepresentative: badge.isRepresentative ?? false })));
 
   const handleBadgeClick = (badge: Badge) => {
     setSelectedBadge(badge);
@@ -75,7 +76,9 @@ const UserBadge: React.FC<UserBadgeProps> = ({ badges }) => {
             key={badge.id} 
             badge={badge} 
             onClick={handleBadgeClick}
-            isAcquired={badge.isAcquired} />
+            isAcquired={badge.isAcquired}
+            isRepresentative={badge.isRepresentative ?? false} // undefined를 false로 처리
+          />
         ))}
       </div>
       {selectedBadge && (
