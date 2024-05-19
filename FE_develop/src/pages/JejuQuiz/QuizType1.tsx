@@ -47,6 +47,9 @@ const QuizType1: React.FC<{ quizData: QuizData; onNextQuestion: () => void; onCo
     onNextQuestion(); // 부모 컴포넌트의 onNextQuestion 함수 호출
   };
 
+  // 정답에 해당하는 항목 가져오기
+  const correctVoca = quizData.dialectVocas.find(voca => voca.quizOrder === quizData.quizAnswer);
+
   return (
     <div className="QT1-container">
       <div className="QT1-quiz-header">
@@ -55,27 +58,21 @@ const QuizType1: React.FC<{ quizData: QuizData; onNextQuestion: () => void; onCo
           <div className="QT1-quiz-nums">문제 {quizData.quizNo}번</div>
         </div>
         <div className="QT1-quiz-text">
-          음성과 뜻이 일치하는<br />
+          다음 항목들과 뜻이 일치하는<br />
           문장을 고르시오
         </div>
       </div>
       <div className="QT1-quiz-content">
-        {/* 표준어 문장을 보여주는 부분 (현재는 주석 처리됨) */}
-        {/* <div className="QT1-standard-text">
-          <p>표준어:</p>
-          <div>{quizData.dialectVocas[0].standardText}</div>
-        </div> */}
         <div className="QT1-dialect-container">
           <img src={hanrabong} alt="" className="QT1-dialect-img" />
-          <div className="QT1-dialect-text">{quizData.dialectVocas[0].dialectText}</div>
+          <div className="QT1-dialect-text">{correctVoca?.dialectText}</div>
         </div>
-        {/* 방언 이미지 부분 (현재는 주석 처리됨) */}
         {/* <div className="QT1-image-container">
-          <img src={quizData.dialectVocas[0].dialectImage} alt="Dialect Image" />
+          <img src={correctVoca?.dialectImage} alt="Dialect Image" />
         </div> */}
         <div className="QT1-audio-container">
           <audio controls>
-            <source src={quizData.dialectVocas[0].dialectVoice} type="audio/mpeg" /> {/* 방언 오디오 */}
+            <source src={correctVoca?.dialectVoice} type="audio/mpeg" />
           </audio>
         </div>
       </div>
@@ -84,8 +81,8 @@ const QuizType1: React.FC<{ quizData: QuizData; onNextQuestion: () => void; onCo
           <div key={index} className="QT1-option-item">
             <button
               onClick={() => handleAnswer(index)}
-              disabled={selectedAnswer !== null} // 답이 선택된 후에는 버튼 비활성화
-              className={`QT1-option-button ${selectedAnswer !== null && selectedAnswer === index ? (isCorrect ? "correct" : "incorrect") : ""}`} // 선택된 답에 따라 버튼 스타일 변경
+              disabled={selectedAnswer !== null}
+              className={`QT1-option-button ${selectedAnswer !== null && selectedAnswer === index ? (isCorrect ? "correct" : "incorrect") : ""}`}
             >
               {voca.standardText}
             </button>
