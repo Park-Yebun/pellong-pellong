@@ -4,6 +4,8 @@ import SocialLoginPage from './pages/SocialLogin';
 import MainPage from './pages/MainPage';
 import MyPageMain from './pages/MyPage/MyPage';
 import ProfileEdit from './pages/MyPage/ProfileEdit';
+import UserExplog from './pages/MyPage/UserExplogPage';
+
 import RankPage from './pages/MyPage/RankPage';
 import JejuQuizListPage from './pages/JejuQuiz/JejuQuizListPage';
 import JejuQuizPage from './pages/JejuQuiz/JejuQuizPage';
@@ -42,6 +44,7 @@ function App() {
         <Route path="/" element={<MainPage />} />
         <Route path="/my-page/:memberId" element={<MyPageMain />} />
         <Route path="/my-page/:memberId/profile-edit" element={<ProfileEdit />} />
+        <Route path="/my-page/:memberId/Explog" element={<UserExplog />} />
         <Route path="/rank" element={<RankPage />} />
         <Route path="/jeju-quiz" element={<JejuQuizListPage />} />
         <Route path="/jeju-quiz/level/:level" element={<JejuQuizPage />} />
