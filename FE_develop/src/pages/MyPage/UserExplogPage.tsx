@@ -18,7 +18,11 @@ const ExperienceLog: React.FC = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get<Experience[]>(`https://www.saturituri.com/api/profiles/explog/${memberId}`);
-        setExperienceLog(response.data);
+        const formattedData = response.data.map((log) => ({
+          ...log,
+          expAt: new Date(log.expAt).toLocaleString('ko-KR'),
+        }));
+        setExperienceLog(formattedData);
       } catch (error) {
         console.error('Error fetching experience log:', error);
       }
@@ -40,7 +44,7 @@ const ExperienceLog: React.FC = () => {
               <strong>경험치 : </strong> {log.exp}
             </div>
             <div>
-              <strong>일자 : </strong> {new Date(log.expAt).toLocaleDateString()}
+              <strong>일자 : </strong> {log.expAt}
             </div>
           </li>
         ))}
