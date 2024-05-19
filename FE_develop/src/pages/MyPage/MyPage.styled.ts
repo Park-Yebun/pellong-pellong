@@ -105,6 +105,7 @@ export const CloseButton = styled.button`
   right: 10px;
   border: none;
   background-color: transparent;
-  font-size: 16px;
+  font-size: 20px;
+  font-weight: bold;
   cursor: pointer;
 `;

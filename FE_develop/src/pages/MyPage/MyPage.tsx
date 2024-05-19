@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams} from 'react-router-dom';
 import '../../components/MyPage/UserProfile.css';
 import useStore from '../../store';
+import './MyPage.css'
 
 import UserExplog from '../../pages/MyPage/UserExplogPage'
 import UserRank from '../../components/MyPage/UserRank'
 import UserBadge from '../../components/MyPage/UserBadge'
 import BackButton from '../../components/BackButton';
 import logoutImg from '../../assets/logout.png'
-import modalImg from '../../assets/logout.png'
 import {
   Container,
   Email,
@@ -157,9 +157,9 @@ const MyPage: React.FC = () => {
               </RankBox>
             </InfoBox>
           </UserProfile>
+          <button onClick={openModal} className='exp-button'>경험치 적립 내역</button>
           <UserBadge badges={badges} /> 
           {/* 모달 열기 버튼 */}
-          <button onClick={openModal}>Open Modal</button>
           <Logout src={logoutImg} alt='logout' onClick={() => logout()}/>
         </UserProfileBox>
       )}
@@ -168,7 +168,7 @@ const MyPage: React.FC = () => {
         <ModalBackground>
           <ModalContent>
             <CloseButton onClick={closeModal}>Close</CloseButton>
-            <UserExplog />
+            <UserExplog/>
           </ModalContent>
         </ModalBackground>
       )}
