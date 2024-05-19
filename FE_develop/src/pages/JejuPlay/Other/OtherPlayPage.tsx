@@ -36,6 +36,8 @@ const OtherPlayPage = () => {
   const [alert, setAlert] = useState<string>('');
   const [lifeCnt, setLifeCnt] = useState<number>(3);
   const { partyId } = useParams();
+  const location = useLocation();
+  const [kind, setKind] = useState<number>(location.state?.kind);
 
   // 클라이언트 할당
   const socket = new SockJS('http://localhost:8080/ws');
