@@ -15,10 +15,10 @@ public class JejuProverb {
     @Column(name = "jejuProverbId", updatable = false)
     private Long jejuProverbId;
 
-    @Column(name = "pbStandard", nullable = false)
-    private String pbStandard;
-
     @Column(name = "pbJeju", nullable = false)
     private String pbJeju;
+
+    @Column(name = "pbStandard", nullable = false)
+    private String pbStandard;
 
 }

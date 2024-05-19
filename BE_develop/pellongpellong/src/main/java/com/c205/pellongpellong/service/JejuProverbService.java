@@ -14,6 +14,6 @@ public class JejuProverbService {
     public JejuProverbDTO getJejuProverb(Long jejuProverbId) {
         JejuProverb jejuProverb = jejuProverbRepository.findById(jejuProverbId)
                 .orElseThrow(() -> new IllegalArgumentException("not found: " + jejuProverbId));
-        return new JejuProverbDTO(jejuProverb.getJejuProverbId(), jejuProverb.getPbStandard(), jejuProverb.getPbStandard());
+        return new JejuProverbDTO(jejuProverb.getJejuProverbId(), jejuProverb.getPbJeju(), jejuProverb.getPbStandard());
     }
 }

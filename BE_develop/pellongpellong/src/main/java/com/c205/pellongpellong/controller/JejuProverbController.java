@@ -21,6 +21,6 @@ public class JejuProverbController {
         Random random = new Random();
         Long randomId = random.nextLong(jejuProverbRepository.count()) + 1;
         JejuProverbDTO jejuProverbDTO = jejuProverbService.getJejuProverb(randomId);
-        return new JejuProverbDTO(jejuProverbDTO.getJejuProverbId(), jejuProverbDTO.getPbStandard(), jejuProverbDTO.getPbJeju());
+        return new JejuProverbDTO(jejuProverbDTO.getJejuProverbId(), jejuProverbDTO.getPbJeju(), jejuProverbDTO.getPbStandard());
     }
 }
