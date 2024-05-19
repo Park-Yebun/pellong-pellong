@@ -4,6 +4,7 @@ import './RankPage.css';
 import BackButton from '../../components/BackButton';
 import close from '../../assets/JejuPlay/close.png'
 import useStore from '../../store';
+import ReactApexChart from "react-apexcharts";
 
 interface User {
   memberId: number;
@@ -39,6 +40,79 @@ const UserRanking: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [passwordModalOpen, setPasswordModalOpen] = useState<boolean>(false); // 이 부분을 함수 컴포넌트 내부로 이동
   const [selectedUser, setSelectedUser] = useState<User | null>(null); // 클릭된 유저 정보를 상태로 관리
+  const [chartOptions, setChartOptions] = useState<any>({
+    chart: {
+      height: 350,
+      type: 'line',
+      dropShadow: {
+        enabled: true,
+        color: '#000',
+        top: 18,
+        left: 7,
+        blur: 10,
+        opacity: 0.2
+      },
+      zoom: {
+        enabled: false
+      },
+      toolbar: {
+        show: false
+      }
+    },
+    colors: ['#77B6EA', '#545454'],
+    dataLabels: {
+      enabled: true,
+    },
+    stroke: {
+      curve: 'smooth'
+    },
+    title: {
+      text: 'Average High & Low Temperature',
+      align: 'left'
+    },
+    grid: {
+      borderColor: '#e7e7e7',
+      row: {
+        colors: ['#f3f3f3', 'transparent'],
+        opacity: 0.5
+      },
+    },
+    markers: {
+      size: 1
+    },
+    xaxis: {
+      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+      title: {
+        text: 'Month'
+      }
+    },
+    yaxis: {
+      title: {
+        text: 'Temperature'
+      },
+      min: 5,
+      max: 40
+    },
+    legend: {
+      position: 'top',
+      horizontalAlign: 'right',
+      floating: true,
+      offsetY: -25,
+      offsetX: -5
+    }
+  });
+
+  const [chartSeries, setChartSeries] = useState<any>([
+    {
+      name: "High - 2013",
+      data: [28, 29, 33, 36, 32, 32, 33]
+    },
+    {
+      name: "Low - 2013",
+      data: [12, 11, 14, 18, 17, 13, 13]
+    }
+  ]);
+
 
   useEffect(() => {
     console.log("페치데이터 동작!!")
@@ -97,6 +171,8 @@ const UserRanking: React.FC = () => {
     }
   };
 
+  
+
   return (
     <div className="RK-user-ranking-container">
       <BackButton />
@@ -122,6 +198,9 @@ const UserRanking: React.FC = () => {
           <div className='password-txt'>
             {/* 클릭된 유저 정보를 모달 내에서 표시 */}
             {selectedUser && `${selectedUser.nickname}과 나의 지난 3일간 누적 경험치 비교`}
+            <div id="chart">
+              <ReactApexChart options={chartOptions} series={chartSeries} type="line" height={350} />
+            </div>
 
           </div>
         </div>
