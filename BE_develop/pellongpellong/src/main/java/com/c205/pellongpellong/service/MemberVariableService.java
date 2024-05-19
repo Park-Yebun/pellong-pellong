@@ -77,7 +77,7 @@ public class MemberVariableService {
     public void updateAccDailyQuest (long myId) {
         DailyQuest dailyQuest = dailyQuestRepository.findByMemberMemberId(myId)
                 .orElseThrow(() -> new RuntimeException("해당 memberId에 해당하는 회원의 DailyQuest가 존재하지 않습니다."));
-        MemberVariable memberVariable = memberVariableRepository.findById(myId)
+        MemberVariable memberVariable = memberVariableRepository.findByMember_MemberId(myId)
                 .orElseThrow(() -> new RuntimeException("해당 memberId에 해당하는 회원의 MemberVariable이 존재하지 않습니다."));
         if (
                 dailyQuest.getDailyExp() >= 300
