@@ -15,6 +15,7 @@ import cloudPlay from '../assets/cloud-play.png';
 import cloudEdu from '../assets/cloud-edu.png';
 import cloudTrans from '../assets/cloud-trans.png';
 import DailyQuote from '../components/MainPage/DailyQuote';
+import DailyQuoteNight from "../components/MainPage/DailyQuoteNight";
 
 
 interface DailyQuest {
@@ -75,7 +76,8 @@ function MainPage() {
 
   return (
     <div className={`main-container ${nightMode ? 'night-mode' : ''}`}>
-      <DailyQuote />
+      {!nightMode && <DailyQuote />}
+      {nightMode && <DailyQuoteNight/>}
       <div className="top-right-links">
         <a onClick={toggleNightMode} className="image-link">
           <img src={sunsetIcon} alt="" />
@@ -97,9 +99,6 @@ function MainPage() {
               {
                 top: '6rem',
                 position: 'absolute',
-                // width: '5rem',
-                // height: '4rem',
-                // backgroundColor: 'black',
               }
             }
             onClick={toggleModal}

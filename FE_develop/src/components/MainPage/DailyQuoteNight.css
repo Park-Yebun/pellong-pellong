@@ -1,0 +1,111 @@
+@font-face {
+    src: url("NanumBarunGothic-YetHangul.ttf");
+    font-family: "assey";
+}
+
+div > h1 {
+    font-family: 'assey';
+
+}
+
+
+h1::before {
+    content: "제주속담:  ";
+}
+
+.daily-quote-night {
+
+    /*display: flex;*/
+    position: fixed;
+    top: 4.5rem;
+    justify-content: center;
+    align-items: center;
+    height: 3rem;
+    width: 100%;
+    border-radius: 1.25rem;
+    background-color: rgba(255, 255, 255,.5);
+    /*background: radial-gradient(circle, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, .7));*/
+    /*background: linear-gradient(to bottom, rgba(169, 219, 254, 1), rgba(255, 255, 255, 1));*/
+    background: linear-gradient(to top, rgba(225, 159, 29, 1), rgba(255, 255, 255, 1));
+    font-size: 0.5rem;
+    font-weight: 500;
+    /*color: #333;*/
+    text-align: center;
+    padding: 0 1rem;
+    /*z-index: 100;*/
+    /*transition-property: width, height;*/
+    /*transition-duration: 1s;*/
+}
+
+.daily-quote2-night {
+
+    /*display: flex;*/
+    position: fixed;
+    top: 4.5rem;
+    justify-content: center;
+    align-items: center;
+    height: 3rem;
+    width: 100%;
+    background-color: rgba(255, 255, 255,.5);
+    /*background: radial-gradient(circle, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, .7));*/
+    border-radius: 1.25rem 1.25rem 0 0;
+    background: linear-gradient(to top, rgba(225, 159, 29, 1), rgba(255, 255, 255, 1));
+    font-size: 0.5rem;
+    font-weight: 500;
+    /*color: #333;*/
+    text-align: center;
+    padding: 0 1rem;
+    /*z-index: 100;*/
+    /*transition-property: width, height;*/
+    /*transition-duration: 1s;*/
+}
+
+.gomu-night {
+    position: fixed;
+    top: 7.5rem;
+    width: 100%;
+    height: 0rem;
+    font-size: 1rem;
+    color: rgba(0,0,0,0);
+    background-color: #A9DBFE;
+    /*z-index: 100;*/
+    /*background-color: rgba(169, 219, 254, .7);*/
+    background: linear-gradient(to bottom, rgba(225, 159, 29, 1), rgba(255, 255, 255, 1));
+    border-radius: 0 0 1.25rem 1.25rem;
+    transition-property: height;
+    transition-duration: 1s;
+}
+
+.gomugomu-night {
+    position: fixed;
+    top: 7.5rem;
+    width: 100%;
+    height: 10rem;
+    background-color: #A9DBFE;
+    background: linear-gradient(to bottom, rgba(225, 159, 29, 1), rgba(255, 255, 255, 1));
+
+    z-index: 100;
+    border-radius: 0 0 1.25rem 1.25rem;
+    color:rgba(0,0,0, 0.5);
+    transition-property: height;
+    transition-duration: 1s;
+    /*margin-top: 1rem;*/
+}
+
+.gomugomu-night > h1 {
+    padding-top: 4em;
+    font-size: 1rem;
+    color: rgba(0,0,0, 1);
+    transition-duration: 2s;
+    z-index: 100;
+
+}
+
+.gomugomu-night > h1::before {
+    content: "해석:  ";
+}
+
+/*.gomugomu > div > p {*/
+/*    font-family: 'assey';*/
+/*    color: blue;*/
+/*}*/
