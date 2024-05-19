@@ -39,29 +39,11 @@ const OtherPlayPage = () => {
   const location = useLocation();
   const [kind, setKind] = useState<number>(location.state?.kind);
 
-  // 클라이언트 할당
-  const socket = new SockJS('http://localhost:8080/ws');
-  let client = Stomp.over(socket);
-
   interface Quiz {
     readonly dramaId: number,
     content: string,
     title: string
   }
-
-  useEffect(() => {
-    // 소켓 연결
-    client.connect({}, () => {
-      // 구독 요청
-      client.subscribe("/topic/party/" + partyId, function(message){});
-
-    return () => {
-      client.disconnect(() => {
-        console.log("웹소켓 연결이 해제되었습니다.")
-      });
-    };
-  }, []);
-  });
 
   const selectRandomQuiz = () => {
     if (dummydata.length > 0) {
