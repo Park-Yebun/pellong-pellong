@@ -66,10 +66,10 @@ const UserRanking: React.FC = () => {
     stroke: {
       curve: 'smooth'
     },
-    title: {
-      text: 'Average High & Low Temperature',
-      align: 'left'
-    },
+    // title: {
+    //   text: 'Average High & Low Temperature',
+    //   align: 'left'
+    // }, 제목 없앰
     grid: {
       borderColor: '#e7e7e7',
       row: {
@@ -104,7 +104,7 @@ const UserRanking: React.FC = () => {
 
   const [chartSeries, setChartSeries] = useState<any>([
     {
-      name: "High - 2013",
+      name: `${selectedUser?.nickname}`,
       data: [28, 29, 33, 36, 32, 32, 33]
     },
     {
@@ -166,6 +166,23 @@ const UserRanking: React.FC = () => {
   
       const userInfo: string = await response.json();
       console.log("찍혀라", userInfo)
+
+      // 차트 데이터 업데이트
+      setChartSeries([
+        {
+          name: user.nickname,
+          data: [28, 29, 33, 36, 32, 32, 33]
+        },
+        {
+          name: store.loginUserInfo?.nickname,
+          data: [12, 11, 14, 18, 17, 13, 13]
+        }
+      ]);
+
+
+
+
+
     } catch (error) {
       console.log("유저 정보 로드 실패", error)
     }
@@ -197,7 +214,7 @@ const UserRanking: React.FC = () => {
           <img className='close' src={close} alt="closebtn" onClick={() => {setPasswordModalOpen(false);}}/>
           <div className='password-txt'>
             {/* 클릭된 유저 정보를 모달 내에서 표시 */}
-            {selectedUser && `${selectedUser.nickname}과 나의 지난 3일간 누적 경험치 비교`}
+            {selectedUser && `${selectedUser.nickname}과 나의 지난 3일간 적립 경험치 비교`}
             <div id="chart">
               <ReactApexChart options={chartOptions} series={chartSeries} type="line" height={350} />
             </div>
