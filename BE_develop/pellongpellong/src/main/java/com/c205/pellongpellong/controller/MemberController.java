@@ -110,9 +110,9 @@ public class MemberController {
 
     @DeleteMapping("/members/{memberId}")
     public ResponseEntity<String> deleteMember(@PathVariable long memberId) {
-        memberVariableService.delete(memberId);
+//        memberVariableService.delete(memberId);
         memberService.delete(memberId);
-        redisTemplate.opsForZSet().remove("ranking", String.valueOf(memberId));
+//        redisTemplate.opsForZSet().remove("ranking", String.valueOf(memberId));
         String message = String.format("회원 %d번이 삭제되었습니다.", memberId);
         return ResponseEntity.ok()
                 .body(message);

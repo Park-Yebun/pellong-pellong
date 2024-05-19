@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -168,21 +169,20 @@ public class ExpController {
         System.out.println("날짜차이: " + t1d.compareTo(t2d));
     }
 
-    @GetMapping("/exp/comparison")
-    public ResponseEntity<List<ExpComparisonResponse>> getRecentDailyExp(@RequestBody List<ExpComparisonRequest> members) {
+    @GetMapping("/exp/{loginedId}/{selectedId}")
+    public ResponseEntity<List<ExpComparisonResponse>> getRecentDailyExp(@PathVariable Long loginedId, @PathVariable Long selectedId) {
         List<ExpComparisonResponse> expComparisonResponses = new ArrayList<>();
-        for (ExpComparisonRequest member : members) {
-//            System.out.println(member.getMemberId());
-            String memberNickName = memberRepository.getNicknameByMemberId(member.getMemberId())
+        List<Long> memberIds = Arrays.asList(loginedId, selectedId);
+        for (Long memberId : memberIds) {
+            String memberNickName = memberRepository.getNicknameByMemberId(memberId)
                     .orElseThrow(() -> new IllegalArgumentException("해당하는 회원이 없습니다."));
-            List<Object[]> dailyExpList = expRepository.findRecentDailyExp(member.getMemberId());
+            List<Object[]> dailyExpList = expRepository.findRecentDailyExp(memberId);
             List<DailyExpDTO> dailyExpDTOList = new ArrayList<>();
             for (Object[] de : dailyExpList) {
                 dailyExpDTOList.add(new DailyExpDTO((de)));
             }
-            expComparisonResponses.add(new ExpComparisonResponse(member.getMemberId(), memberNickName, dailyExpDTOList));
+            expComparisonResponses.add(new ExpComparisonResponse(memberId, memberNickName, dailyExpDTOList));
         }
         return ResponseEntity.ok().body(expComparisonResponses);
     }
-
 }
