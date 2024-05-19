@@ -23,7 +23,7 @@ interface DailyQuest {
 }
 
 function MainPage() {
-  const navigate = useNavigate(); // useNavigate hook 사용
+  const navigate = useNavigate();
   const store = useStore();
 
   const [showModal, setShowModal] = useState(false);
@@ -36,9 +36,10 @@ function MainPage() {
 
   const fetchDailyQuests = async () => {
     try {
-      const response = await axios.get(`/daily-quest/${store.loginUserInfo?.memberId}`);
+      const response = await axios.get(`https://www.saturituri.com/api/daily-quest/${store.loginUserInfo?.memberId}`);
       const data = response.data;
       setDailyQuests(data);
+      console.log("됐다", data)
     } catch (error) {
       console.error('Error fetching daily quests:', error);
     }
@@ -113,17 +114,22 @@ function MainPage() {
                   <br />
                   매일의 목표를 달성해보세요
                 </div>
-                </div>
-                <div className='main-quest-box'>
-                  {dailyQuests.map((quest) => (
+              </div>
+              <div className='main-quest-box'>
+                {dailyQuests.length > 0 ? (
+                  dailyQuests.map((quest) => (
                     <div key={quest.dailyQuestId}>
                       <div>일일 경험치: {quest.dailyExp}</div>
                       <div>90점 이상 통과 여부: {quest.passed ? '통과' : '미통과'}</div>
                       <div>일일 퀘스트 완료 여부: {quest.accomplished ? '완료' : '미완료'}</div>
                       <div>사투리 모의고사 공유 여부: {quest.shared ? '공유됨' : '미공유'}</div>
                     </div>
-                  ))}
-                </div>
+                  ))
+                ) : (
+                  <div>데이터가 없습니다.</div>
+                  // 로딩 중 메시지 대신 데이터 없음 메시지를 표시합니다.
+                )}
+              </div>
             </div>
           </div>
         </div>
