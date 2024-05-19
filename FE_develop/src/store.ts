@@ -3,6 +3,9 @@ import { persist } from 'zustand/middleware'
 
 interface UserInfo {
     memberId: number;
+    nickname: String;
+    email: String;
+    profileImg: String;
 }
 
 interface Store {

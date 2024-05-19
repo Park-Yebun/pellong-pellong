@@ -4,6 +4,7 @@ import './RankPage.css';
 import BackButton from '../../components/BackButton';
 import close from '../../assets/JejuPlay/close.png'
 import useStore from '../../store';
+import ReactApexChart from "react-apexcharts";
 
 interface User {
   memberId: number;
@@ -39,6 +40,89 @@ const UserRanking: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [passwordModalOpen, setPasswordModalOpen] = useState<boolean>(false); // 이 부분을 함수 컴포넌트 내부로 이동
   const [selectedUser, setSelectedUser] = useState<User | null>(null); // 클릭된 유저 정보를 상태로 관리
+
+  const today = new Date();
+  const lastThreeDays = [];
+  for (let i = 2; i >= 0; i--) {
+      const date = new Date(today);
+      date.setDate(today.getDate() - i);
+      const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+      lastThreeDays.push(formattedDate);
+  }
+
+  const [chartOptions, setChartOptions] = useState<any>({
+    chart: {
+      height: 350,
+      type: 'line',
+      dropShadow: {
+        enabled: true,
+        color: '#000',
+        top: 18,
+        left: 7,
+        blur: 10,
+        opacity: 0.2
+      },
+      zoom: {
+        enabled: false
+      },
+      toolbar: {
+        show: false
+      }
+    },
+    colors: ['#77B6EA', '#545454'],
+    dataLabels: {
+      enabled: true,
+    },
+    stroke: {
+      curve: 'smooth'
+    },
+    // title: {
+    //   text: 'Average High & Low Temperature',
+    //   align: 'left'
+    // }, 제목 없앰
+    grid: {
+      borderColor: '#e7e7e7',
+      row: {
+        colors: ['#f3f3f3', 'transparent'],
+        opacity: 0.5
+      },
+    },
+    markers: {
+      size: 1
+    },
+    xaxis: {
+      categories: lastThreeDays,
+      // title: {
+      //   text: 'Month'
+      // } X축 제목 삭제
+    },
+    // yaxis: {
+    //   // title: {
+    //   //   text: 'Temperature'
+    //   // }, Y축 제목 삭제
+    //   min: 5,
+    //   max: 40
+    // },
+    legend: {
+      position: 'top',
+      horizontalAlign: 'right',
+      floating: true,
+      offsetY: -25,
+      offsetX: -5
+    }
+  });
+
+  const [chartSeries, setChartSeries] = useState<any>([
+    {
+      name: `${selectedUser?.nickname}`,
+      data: [28, 29, 33]
+    },
+    {
+      name: "Low - 2013",
+      data: [12, 11, 14]
+    }
+  ]);
+
 
   useEffect(() => {
     console.log("페치데이터 동작!!")
@@ -92,10 +176,29 @@ const UserRanking: React.FC = () => {
   
       const userInfo: string = await response.json();
       console.log("찍혀라", userInfo)
+
+      // 차트 데이터 업데이트
+      setChartSeries([
+        {
+          name: user.nickname,
+          data: [28, 29, 33]
+        },
+        {
+          name: store.loginUserInfo?.nickname,
+          data: [12, 11, 14]
+        }
+      ]);
+
+
+
+
+
     } catch (error) {
       console.log("유저 정보 로드 실패", error)
     }
   };
+
+  
 
   return (
     <div className="RK-user-ranking-container">
@@ -120,7 +223,12 @@ const UserRanking: React.FC = () => {
         <div className='RK-password-modal'>
           <img className='RK-close' src={close} alt="closebtn" onClick={() => {setPasswordModalOpen(false);}}/>
           <div className='RK-password-txt'>
-            {selectedUser && `${selectedUser.nickname}과 나의 지난 3일간 누적 경험치 비교`}
+            {/* 클릭된 유저 정보를 모달 내에서 표시 */}
+            {selectedUser && `${selectedUser.nickname}과 나의 지난 3일간 적립 경험치 비교`}
+            <div id="chart">
+              <ReactApexChart options={chartOptions} series={chartSeries} type="line" height={350} />
+            </div>
+
           </div>
         </div>
       )}
