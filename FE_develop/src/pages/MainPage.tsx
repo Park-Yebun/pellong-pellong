@@ -23,6 +23,7 @@ interface DailyQuest {
   passed: boolean;
   accomplished: boolean;
   shared: boolean;
+  memberId: number;
 }
 
 function MainPage() {
@@ -34,19 +35,28 @@ function MainPage() {
   const [dailyQuests, setDailyQuests] = useState<DailyQuest[]>([]); // 일일 퀘스트 목록
 
   useEffect(() => {
-    fetchDailyQuests();
-  }, []);
 
-  const fetchDailyQuests = async () => {
-    try {
-      const response = await axios.get(`https://www.saturituri.com/api/daily-quest/${store.loginUserInfo?.memberId}`);
-      const data = response.data;
-      setDailyQuests(data);
-      console.log("됐다", data)
-    } catch (error) {
-      console.error('Error fetching daily quests:', error);
-    }
-  };
+    const fetchDailyQuests = async () => {
+      try {
+        const response = await fetch(`https://www.saturituri.com/api/daily-quest/${store.loginUserInfo?.memberId}`, {
+          method: "GET",
+          headers: {
+            'Content-Type': 'application/json'
+          }
+  
+        });
+        const data = await response.json();
+        setDailyQuests([data]);
+        // console.log("됐다", data)
+        console.log(dailyQuests)
+
+      } catch (error) {
+        console.error('Error fetching daily quests:', error);
+      }
+    };
+    fetchDailyQuests();
+  }, [dailyQuests]);
+
 
   function handleClick(e: React.MouseEvent<HTMLAnchorElement>, path: string) {
     e.preventDefault(); // 기본 링크 동작 차단
@@ -133,19 +143,14 @@ function MainPage() {
                 </div>
               </div>
               <div className='main-quest-box'>
-                {dailyQuests.length > 0 ? (
-                  dailyQuests.map((quest) => (
-                    <div key={quest.dailyQuestId}>
-                      <div>일일 경험치: {quest.dailyExp}</div>
-                      <div>90점 이상 통과 여부: {quest.passed ? '통과' : '미통과'}</div>
-                      <div>일일 퀘스트 완료 여부: {quest.accomplished ? '완료' : '미완료'}</div>
-                      <div>사투리 모의고사 공유 여부: {quest.shared ? '공유됨' : '미공유'}</div>
-                    </div>
-                  ))
-                ) : (
-                  <div>데이터가 없습니다.</div>
-                  // 로딩 중 메시지 대신 데이터 없음 메시지를 표시합니다.
-                )}
+                {dailyQuests.map((quest) => (
+                  <div key={quest.dailyQuestId}>
+                    <div>일일 경험치: {quest.dailyExp}</div>
+                    <div>90점 이상 통과 여부: {quest.passed ? '통과' : '미통과'}</div>
+                    <div>일일 퀘스트 완료 여부: {quest.accomplished ? '완료' : '미완료'}</div>
+                    <div>사투리 모의고사 공유 여부: {quest.shared ? '공유됨' : '미공유'}</div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
