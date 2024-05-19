@@ -174,25 +174,31 @@ const UserRanking: React.FC = () => {
         }
       });
   
-      const userInfo: string = await response.json();
-      console.log("찍혀라", userInfo)
+      const userData = await response.json();
+      console.log("찍혀라", userData)
 
+      // 유저의 dailyExpDTOList에서 날짜와 경험치 추출
+      const data1 = userData[0].dailyExpDTOList
+      const expArray1 = data1.map((item: { dailyExp: number }) => item.dailyExp);
+      // data1이 현재 로그인 유저
+
+      const data2 = userData[1].dailyExpDTOList
+      const expArray2 = data2.map((item: { dailyExp: number }) => item.dailyExp);
+      // data2가 현재 클릭한 유저
+
+      // console.log("데이터1",expArray1)
+      // console.log("데이터2",expArray2)
       // 차트 데이터 업데이트
       setChartSeries([
         {
           name: user.nickname,
-          data: [28, 29, 33]
+          data: expArray2
         },
         {
           name: store.loginUserInfo?.nickname,
-          data: [12, 11, 14]
+          data: expArray1
         }
       ]);
-
-
-
-
-
     } catch (error) {
       console.log("유저 정보 로드 실패", error)
     }
