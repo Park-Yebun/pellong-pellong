@@ -7,8 +7,9 @@ import QuizType2 from "./QuizType2";
 import QuizType3 from "./QuizType3";
 
 const LevelPlayScreen: React.FC = () => {
-  const { chapterNo } = useParams<{ chapterNo: string }>();
-  const parsedChapterNo = parseInt(chapterNo ?? "1", 10); // 문자열을 숫자로 변환
+  const { level } = useParams<{ level: string }>();
+  console.log("챕터", level)
+  const parsedChapterNo = parseInt(level ?? "1", 10); // 문자열을 숫자로 변환
   const navigate = useNavigate(); // useNavigate 훅 사용
 
   const [questions, setQuestions] = useState<any[]>([]);
@@ -34,7 +35,7 @@ const LevelPlayScreen: React.FC = () => {
       setCurrentQuestionIndex(prevIndex => prevIndex + 1);
     } else {
       // 퀴즈가 끝났을 때 결과 페이지로 이동
-      navigate("/jeju-quiz/result", { state: { score, totalQuestions: questions.length } });
+      navigate("/jeju-quiz/result", { state: { score, totalQuestions: questions.length, parsedChapterNo } });
     }
   };
 

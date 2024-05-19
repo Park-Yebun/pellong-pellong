@@ -6,16 +6,16 @@ import useStore from '../../store';
 interface QuizResultPageProps {
   score: number;
   totalQuestions: number;
+  parsedChapterNo: number;
 }
 
 const QuizResultPage: React.FC = () => {
   const store = useStore();
   const navigate = useNavigate();
   const location = useLocation();
-  const { score, totalQuestions } = location.state as QuizResultPageProps;
+  const { score, totalQuestions, parsedChapterNo } = location.state as QuizResultPageProps;
 
   useEffect(() => {
-
     const fetchData = async () => {
       try {
         let apiUrl = `https://www.saturituri.com/api/exp/quiz-solving/${store.loginUserInfo?.memberId}`;
@@ -39,6 +39,25 @@ const QuizResultPage: React.FC = () => {
       }
     };
 
+
+    const fetchLP = async () => {
+      try {
+        const updatedChapterNo = parsedChapterNo + 1;
+        console.log("nan이면 안돼", {parsedChapterNo})
+        const response = await fetch(`https://www.saturituri.com/api/learning/${store.loginUserInfo?.memberId}/${updatedChapterNo}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        console.log("성공얍", response)
+        // 데이터 처리
+      } catch (error) {
+        console.error("API 호출에 실패했습니다:", error);
+      }
+    };
+
+    fetchLP();
     fetchData(); // 컴포넌트가 마운트될 때 API 호출
   }, []);
 
