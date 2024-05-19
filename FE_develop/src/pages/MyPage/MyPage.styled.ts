@@ -65,8 +65,8 @@ export const RankBox = styled.div`
 `;
 
 export const RankImg = styled.div`
-  width: 130px;
-  height: 130px;
+  width: 90px;
+  height: 90px;
   font-weight: bold;
   margin-right: 10px; /* 이미지와 텍스트 사이의 간격 */
 `;
