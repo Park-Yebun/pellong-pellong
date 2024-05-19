@@ -16,7 +16,10 @@ import {
   UserProfileBox,
   ProfileImg,
   Logout,
-  NicknameBox
+  NicknameBox,
+  RankBox,
+  RankImg,
+  RankText
 } from './MyPage.styled'
  
 interface User {
@@ -123,10 +126,17 @@ const MyPage: React.FC = () => {
                       <NicknameBox>
                         <Nickname>{userData?.nickname}</Nickname>
                       </NicknameBox>
-                      <img src={getRankBadge(userData.sumExp)} alt=""/>
-                      <p> {userData.tier}</p>
-                      <p> 순위 : {userData.myRank}</p>
-                      <p> 누적 경험치 : {userData.sumExp}</p>
+                      <RankBox>
+                        <RankImg>
+                          <img src={getRankBadge(userData.sumExp)} alt=""/>
+                          {/* <img src={logoutImg} alt=""/> */}
+                        </RankImg>
+                        <RankText>
+                          <div> {userData.tier}</div>
+                          <div> 순위 : {userData.myRank}</div>
+                          <div> 누적 경험치 : {userData.sumExp}</div>
+                        </RankText>
+                      </RankBox>
                   </InfoBox>
               </UserProfile>
               <UserBadge badges={badges} /> 

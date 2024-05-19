@@ -38,9 +38,9 @@ export const UserProfileBox = styled.div`
 `
 export const UserProfile = styled.div``
 export const InfoBox = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    // display: flex;
+    // flex-direction: column;
+    // align-items: center;
 `
 export const ProfileImg = styled.img``
 export const Email = styled.div``
@@ -57,6 +57,19 @@ export const NicknameBox = styled.div`
     margin-top: 18px;
     display: flex;
 `
+export const RankBox = styled.div`
+    dispaly: flex;
+    flex-direction: row;
+    font-weight: bold;
+`
+export const RankImg = styled.div`
+
+    font-weight: bold;
+`
+export const RankText = styled.div`
+
+    font-weight: bold;
+`
 export const Logout = styled.img`
-    margin-left: 10px;
+    margin-top: 20px;
 `
