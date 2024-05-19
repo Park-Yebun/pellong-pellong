@@ -73,9 +73,15 @@
   border-radius: 50px;
   padding: 20px;
   cursor: pointer;
+  margin-top: 1rem; /* 버튼 위쪽에 간격을 설정합니다. */
 
 }
 
+.tt-test-btn-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 요소들을 수직으로 중앙 정렬합니다. */
+}
 .tt-test-button {
   width: 300px;
   margin-bottom: 20px;
