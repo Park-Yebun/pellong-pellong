@@ -1,0 +1,106 @@
+.badge-grid {
+  margin-top: 20px;
+  display: grid;
+  justify-items: center;
+  grid-template-columns: repeat(3, 1fr); /* 3열 그리드 */
+}
+
+.badge {
+  position: relative;
+  padding: 5px;
+  width: 80px;
+  height: 75px;
+  margin: 10px;
+  cursor: pointer;
+  text-align: center;
+  overflow: hidden; /* 원형 모양을 만들기 위해 테두리를 자르도록 설정 */
+  transition: transform 0.2s;
+}
+
+.badge.representative::after {
+  content: "대표";
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: gold;
+  color: black;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 12px;
+}
+
+.badge:hover {
+  transform: scale(1.1);
+}
+
+.badge .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 5px;
+  font-size: 12px;
+  display: none; /* 기본적으로 숨김 */
+}
+
+.badge.representative .checkmark {
+  display: block; /* 대표 뱃지일 경우 보이기 */
+}
+
+.badge img {
+  width: 100%; /* 이미지 크기 */
+  height: 100%; /* 이미지 크기 */
+}
+
+.badge-description {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border-top: 1px solid gray;
+  padding: 20px;
+  text-align: center;
+  margin-top: 20px;
+  animation: slideUp 0.3s ease-out;
+}
+
+.badge-description h2 {
+  margin: 0;
+}
+
+.badge-description p {
+  margin: 10px 0;
+}
+
+.badge-description button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.set-representative-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.set-representative-button:hover {
+  background-color: #0056b3;
+}
+
+
+
+@keyframes slideUp {
+  from {
+      transform: translateY(100%);
+  }
+  to {
+      transform: translateY(0);
+  }
+}

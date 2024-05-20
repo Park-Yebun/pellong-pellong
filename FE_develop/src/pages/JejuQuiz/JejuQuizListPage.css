@@ -1,0 +1,40 @@
+.quiz-list-container {
+  flex-direction: column;
+  background-image: url('../../assets/quiz-background.png');
+}
+
+.level-list-container {
+  margin-top: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.level-list {
+  list-style: none;
+  padding: 0;
+  /* display: flex; */
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.level-item {
+  margin: 10px; 
+}
+
+.level-link {
+  display: inline-block;
+  width: 100px; /* 레벨 아이템의 너비 조정 */
+  height: 100px; /* 레벨 아이템의 높이 조정 */
+  border-radius: 50%; /* 원형으로 모양 조정 */
+  background-color: #2ECC71; /* 배경색 지정 */
+  color: #fff; /* 텍스트 색상 지정 */
+  font-size: 20px; /* 텍스트 크기 지정 */
+  line-height: 100px; /* 텍스트 수직 가운데 정렬 */
+  text-align: center; /* 텍스트 수평 가운데 정렬 */
+  text-decoration: none; /* 링크 텍스트에 밑줄 제거 */
+}
+
+.level-link:hover {
+  background-color: #27AE60; /* 호버 시 배경색 변경 */
+}

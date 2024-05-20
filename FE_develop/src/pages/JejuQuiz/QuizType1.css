@@ -1,0 +1,172 @@
+@font-face {
+  src: url("NanumBarunGothic-YetHangul.ttf");
+  font-family: "assey";
+}
+
+.QT1-container {
+  background-color: #D1E9F9;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 100vh;
+  max-width: 600px;
+  margin: auto;
+}
+
+.QT1-quiz-header {
+  flex-direction: column;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  background-color: #A9DBFE;
+}
+
+.QT1-tinum {
+  display: flex;
+  justify-content: space-between;
+}
+
+.QT1-quiz-title {
+  font-size: 25px;
+  font-weight: bold;
+  color: #333;
+}
+
+.QT1-quiz-nums {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.QT1-quiz-text {
+  text-align:left;
+  font-size: 25px;
+  margin-top: 20px;
+  color: white;
+}
+
+.QT1-quiz-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  gap: 20px;
+  font-family: "assey";
+}
+
+.QT1-dialect-container {
+  display: flex;
+  align-items: center;
+  width: 300px;
+
+}
+
+.QT1-dialect-img {
+  width: 150px;
+  height: 150px;
+}
+
+.QT1-dialect-text{
+  text-align: center;
+  width: 200px;
+  background-color: #fff;
+  color: #333;
+  font-size: 18px;
+  padding: 20px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: "assey";
+}
+
+.QT1-image-container {
+  text-align: center;
+  height: 180px;
+  width: 180px;
+  background-color: #fff;
+  color: #333;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  
+}
+
+.QT1-image-container img {
+  height: 150px;
+  width: 150px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.QT1-audio-container {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.QT1-options-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "assey";
+}
+
+.QT1-option-item {
+  margin-bottom: 10px;
+  font-family: "assey";
+}
+
+.QT1-option-button {
+  width: 300px;
+  background-color: #fff;
+  color: #333;
+  font-size: 18px;
+  padding: 20px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: "assey";
+}
+
+.QT1-option-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.QT1-option-button:hover:not(:disabled) {
+  background-color: #f0f0f0;
+}
+
+.QT1-correct-feedback {
+  color: green;
+}
+
+.QT1-incorrect-feedback {
+  color: red;
+}
+
+.QT1-answer-feedback {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.QT1-next-button {
+  background-color: #0056b3;
+  color: white;
+  font-size: 18px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.QT1-next-button:hover {
+  background-color: #003d80;
+}
