@@ -59,7 +59,7 @@ const QuizType3: React.FC<{ quizData: QuizData; onNextQuestion: () => void; onCo
         </div>
         <div className="QT1-quiz-text">
           이미지와 뜻이 일치하는<br />
-          문장을 고르시오
+          단어를 고르시오
         </div>
       </div>
       <div className="QT1-quiz-content">

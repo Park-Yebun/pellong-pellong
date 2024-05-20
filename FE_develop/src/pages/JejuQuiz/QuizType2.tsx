@@ -59,7 +59,7 @@ const QuizType2: React.FC<{ quizData: QuizData; onNextQuestion: () => void; onCo
         </div>
         <div className="QT1-quiz-text">
           음성과 뜻이 일치하는<br />
-          문장을 고르시오
+          단어를 고르시오
         </div>
       </div>
       <div className="QT1-quiz-content">
