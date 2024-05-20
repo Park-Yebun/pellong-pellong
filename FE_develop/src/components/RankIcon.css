@@ -1,0 +1,15 @@
+.rank-icon-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.rank-icon {
+    width: 250px; /* 아이콘의 너비 조정 */
+    height: auto; /* 아이콘의 높이 조정 */
+}
+
+.rank-text {
+    margin-top: 10px; /* 텍스트와 아이콘 사이의 간격 조정 */
+    font-size: 20px; /* 텍스트 크기 조정 */
+}

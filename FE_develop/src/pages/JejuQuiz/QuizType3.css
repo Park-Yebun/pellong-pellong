@@ -1,0 +1,49 @@
+.QT3-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #D1E9F9;
+  height: 80vh;
+  padding: 20px;
+  text-align: center;
+}
+  
+  .QT3-word-box {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .QT3-image {
+    background-color: #fff;
+    color: black;
+    font-size: 18px;
+    width: 300px;
+    height: 100px;
+    padding: 14px 28px; /* 좀 더 큰 패딩 */
+    margin: 10px;
+    border: none;
+    border-radius: 25px; /* 더 둥근 모양 */
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .QT3-button {
+    background-color: #007aff;
+    color: #fff;
+    font-size: 16px;
+    padding: 12px 24px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .QT3-message {
+    font-size: 18px;
+    margin-top: 10px;
+    color: #007aff;
+  }
+  

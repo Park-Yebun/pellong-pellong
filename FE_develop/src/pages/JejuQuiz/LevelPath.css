@@ -1,0 +1,107 @@
+.level-path-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    /* height: 100vh; */
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .level-path-header {
+    height: 30px;
+    width: 60px;
+    padding: 20px;
+    margin-bottom: 30px;
+    font-size: 30px;
+    font-weight: bold;
+    background-color: #cb7716;
+    border-radius: 20px;
+    text-align: center;
+    border: 10px solid #D39C5E; /* 초록선 색상 */
+  }
+  
+  .level-path {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 20px
+  }
+  
+  .level-circle {
+    width: 70px;
+    height: 70px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    font-weight: bold;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    text-decoration: none;
+    color: black;
+    position: relative; /* 새로운 내용 */
+  }
+  
+  .level-circle::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 10px solid #8dc63f; /* 초록선 색상 */
+    border-radius: 50%;
+  }
+
+  .level-image {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  .level-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 이미지가 div 안에 꽉 차도록 조정 */
+  }
+  
+  .level-circle:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .stepping-stones {
+    display: flex;
+  }
+  
+  .stones-1 { transform: translateX(-180%); }
+  .stones-2 { transform: translateX(80%); }
+  .stones-3 { transform: translateX(380%); }
+  .stones-4 { transform: translateX(90%); }
+  .stones-5 { transform: translateX(-180%); }
+  .stones-6 { transform: translateX(-160%); }
+  .stones-7 { transform: translateX(200%); }
+  .stones-8 { transform: translateX(180%); }
+  .stones-9 { transform: translateX(-200%); }
+  
+  .stepping-stones .stone {
+    width: 30px;
+    height: 30px;
+    background-color: #8dc63f;
+    border-radius: 50%;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    margin: 5px;
+  }
+  
+  .level-1 { transform: translateX(-170%); }
+  .level-2 { transform: translateX(-20%); }
+  .level-3 { transform: translateX(120%); }
+  .level-4 { transform: translateX(120%); }
+  .level-5 { transform: translateX(-20%); }
+  .level-6 { transform: translateX(-160%); }
+  .level-7 { transform: translateX(0%); }
+  .level-8 { transform: translateX(180%); }
+  .level-9 { transform: translateX(0%); }
+  .level-10 { transform: translateX(-180%); }
+  

@@ -1,0 +1,12 @@
+.btn-go-back {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    padding-top: 15px;
+    margin-left: 15px;
+}
+
+.btn-go-back img {
+    width: 30px;
+    height: 30px;
+  }
