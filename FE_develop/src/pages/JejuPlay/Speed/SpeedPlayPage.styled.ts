@@ -6,8 +6,9 @@ interface TimerProps {
   }
 
 export const Container = styled.div`
-    width: 360px;
+    // width: 360px;
     height: 800px;
+    position: relative;
 
     display: flex;
     flex-direction: column;

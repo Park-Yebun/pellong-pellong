@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import useStore from '../../store';
-import { Link } from 'react-router-dom'; // Link 컴포넌트를 import 합니다.
+import { Link, useNavigate } from 'react-router-dom'; // Link 컴포넌트를 import 합니다.
 import './TestPage.css'; // CSS 파일을 import 합니다.
 
 declare global {
@@ -263,6 +263,7 @@ const QuizApp: React.FC = () => {
     );
   };
   const [name, setName] = useState<string>('');
+  const navigate = useNavigate();
 
   const handleNameSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -273,7 +274,7 @@ const QuizApp: React.FC = () => {
     return (
       <div className="tt-name-input-container">
         <h2>이름을 입력하세요</h2>
-        <form onSubmit={handleNameSubmit}>
+        <form className='formTag' onSubmit={handleNameSubmit}>
           <input
             type="text"
             value={name}
@@ -306,8 +307,8 @@ const QuizApp: React.FC = () => {
           {/* <p className="test-result">맞힌 문제 수: {score}</p> */}
           <div className='tt-test-btn-container'>
           
-          <button className="tt-test-buttons">
-            <Link to="/">메인으로</Link>
+          <button className="tt-test-buttons" onClick={() => {navigate('/')}}>
+            홈 화면으로
           </button>
           
           <button className="tt-test-buttons" onClick={handleShare}>카카오톡으로 결과 확인하기</button>
