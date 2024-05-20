@@ -1,6 +1,0 @@
-Flask==2.2.2
-transformers==4.40.2
-torch==2.2.2
-flask_cors
-gunicorn
-werkzeug==2.2.3
