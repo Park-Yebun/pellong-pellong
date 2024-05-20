@@ -5,15 +5,18 @@
   background-color: #f8f8f8;
   border: 1px solid #ccc;
   border-radius: 10px;
+
 }
 
 .test-question-container {
-  padding: 20px;
+  margin-top: 100px;
+  padding: 40px;
+  box-sizing: border-box;
 }
 
 .test-question {
   font-size: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .test-options-list {
@@ -26,7 +29,7 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   cursor: pointer;
 }
 
@@ -101,7 +104,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: 190px;
+
+  text-align: center;
+  
 }
 
 .tt-name-form {
@@ -124,9 +130,20 @@
   padding: 10px;
   font-size: 16px;
   font-weight: bold;
-  background-color: #E3FFD0;
-  color: black;
+  background-color: #6990FF;
+  color: #FFF;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+
+  margin-top: 50px;
+}
+
+.formTag {
+  margin-top: 80px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
