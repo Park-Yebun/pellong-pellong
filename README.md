@@ -47,16 +47,16 @@
 
 ## 🚀 기능
 1. 회원가입 및 소셜로그인 <br>
-![](./exec/1.gif)
+![](./exec/gif/1.gif)
 2. 사투리 모의고사
 <br>
-![](./exec/2.gif)
+![](./exec/gif/2.gif)
 3. 사투리 퀴즈 <br>
-![](./exec/3.gif)
+![](./exec/gif/3.gif)
 4. 사투리 멀티 게임 <br>
-![](./exec/4.gif)
+![](./exec/gif/4.gif)
 5. 멀티 게임 랭킹 <br>
-![](./exec/5.gif)
+![](./exec/gif/5.gif)
 6. 사투리 번역기 <br>
 
 
