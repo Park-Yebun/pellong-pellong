@@ -23,7 +23,7 @@
 - **FE**:
 ![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black)
 ![PWA](https://img.shields.io/badge/PWA-5A0FC8?logo=pwa&logoColor=white)
-![Websockets](https://img.shields.io/badge/Websockets-000000?logo=socket.io&logoColor=white)
+![Websocket](https://img.shields.io/badge/Websockets-000000?logo=socket.io&logoColor=white)
 ![Zustand](https://img.shields.io/badge/Zustand-4A90E2?logo=zustand&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
 
@@ -63,87 +63,72 @@
 6. 사투리 번역기 <br>
 ![](./exec/gif/5.gif)
 
-## 🐘 앞으로 끼리끼리 서비스의 미래는?
+## 🏝️ 앞으로 펠롱펠롱 서비스의 미래는?
 - 제주도 교육청 하의 언어학습 플랫폼
 - 제주어 뿐만 아니라, 각 지역의 방언 학습 서비스 제공
 
 
 ## 포팅메뉴얼
-[📋포팅메뉴얼 노션 링크]()
+[📋포팅메뉴얼 링크](exec/포팅메뉴얼.pdf)
 
 
 ## 컴포넌트 구조
 ### FrontEnd
 📦src  
+ ┣ 📂@types
+ ┃ ┣ 📜kakao.d.ts
  ┣ 📂assets  
- ┃ ┣ 📂book  
- ┃ ┣ 📂bookshelf  
- ┃ ┣ 📂error  
- ┃ ┣ 📂header  
- ┃ ┣ 📂library  
- ┃ ┣ 📂main  
- ┃ ┣ 📂story  
- ┃ ┣ 📂study  
- ┃ ┣ 📂user  
+ ┃ ┣ 📂JejuPlay
  ┣ 📂components  
- ┃ ┣ 📂api  
- ┃ ┣ 📂common  
- ┃ ┣ 📂Counter  
- ┃ ┣ 📂header  
- ┃ ┣ 📂main  
- ┃ ┣ 📂Modal  
- ┃ ┗ 📂story  
- ┣ 📂pages  
+ ┃ ┣ 📂JejuPlay
+ ┃ ┣ 📂JejuQuiz
+ ┃ ┣ 📂MainPage
+ ┃ ┣ 📂MyPage
+ ┣ 📂contexts
+ ┃ ┣ 📜AuthContext.tsx
+ ┃ ┣ 📜useWebsocket.tsx
+ ┣ 📂pages
+ ┃ ┣ 📂JejuEdu
+ ┃ ┣ 📂JejuPlay
+ ┃ ┃ ┣ 📂Other
+ ┃ ┃ ┣ 📂Speed
+ ┃ ┣ 📂JejuQuiz
+ ┃ ┣ 📂JejuTest
+ ┃ ┣ 📂MainPage
+ ┃ ┣ 📂MyPage
  ┣ 📜App.css  
- ┣ 📜App.jsx  
+ ┣ 📜App.tsx 
+ ┣ 📜Router.tsx
  ┣ 📜index.css  
- ┣ 📜main.jsx  
- ┣ 📜ResrtictRoute.jsx  
+ ┣ 📜index.tsx
+ ┣ 📜react-app-env.d.ts  
+ ┣ 📜reportWebVitals.ts 
  ┗ 📜service-worker.js  
+ ┗ 📜serviceWorkerRegistration.js 
+ ┗ 📜store.ts
 
 ### BackEnd
-📦BE  
+📦BE/pellongpellong 
  ┣ 📂gradle  
  ┃ ┗ 📂wrapper  
  ┣ 📂src  
  ┃ ┣ 📂main  
  ┃ ┃ ┗ 📂java  
  ┃ ┃ ┃ ┗ 📂com  
- ┃ ┃ ┃ ┃ ┗ 📂kkirikkiri  
+ ┃ ┃ ┃ ┃ ┗ 📂C205/pellongpellong
  ┃ ┃ ┃ ┃ ┃ ┣ 📂config  
- ┃ ┃ ┃ ┃ ┃ ┣ 📂domain  
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂book  
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller  
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto  
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂entity  
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂enums  
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository  
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂service  
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂bookshelf  
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller  
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto  
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂entity  
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository  
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂service  
- ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂learning  
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller  
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto  
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂entity  
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository  
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂service  
- ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂member  
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller  
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto  
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂entity  
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂enums  
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository  
- ┃ ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂service  
- ┃ ┃ ┃ ┃ ┃ ┣ 📂global  
- ┃ ┃ ┃ ┃ ┃ ┃ ┗ 📂common  
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller 
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂entity
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂jwt
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂oauth2
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂service
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜PellongpellongApplication.java
  ┃ ┗ 📂test  
  ┃ ┃ ┗ 📂java  
  ┃ ┃ ┃ ┗ 📂com  
- ┃ ┃ ┃ ┃ ┗ 📂kkirikkiri  
+ ┃ ┃ ┃ ┃ ┗ 📂C205/pellongpellong
  ┣ 📜.gitignore  
  ┣ 📜build.gradle  
  ┣ 📜docker-compose-redis.yml  
