@@ -75,60 +75,60 @@
 ## 컴포넌트 구조
 ### FrontEnd
 📦src  
- ┣ 📂@types
- ┃ ┣ 📜kakao.d.ts
+ ┣ 📂@types  
+ ┃ ┣ 📜kakao.d.ts  
  ┣ 📂assets  
- ┃ ┣ 📂JejuPlay
+ ┃ ┣ 📂JejuPlay  
  ┣ 📂components  
- ┃ ┣ 📂JejuPlay
- ┃ ┣ 📂JejuQuiz
- ┃ ┣ 📂MainPage
- ┃ ┣ 📂MyPage
- ┣ 📂contexts
- ┃ ┣ 📜AuthContext.tsx
- ┃ ┣ 📜useWebsocket.tsx
- ┣ 📂pages
- ┃ ┣ 📂JejuEdu
- ┃ ┣ 📂JejuPlay
- ┃ ┃ ┣ 📂Other
- ┃ ┃ ┣ 📂Speed
- ┃ ┣ 📂JejuQuiz
- ┃ ┣ 📂JejuTest
- ┃ ┣ 📂MainPage
- ┃ ┣ 📂MyPage
+ ┃ ┣ 📂JejuPlay  
+ ┃ ┣ 📂JejuQuiz  
+ ┃ ┣ 📂MainPage  
+ ┃ ┣ 📂MyPage  
+ ┣ 📂contexts  
+ ┃ ┣ 📜AuthContext.tsx  
+ ┃ ┣ 📜useWebsocket.tsx  
+ ┣ 📂pages  
+ ┃ ┣ 📂JejuEdu  
+ ┃ ┣ 📂JejuPlay  
+ ┃ ┃ ┣ 📂Other  
+ ┃ ┃ ┣ 📂Speed  
+ ┃ ┣ 📂JejuQuiz  
+ ┃ ┣ 📂JejuTest  
+ ┃ ┣ 📂MainPage  
+ ┃ ┣ 📂MyPage  
  ┣ 📜App.css  
- ┣ 📜App.tsx 
- ┣ 📜Router.tsx
+ ┣ 📜App.tsx  
+ ┣ 📜Router.tsx  
  ┣ 📜index.css  
- ┣ 📜index.tsx
+ ┣ 📜index.tsx  
  ┣ 📜react-app-env.d.ts  
- ┣ 📜reportWebVitals.ts 
+ ┣ 📜reportWebVitals.ts  
  ┗ 📜service-worker.js  
- ┗ 📜serviceWorkerRegistration.js 
- ┗ 📜store.ts
+ ┗ 📜serviceWorkerRegistration.js  
+ ┗ 📜store.ts  
 
 ### BackEnd
-📦BE/pellongpellong 
+📦BE/pellongpellong  
  ┣ 📂gradle  
  ┃ ┗ 📂wrapper  
  ┣ 📂src  
  ┃ ┣ 📂main  
  ┃ ┃ ┗ 📂java  
  ┃ ┃ ┃ ┗ 📂com  
- ┃ ┃ ┃ ┃ ┗ 📂C205/pellongpellong
+ ┃ ┃ ┃ ┃ ┗ 📂C205/pellongpellong  
  ┃ ┃ ┃ ┃ ┃ ┣ 📂config  
- ┃ ┃ ┃ ┃ ┃ ┣ 📂controller 
- ┃ ┃ ┃ ┃ ┃ ┣ 📂dto
- ┃ ┃ ┃ ┃ ┃ ┣ 📂entity
- ┃ ┃ ┃ ┃ ┃ ┣ 📂jwt
- ┃ ┃ ┃ ┃ ┃ ┣ 📂oauth2
- ┃ ┃ ┃ ┃ ┃ ┣ 📂repository
- ┃ ┃ ┃ ┃ ┃ ┣ 📂service
- ┃ ┃ ┃ ┃ ┃ ┣ 📜PellongpellongApplication.java
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂controller  
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂dto  
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂entity  
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂jwt  
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂oauth2  
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂repository  
+ ┃ ┃ ┃ ┃ ┃ ┣ 📂service  
+ ┃ ┃ ┃ ┃ ┃ ┣ 📜PellongpellongApplication.java  
  ┃ ┗ 📂test  
  ┃ ┃ ┗ 📂java  
  ┃ ┃ ┃ ┗ 📂com  
- ┃ ┃ ┃ ┃ ┗ 📂C205/pellongpellong
+ ┃ ┃ ┃ ┃ ┗ 📂C205/pellongpellong  
  ┣ 📜.gitignore  
  ┣ 📜build.gradle  
  ┣ 📜docker-compose-redis.yml  
