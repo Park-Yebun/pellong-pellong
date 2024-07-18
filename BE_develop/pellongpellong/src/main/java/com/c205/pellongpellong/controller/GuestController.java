@@ -35,6 +35,9 @@ public class GuestController {
     @MessageMapping("/party/guest/{partyId}")
     @SendTo("/topic/party/{partyId}")
     public Map<String, Object> addGuestToParty(@DestinationVariable long partyId, GuestRequest guest) {
+//        logger.info("수신된 파티 ID: {}", guest.getPartyId());
+//        logger.info("수신된 멤버 ID: {}", guest.getMemberId());
+
         PartyDetailDTO partydetail = guestService.addGuestToParty(guest);
 
         // 웹소켓 송신 메세지 객체 타입으로 만들어서 보내주기

@@ -174,8 +174,8 @@ public class ExpController {
         List<ExpComparisonResponse> expComparisonResponses = new ArrayList<>();
         List<Long> memberIds = Arrays.asList(loginedId, selectedId);
         for (Long memberId : memberIds) {
-            String memberNickName = memberRepository.getNicknameByMemberId(memberId)
-                    .orElseThrow(() -> new IllegalArgumentException("해당하는 회원이 없습니다."));
+            String memberNickName = memberRepository.findByMemberId(memberId)
+                    .orElseThrow(() -> new IllegalArgumentException("해당하는 회원이 없습니다.")).getNickname();
             List<Object[]> dailyExpList = expRepository.findRecentDailyExp(memberId);
             List<DailyExpDTO> dailyExpDTOList = new ArrayList<>();
             for (Object[] de : dailyExpList) {

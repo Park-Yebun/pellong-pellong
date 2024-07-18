@@ -104,21 +104,21 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
             // 기존 사용자 로그인시 출석체크 경험치 부여할지 말지 체크
             // 현재 일시 가져오기
-            LocalDateTime currentDateTime = LocalDateTime.now();
+//            LocalDateTime currentDateTime = LocalDateTime.now();
 
             // 기존 로그인 이력 가져오기
-            LocalDateTime lastLoginDateTime = memberVariableController.getLoginHistoryByMemberId(existingMember.getMemberId());
+//            LocalDateTime lastLoginDateTime = memberVariableController.getLoginHistoryByMemberId(existingMember.getMemberId());
 
             // 로그인 이력이 없는 경우 또는 마지막 로그인 날짜가 오늘과 같은 경우에는 최근 로그인 일시만 업데이트
-            if (lastLoginDateTime == null || lastLoginDateTime.toLocalDate().isEqual(currentDateTime.toLocalDate())) {
-                memberVariableController.updateLoginTime(existingMember.getMemberId());
-
-            } else { // 마지막 로그인 날짜가 오늘이 아닌 경우에는 경험치 적립 및 최근 로그인 일시 업데이트
-
-                expController.earnAttendanceExp(existingMember.getMemberId());
-                memberVariableController.updateLoginTime(existingMember.getMemberId());
-
-            }
+//            if (lastLoginDateTime == null || lastLoginDateTime.toLocalDate().isEqual(currentDateTime.toLocalDate())) {
+//                memberVariableController.updateLoginTime(existingMember.getMemberId());
+//
+//            } else { // 마지막 로그인 날짜가 오늘이 아닌 경우에는 경험치 적립 및 최근 로그인 일시 업데이트
+//
+//                expController.earnAttendanceExp(existingMember.getMemberId());
+//                memberVariableController.updateLoginTime(existingMember.getMemberId());
+//
+//            }
             return existingMember;
 
         } else {
@@ -139,7 +139,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
             // 저장된 멤버의 ID를 사용하여 여러 메소드를 호출합니다.
             rankController.addRank(savedMember.getMemberId());
-            memberBadgeController.addMemberBadge(savedMember.getMemberId());
+//            memberBadgeController.addMemberBadge(savedMember.getMemberId());
             dailyQuestController.addDailyQuest(savedMember.getMemberId());
             memberVariableController.addMemberVariable(savedMember.getMemberId());
             redisTemplate.opsForZSet().incrementScore("ranking", String.valueOf(savedMember.getMemberId()), 0);

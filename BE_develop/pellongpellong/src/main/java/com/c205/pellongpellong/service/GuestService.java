@@ -41,7 +41,10 @@ public class GuestService {
     // 웹소켓 적용
     @Transactional
     public PartyDetailDTO addGuestToParty(GuestRequest user) {
-        logger.info("입장요청 잘 수신함");
+        logger.info("수신된 파티 ID: {}", user.getPartyId());
+        logger.info("수신된 멤버 ID: {}", user.getMemberId());
+
+//        logger.info("입장요청 잘 수신함");
         Party party = partyRepository.findById(user.getPartyId()).orElseThrow(() -> new RuntimeException("파티id를 찾을 수 없어요"));
         Member member = memberRepository.findById(user.getMemberId()).orElseThrow(() -> new RuntimeException("회원id을 찾을 수 없어요"));
 
@@ -54,8 +57,12 @@ public class GuestService {
         if (party.getPo() >= party.getTo()) {
             throw new IllegalStateException("방이 가득 찼어요.");
         }
+
         Guest guest = new Guest();
 //        guest.setMember(member);
+        logger.info("여기까진 잘 작동함");
+        logger.info("멤버 아이디 확인 : {}", member.getMemberId());
+
         guest.setMemberId(member.getMemberId());
         guest.setParty(party);
         guest = guestRepository.save(guest);
@@ -66,8 +73,8 @@ public class GuestService {
         List<GuestDTO> guestDTOs = party.getGuests().stream()
 //                .map(g -> new GuestDTO(g.getGuestId(), g.getMember().getNickname(), g.getMember().getProfileImg()))
                 .map(g -> new GuestDTO(g.getGuestId(),
-                        memberRepository.getNicknameByMemberId(g.getMemberId()).orElseThrow(),
-                        memberRepository.findMemberByMemberId(g.getMemberId()).orElseThrow().getProfileImg(),
+                        memberRepository.findByMemberId(g.getMemberId()).orElseThrow().getNickname(),
+                        memberRepository.findByMemberId(g.getMemberId()).orElseThrow().getProfileImg(),
                         g.getMemberId()))
                 .collect(Collectors.toList());
 
@@ -101,8 +108,8 @@ public class GuestService {
                 .filter(guest -> guest.getParty().getPartyId().equals(partyId))
 //                .map(guest -> new GuestDTO(guest.getGuestId(), guest.getMember().getNickname(), guest.getMember().getProfileImg()))
                 .map(g -> new GuestDTO(g.getGuestId(),
-                        memberRepository.getNicknameByMemberId(g.getMemberId()).orElseThrow(),
-                        memberRepository.findMemberByMemberId(g.getMemberId()).orElseThrow().getProfileImg(),
+                        memberRepository.findByMemberId(g.getMemberId()).orElseThrow().getNickname(),
+                        memberRepository.findByMemberId(g.getMemberId()).orElseThrow().getProfileImg(),
                         g.getMemberId()))
                 .collect(Collectors.toList());
     }
@@ -127,8 +134,8 @@ public class GuestService {
         // 업데이트된 파티 테이블 정보 가져오기
         List<GuestDTO> guestDTOs = party.getGuests().stream()
                 .map(g -> new GuestDTO(g.getGuestId(),
-                        memberRepository.getNicknameByMemberId(g.getMemberId()).orElseThrow(),
-                        memberRepository.findMemberByMemberId(g.getMemberId()).orElseThrow().getProfileImg(),
+                        memberRepository.findByMemberId(g.getMemberId()).orElseThrow().getNickname(),
+                        memberRepository.findByMemberId(g.getMemberId()).orElseThrow().getProfileImg(),
                                 g.getMemberId()))
                 .collect(Collectors.toList());
 

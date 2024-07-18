@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface PartyRepository extends JpaRepository<Party, Long> {
     // 멤버 ID로 생성된 파티 찾기
     Optional<Party> findByMemberMemberId(Long memberId);
+//    Optional<Party> findByMemberId(Long memberId);
 }

@@ -57,10 +57,10 @@ public class RankService {
 //                    Long memberId = Long.parseLong(Objects.requireNonNull(typedTuple.getValue()));
                     Long memberId = Long.parseLong(Objects.requireNonNull(typedTuple.getValue()));
                     int sumExp = Objects.requireNonNull(typedTuple.getScore()).intValue();
-                    String nickName = memberRepository.getNicknameByMemberId(memberId).orElseThrow(() -> new RuntimeException("해당 memberId에 해당하는 회원의 닉네임이 존재하지 않습니다."));
+                    String nickName = memberRepository.findByMemberId(memberId).orElseThrow(() -> new RuntimeException("해당 회원이 존재하지 않습니다.")).getNickname();
 //                    int sumExp = Integer.parseInt(Double.toString(typedTuple.getScore()));
-                    String profileImg = memberRepository.getProfileImgByMemberId(memberId)
-                            .orElseThrow(() -> new RuntimeException("해당 memberId에 해당하는 회원의 프로필 이미지가 존재하지 않습니다."));
+                    String profileImg = memberRepository.findByMemberId(memberId)
+                            .orElseThrow(() -> new RuntimeException("해당 회원이 존재하지 않습니다.")).getProfileImg();
                     RankDTO rankDTO = new  RankDTO(rankId.get(), memberId, sumExp, nickName, profileImg);
                     rankId.addAndGet(1);
                     return rankDTO;

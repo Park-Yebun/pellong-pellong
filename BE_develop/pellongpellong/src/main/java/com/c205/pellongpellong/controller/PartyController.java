@@ -84,7 +84,7 @@ public class PartyController {
     @MessageMapping("/party/{partyId}")
     public void enterUser(@DestinationVariable("partyId") Long partyId) {
         String enterMessage = "대기방에 입장하셨습니다.";
-        logger.info("");
+//        logger.info("입장요청 잘 수신함!!");
 
         // 동적으로 대상 경로를 설정하여 메시지 전송
         messagingTemplate.convertAndSend("/topic/party/" + partyId, enterMessage);
