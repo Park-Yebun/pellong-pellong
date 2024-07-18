@@ -8,7 +8,7 @@ const useWebsocket = () => {
 
   useEffect(() => {
     const newClient = new Client({
-      webSocketFactory: () => new SockJS('https://www.saturituri.com/ws'),
+      webSocketFactory: () => new SockJS('http://localhost:8080/ws'),
       reconnectDelay: 5000,
       debug: (str) => console.log(new Date(), str),
     });

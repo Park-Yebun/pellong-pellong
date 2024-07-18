@@ -115,27 +115,27 @@ const UserRanking: React.FC = () => {
   const [chartSeries, setChartSeries] = useState<any>([]); 
 
 
-  useEffect(() => {
-    // console.log("페치데이터 동작!!")
-    // console.log(store.loginUserInfo?.memberId)
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch('https://www.saturituri.com/api/ranking', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-        const data: User[] = await response.json();
-        const rankedUsers = sortAndRankUsers(data);
-        setUsers(rankedUsers);
-        // console.log("데이터 로드 완료", data);
-      } catch (error) {
-        // console.log("데이터 로드 실패", error)
-      }
-    }
-    fetchUsers();
-  }, []);
+  // useEffect(() => {
+  //   // console.log("페치데이터 동작!!")
+  //   // console.log(store.loginUserInfo?.memberId)
+  //   const fetchUsers = async () => {
+  //     try {
+  //       const response = await fetch('https://www.saturituri.com/api/ranking', {
+  //         method: 'GET',
+  //         headers: {
+  //           'Content-Type': 'application/json'
+  //         }
+  //       });
+  //       const data: User[] = await response.json();
+  //       const rankedUsers = sortAndRankUsers(data);
+  //       setUsers(rankedUsers);
+  //       // console.log("데이터 로드 완료", data);
+  //     } catch (error) {
+  //       // console.log("데이터 로드 실패", error)
+  //     }
+  //   }
+  //   fetchUsers();
+  // }, []);
 
   const getRankBadge = (sumExp: number) => {
     if (sumExp >= 0 && sumExp < 100) {

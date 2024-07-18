@@ -87,7 +87,7 @@ const MyPage: React.FC = () => {
     // console.log("페치데이터 동작!!")
     const fetchData = async () => {
       try {
-        const response = await fetch('https://www.saturituri.com/api/profiles/' + store.loginUserInfo?.memberId, {
+        const response = await fetch('http://localhost:8080/profiles/' + store.loginUserInfo?.memberId, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json'

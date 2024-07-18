@@ -40,26 +40,26 @@ const WaitingRoomPage = () => {
   const isEmpty = roomData?.po === 0 ? true : false;
 
   const startGame = (event:any) => {
-    // const numPartyId = Number(partyId)
-    // if (client) {
-    //   client.publish({
-    //     destination: `/app/party/${numPartyId}/start`,
-    //     body: ''
-    //   });
-    // }
-    if (!isOwner) {
-      event.preventDefault();
-      console.log("퀴즈 시작 권한이 없습니다.") //추후 alert나 모달로 구현할 것
-    } else {
-      if (!isReady && client) {
-        console.log("인원이 준비되지 않았습니다.") //추후 alert나 모달로 구현할 것
-      } else if (isReady && client) {
-        const numPartyId = Number(partyId)
-        client.publish({
-          destination: `/app/party/${numPartyId}/start`,
-          body: ''
-        });
-      }}
+    const numPartyId = Number(partyId)
+    if (client) {
+      client.publish({
+        destination: `/app/party/${numPartyId}/start`,
+        body: ''
+      });
+    }
+    // if (!isOwner) {
+    //   event.preventDefault();
+    //   console.log("퀴즈 시작 권한이 없습니다.") //추후 alert나 모달로 구현할 것
+    // } else {
+    //   if (!isReady && client) {
+    //     console.log("인원이 준비되지 않았습니다.") //추후 alert나 모달로 구현할 것
+    //   } else if (isReady && client) {
+    //     const numPartyId = Number(partyId)
+    //     client.publish({
+    //       destination: `/app/party/${numPartyId}/start`,
+    //       body: ''
+    //     });
+    //   }}
   };
 
   useEffect(() => {
@@ -89,6 +89,7 @@ const WaitingRoomPage = () => {
         };
       });
 
+      console.log("현재 로그인된 유저 확인" + store.loginUserInfo?.memberId)
       client.publish({
         destination: '/app/party/guest/' + numPartyId,
         body: JSON.stringify({partyId: numPartyId, memberId: store.loginUserInfo?.memberId})

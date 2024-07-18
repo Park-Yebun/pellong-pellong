@@ -36,7 +36,7 @@ export const DailyQuote = () => {
 
         const fetchDailyQuote = async () => {
             try {
-                const response = await fetch('https://www.saturituri.com/api/jeju-proverb', {
+                const response = await fetch('http://localhost:8080/jeju-proverb', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
