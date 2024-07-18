@@ -106,4 +106,52 @@ export const Answer = styled.input`
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 `
 
-export const Alert = styled.div`` 
+export const Alert = styled.div`
+        position: absolute;
+        top: -23px;
+        left: -37px;
+
+        color: #F5002C;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 800;
+        line-height: normal;
+        letter-spacing: 0.02px;
+`
+
+export const PlayerBox = styled.div`
+    width: 270px;
+    height: 135px;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+`
+export const LifeBox = styled.div``
+export const Life = styled.img`
+    width: 19.545px;
+    height: 19.545px;
+    margin-right: 5px;
+`
+export const Player= styled.div`
+    position: absolute;
+    left: 0;
+    bottom: 0;
+`
+
+export const ProfileImg = styled.img`
+    width: 64px;
+    height: 64px;
+    border-radius: 60px;
+`
+export const Nickname = styled.div`
+    width: 64px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    letter-spacing: 0.015px;
+`

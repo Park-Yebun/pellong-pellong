@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link, useNavigate, useLocation, useParams } from 'react-router-dom';
 import moviebadge from '../../../assets/JejuPlay/moviebadge.png'
 import stageboard from '../../../assets/JejuPlay/stageboard.png'
 import mardarin from '../../../assets/JejuPlay/mandarin.png'
 import dummydata from '../../../data/drama';
-import SoloUser from '../../../components/JejuPlay/SoloUser';
-import DuelUser from '../../../components/JejuPlay/DuelUser';
+import lifeImg from '../../../assets/JejuPlay/life.png'
+import deLifeImg from '../../../assets/JejuPlay/loselife.png'
+
 import {
   Container,
   Answer,
@@ -18,23 +19,23 @@ import {
   StageBox,
   TypeBadge,
   StageText,
-  Alert
+  Alert,
+  PlayerBox,
+  Player,
+  Life,
+  LifeBox,
+  Nickname,
+  ProfileImg
 } from './OtherPlayPage.styled'
 
-// 웹소켓 통신
-import SockJS from 'sockjs-client';
-import {Stomp, Frame} from '@stomp/stompjs';
 
 const OtherPlayPage = () => {
   const navigate = useNavigate();
-  // const {to} = useLocation().state;
   const [quizList, setQuizList] = useState<any[]>([]);
   const [quiz, setQuiz] = useState<Quiz|null>(null);
   const [stage, setStage] = useState<number>(1)
   const answerRef = useRef<HTMLInputElement|null>(null);
   const [isWrong, setIsWrong] = useState<boolean>(false);
-  const [alert, setAlert] = useState<string>('');
-  const [lifeCnt, setLifeCnt] = useState<number>(3);
   const { partyId } = useParams();
   const location = useLocation();
   const [kind, setKind] = useState<number>(location.state?.kind);
@@ -45,6 +46,30 @@ const OtherPlayPage = () => {
     title: string
   }
 
+  interface UserInfo {
+    guestId: number;
+    nickname: string;
+    profileImg: string;
+    memberId: number;
+  }
+
+  interface EnhancedUserInfo extends UserInfo {
+    correctCount: number;
+    validLifeCount: number;
+    alert: string;
+  }
+
+   // 유저 관련 변수들
+   const userInfos = location.state?.userInfos;
+   // 입력 필드에 답을 제출한 가장 최근 플레이어
+   const [currentUser, setCurrentUser] = useState<EnhancedUserInfo | null>(null);
+   const [players, setPlayers] = useState<EnhancedUserInfo[]>(userInfos.map((user: UserInfo) => ({
+     ...user,
+     correctCount: 0,
+     validLifeCount: Math.min(3, Math.max(0, 3)),
+     alert: ''
+   })));
+
   const selectRandomQuiz = () => {
     if (dummydata.length > 0) {
       const randomIndex = Math.floor(Math.random() * dummydata.length);
@@ -53,31 +78,69 @@ const OtherPlayPage = () => {
     return null;
   };
 
-  const checkAnswer = (answer:string|undefined) => {
+  // 입력창에 접근할때 유저 정보를 변수에 저장
+  const handleFocus = (user: EnhancedUserInfo | null) => {
+    if (user) {
+      setCurrentUser(user);
+      console.log("답을 입력한 유저 : " + user)
+    }
+  };
+
+  const checkAnswer = useCallback((answer:string|undefined,  user: EnhancedUserInfo | null) => {
     console.log('함수 정상 작동!!', answer)
-    if (answer && answer === quiz?.title) {
+    if (user && answer && answer === quiz?.title) {
       // 정답 맞았을때 로직
       setStage(prevStage => prevStage + 1)
       if (answerRef.current) {answerRef.current.value = "";}
       setQuizList(quizList.filter(quiz => quiz.dramaId !== quiz.dramaId));
       setQuiz(selectRandomQuiz());
-      setAlert('정답!');
+
+      // 현재 플레이어 correctCount 증가
+      setPlayers(players.map((player) => {
+        if (player.guestId === user.guestId) {
+          return { ...player, correctCount: player.correctCount + 1, alert: '정답!' };
+        }
+        return player;
+      }));
+
+      // alert 상태 초기화
       setTimeout(() => {
-        setAlert('');
+        setPlayers((prevPlayers) => prevPlayers.map((player) => {
+          if (player.guestId === user.guestId) {
+            return { ...player, alert: '' };
+          }
+          return player;
+        }));
       }, 1000);
-    } else if (answer && answer !== quiz?.title) {
-      // 틀렸을때 로직
+
+    // 틀렸을때 로직
+    } else if (user && answer && answer !== quiz?.title) {
+      console.log("틀렸음")
       if (answerRef.current) {answerRef.current.value = "";}
-      setAlert('오답!');
+
+      // life 감소
+      setPlayers((prevPlayers) => prevPlayers.map((player) => {
+        if (player.guestId === user.guestId) {
+          return { ...player, alert: '오답!', validLifeCount: player.validLifeCount - 1 };
+        }
+        return player;
+      }));
+
+      // alert 상태 초기화
       setTimeout(() => {
-        setAlert('');
+        setPlayers((prevPlayers) => prevPlayers.map((player) => {
+          if (player.guestId === user.guestId) {
+            return { ...player, alert: '' };
+          }
+          return player;
+        }));
       }, 1000);
-      setLifeCnt(prevLifeCnt => prevLifeCnt - 1)
+
     } else {
       // 제출한 답이 ''이거나 null일때 로직
       if (answerRef.current) {answerRef.current.value = "";}
     }
-  }
+  }, [])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -111,14 +174,6 @@ const OtherPlayPage = () => {
     };
     fetchData();
   }, []);
-  
-  useEffect(() => {
-    if (lifeCnt === 0) {
-      setTimeout(() => {
-        navigate('/jeju-play/gameover');
-      }, 300);
-    }
-  }, [lifeCnt, navigate]);
 
   return (
     <Container>
@@ -130,16 +185,34 @@ const OtherPlayPage = () => {
         <TypeBadge src={moviebadge} alt='moviebadge'></TypeBadge>
         <Content>{quiz?.content}</Content>
       </QuizBox>
-      <AnswerBox>
-        <MandarinBadge src={mardarin} alt='mandarin'></MandarinBadge>
-        <Answer ref={answerRef} placeholder='제목을 입력하세요.' onKeyDown={(e) => {if(e.key === 'Enter') {checkAnswer(answerRef.current?.value)}}}></Answer>
-      </AnswerBox>
       {/* {to == 1 && (
         <SoloUser alert={alert} lifeCnt={lifeCnt}/>
       )}
       {to == 2 && (
         <DuelUser/>
       )} */}
+      <PlayerBox>
+        {players.map((player) => (
+          <Player key={player.guestId}>
+              <Alert>{player.alert}</Alert>
+              <ProfileImg src={player.profileImg} alt="profile"></ProfileImg>
+              <Nickname>골개비</Nickname>
+              <LifeBox>
+                {[...Array(player.validLifeCount)].map((_, index) => (
+                    <Life key={index} src={lifeImg} alt="life"></Life>
+                ))}
+                {[...Array(3-player.validLifeCount)].map((_, index) => (
+                    <Life key={index} src={deLifeImg} alt="delife"></Life>
+                ))}
+              </LifeBox>
+              <AnswerBox>
+                <MandarinBadge src={mardarin} alt='mandarin'></MandarinBadge>
+                <Answer ref={answerRef} placeholder='제목을 입력하세요.' 
+                onKeyUp={(e) => {if(e.key === 'Enter') {checkAnswer(answerRef.current?.value, player)}}}></Answer>
+            </AnswerBox>
+          </Player>
+        ))}
+        </PlayerBox>
     </Container>
   );
 };

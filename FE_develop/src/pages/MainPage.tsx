@@ -36,28 +36,28 @@ function MainPage() {
   const [nightMode, setNightMode] = useState(false); // 야경 모드 상태
   const [dailyQuests, setDailyQuests] = useState<DailyQuest[]>([]); // 일일 퀘스트 목록
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    const fetchDailyQuests = async () => {
-      try {
-        const response = await fetch(`https://www.saturituri.com/api/daily-quest/${store.loginUserInfo?.memberId}`, {
-          method: "GET",
-          headers: {
-            'Content-Type': 'application/json'
-          }
+  //   const fetchDailyQuests = async () => {
+  //     try {
+  //       const response = await fetch(`https://www.saturituri.com/api/daily-quest/${store.loginUserInfo?.memberId}`, {
+  //         method: "GET",
+  //         headers: {
+  //           'Content-Type': 'application/json'
+  //         }
   
-        });
-        const data = await response.json();
-        setDailyQuests([data]);
-        // console.log("됐다", data)
-        // console.log(dailyQuests[0].accomplished)
+  //       });
+  //       const data = await response.json();
+  //       setDailyQuests([data]);
+  //       // console.log("됐다", data)
+  //       // console.log(dailyQuests[0].accomplished)
 
-      } catch (error) {
-        console.error('Error fetching daily quests:', error);
-      }
-    };
-    fetchDailyQuests();
-  }, [dailyQuests]);
+  //     } catch (error) {
+  //       console.error('Error fetching daily quests:', error);
+  //     }
+  //   };
+  //   fetchDailyQuests();
+  // }, [dailyQuests]);
 
 
   function handleClick(e: React.MouseEvent<HTMLAnchorElement>, path: string) {
