@@ -95,7 +95,7 @@ const PlayMainPage = () => {
         </div>
         <div className='waitroom title'>대기방</div>
         {roomData.map((room:Room, index:number) => 
-          <div className='waitiroom-container' onClick={() => handleClick(room)}
+          <div key={index} className='waitiroom-container' onClick={() => handleClick(room)}
           style={{display:'flex', justifyContent:'space-between', alignItems:'center', margin:'1.19rem'}}>
             <img className='profile' src={room.memberProfileImg} alt="profile" />
             <div className='party-title'>

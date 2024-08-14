@@ -97,6 +97,7 @@ const WaitingRoomPage = () => {
 
       return () => {
         subscription.unsubscribe();
+        console.log("구독을 해제합니다.")
       };
     }
   }, [connected, roomType]);

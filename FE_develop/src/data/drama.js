@@ -47,7 +47,7 @@ const dummydata = [
     {
         "dramaId" : 10,
         "content" : "잘 갑서 동지들, 독랍된 조국에서 씨유 어게인",
-        "title" : "미스터 션사인",
+        "title" : "미스터 션샤인",
     },
 
 ]
