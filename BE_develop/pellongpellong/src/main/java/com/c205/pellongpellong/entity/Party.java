@@ -20,7 +20,7 @@ public class Party {
     @Column(name = "partyId", updatable = false)
     private Long partyId;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memberId")
     private Member member; // 참조키로 Member를 연결
 

@@ -48,11 +48,10 @@ public class PartyService {
     // 웹소켓적용
     @Transactional
     public void deleteParty(Long partyId) {
-        Party party = partyRepository.findById(partyId).orElseThrow(() -> new RuntimeException("파티를 찾을 수 없습니다."));
+        Party party = partyRepository.findPartyByPartyId(partyId).orElseThrow(() -> new RuntimeException("파티를 찾을 수 없습니다."));
 
         guestRepository.deleteAll(party.getGuests());
-        partyRepository.deleteById(partyId);
-        messagingTemplate.convertAndSend("/topic/parties", "삭제된 방번호는 : " + partyId);
+        partyRepository.deletePartyByPartyId(partyId);
     }
 
     public List<PartyDTO> listAllPartiesWithDetails() {

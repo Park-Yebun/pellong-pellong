@@ -72,7 +72,7 @@ public class GuestService {
 
         List<GuestDTO> guestDTOs = party.getGuests().stream()
 //                .map(g -> new GuestDTO(g.getGuestId(), g.getMember().getNickname(), g.getMember().getProfileImg()))
-                .map(g -> new GuestDTO(g.getGuestId(),
+                .map(g -> new GuestDTO(g.getMemberId(),
                         memberRepository.findByMemberId(g.getMemberId()).orElseThrow().getNickname(),
                         memberRepository.findByMemberId(g.getMemberId()).orElseThrow().getProfileImg(),
                         g.getMemberId()))
