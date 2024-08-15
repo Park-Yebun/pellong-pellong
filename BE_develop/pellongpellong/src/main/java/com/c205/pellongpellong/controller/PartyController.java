@@ -65,21 +65,21 @@ public class PartyController {
     }
 
 
-    @MessageMapping("/party/delete/{memberId}")
+    @MessageMapping("/party/delete/{partyId}")
     @SendTo("/topic/party/{partyId}")
-    public Map<String, Object> deletePartyByMemberId(@DestinationVariable("memberId") Long memberId) {
-        Optional<Party> party = partyService.findPartyByMemberId(memberId);
-        if (!party.isPresent()) {
+    public Map<String, Object> deletePartyByPartyId(@DestinationVariable Long partyId) {
+        try {
+            partyService.deleteParty(partyId);
+            Map<String, Object> message = new HashMap<>();
+            message.put("type", "delete");
+            return message;
+        } catch (RuntimeException e) {
+            logger.error(e.getMessage());
             Map<String, Object> message = new HashMap<>();
             message.put("type", "deleteError");
             return message;
         }
-        partyService.deleteParty(party.get().getPartyId());
-        Map<String, Object> message = new HashMap<>();
-        message.put("type", "delete");
-        return message;
     }
-
 
     @MessageMapping("/party/{partyId}")
     public void enterUser(@DestinationVariable("partyId") Long partyId) {
@@ -99,36 +99,35 @@ public class PartyController {
         return message;
     }
 
-    @MessageMapping(value = "/party/{partyId}/correct/{memberId}")
-    @SendTo("/topic/party/{partyId}")
-    public Map<String, Object>  correctMSG(@DestinationVariable("partyId")  Long partyId, @DestinationVariable("memberId")  Long memberId) {
-        logger.info("정답 요청 옴");
-        Map<String, Object> message = new HashMap<>();
-        message.put("type", "correct");
-        message.put("memberId", memberId);
-
-        return message;
-    }
-
-    @MessageMapping(value = "/party/{partyId}/wrong/{memberId}")
-    @SendTo("/topic/party/{partyId}")
-    public Map<String, Object> wrongMSG(@DestinationVariable("partyId") Long partyId, @DestinationVariable("memberId") Long memberId) {
-        logger.info("오답 요청 옴");
-        Map<String, Object> message = new HashMap<>();
-        message.put("type", "wrong");
-        message.put("memberId", memberId);
-
-        return message;
-    }
-
-    @MessageMapping(value = "/party/result")
-    @SendTo("/topic/party/{partyId}")
-    public Map<String, Object> result() {
-        logger.info("퀴즈 종료");
-        Map<String, Object> message = new HashMap<>();
-        message.put("type", "result");
-
-        return message;
-    }
-
+//    @MessageMapping(value = "/party/{partyId}/correct/{memberId}")
+//    @SendTo("/topic/party/{partyId}")
+//    public Map<String, Object>  correctMSG(@DestinationVariable("partyId")  Long partyId, @DestinationVariable("memberId")  Long memberId) {
+//        logger.info("정답 요청 옴");
+//        Map<String, Object> message = new HashMap<>();
+//        message.put("type", "correct");
+//        message.put("memberId", memberId);
+//
+//        return message;
+//    }
+//
+//    @MessageMapping(value = "/party/{partyId}/wrong/{memberId}")
+//    @SendTo("/topic/party/{partyId}")
+//    public Map<String, Object> wrongMSG(@DestinationVariable("partyId") Long partyId, @DestinationVariable("memberId") Long memberId) {
+//        logger.info("오답 요청 옴");
+//        Map<String, Object> message = new HashMap<>();
+//        message.put("type", "wrong");
+//        message.put("memberId", memberId);
+//
+//        return message;
+//    }
+//
+//    @MessageMapping(value = "/party/result")
+//    @SendTo("/topic/party/{partyId}")
+//    public Map<String, Object> result() {
+//        logger.info("퀴즈 종료");
+//        Map<String, Object> message = new HashMap<>();
+//        message.put("type", "result");
+//
+//        return message;
+//    }
 }
