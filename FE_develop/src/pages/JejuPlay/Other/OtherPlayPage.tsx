@@ -95,7 +95,7 @@ useEffect(() => {
         setQuiz(selectRandomQuiz());
 
         // 현재 플레이어 correctCount 증가
-        setPlayers(players.map((player) => {
+        setPlayers((prevPlayers) => prevPlayers.map((player) => {
           if (player.guestId === data.playerId) {
             return { ...player, correctCount: player.correctCount + 1, alert: '정답!' };
           }

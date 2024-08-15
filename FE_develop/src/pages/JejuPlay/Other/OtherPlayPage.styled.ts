@@ -107,16 +107,16 @@ export const Answer = styled.input`
 `
 
 export const Alert = styled.div`
-        position: absolute;
-        top: -23px;
-        left: -37px;
+    position: absolute;
+    top: -23px;
+    left: -37px;
 
-        color: #F5002C;
-        font-size: 20px;
-        font-style: normal;
-        font-weight: 800;
-        line-height: normal;
-        letter-spacing: 0.02px;
+    color: #F5002C;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    letter-spacing: 0.02px;
 `
 
 export const PlayerBox = styled.div`
