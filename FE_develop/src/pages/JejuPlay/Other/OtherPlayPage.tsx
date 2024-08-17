@@ -118,7 +118,11 @@ useEffect(() => {
         // life 감소
         setPlayers((prevPlayers) => prevPlayers.map((player) => {
           if (player.guestId === data.playerId) {
-            if (player.validLifeCount === 1) {navigate('/jeju-play/gameover')};
+            if (player.validLifeCount === 1) {navigate('/jeju-play/gameover/' + partyId, {
+              state: {
+                gameResult: players
+              }
+            })};
             return { ...player, alert: '오답!', validLifeCount: player.validLifeCount - 1 };
           }
           return player;
@@ -157,7 +161,6 @@ useEffect(() => {
     const fetchData = async () => {
       try {
         setQuizList(dummydata);
-        console.log("dummydata:", dummydata);
       } catch {
         console.log("데이터 패치 실패");
       }
@@ -169,7 +172,6 @@ useEffect(() => {
     if (quizList.length > 0) {
       const selectedQuiz = selectRandomQuiz();
       setQuiz(selectedQuiz);
-      console.log("selected quiz:", selectedQuiz);
     }
   }, [quizList]);
   
@@ -187,8 +189,7 @@ useEffect(() => {
       return;
     }
 
-    console.log('함수 정상 작동!!', answer, quiz)
-    if (client && user && answer && answer === quiz?.title) {
+    if (client && user && answer && answer.replace(/\s+/g, '') === quiz?.title.replace(/\s+/g, '')) {
       // 정답 맞았을때 로직
       if (stage === 10) {
         client.publish({
@@ -203,7 +204,7 @@ useEffect(() => {
       });
 
     // 틀렸을때 로직
-    } else if (client && user && answer && answer !== quiz?.title) {
+    } else if (client && user && answer && answer.replace(/\s+/g, '') !== quiz?.title.replace(/\s+/g, '')) {
       console.log("틀렸음")
       if (answerRef.current) {answerRef.current.value = "";}
       client.publish({

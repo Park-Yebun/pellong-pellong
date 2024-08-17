@@ -59,7 +59,7 @@ function App() {
         <Route path="/jeju-edu/result" element={<ShadowingResultPage />} />
         <Route path="/jeju-play" element={<PlayMainPage />} />
         <Route path="/jeju-play/create" element={<CreateWaitingRoom />} />
-        <Route path="/jeju-play/gameover" element={<GameOverPage />} />  
+        <Route path="/jeju-play/gameover/:partyId" element={<GameOverPage />} />  
         <Route path="/jeju-play/other/:partyId" element={<OtherPlayPage />} />
         <Route path="/jeju-play/speed/:partyId" element={<SpeedPlayPage />} />
         <Route path="/jeju-play/speed/:partyId/result" element={<SpeedPlayResultPage />} />
