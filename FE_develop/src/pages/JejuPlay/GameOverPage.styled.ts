@@ -5,26 +5,23 @@ export const Container = styled.div`
     min-height: 800px;
     background: #FCE6B5;
 
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `
 
 export const GameOver = styled.div`
-    position: absolute;
-    top: 87px;
-    left: 110px;
-
     font-size: 36px;
     font-style: normal;
     font-weight: 800;
     line-height: normal;
     letter-spacing: 0.036px;
+
+    text-align: center;
+    margin-top: 111px;
 `
 
 export const Winner = styled.div`
-    position: absolute;
-    top: 164px;
-    left: 129px;
-
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -32,20 +29,33 @@ export const Winner = styled.div`
 `
 
 export const Loser = styled.div`
-    position: absolute;
-    top: 532px;
-    left: 110px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 30px;
+`
+
+export const Trophy = styled.img`
+    width: 110px;
+    height: 140px;
 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-`
 
-export const Trophy = styled.img``
+    margin-top: 35px;
+    margin-left: 8px;
+`
 
 export const ProfileBox = styled.div`
     margin-top: 45px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 `
 
 export const ProfileImg = styled.img`

@@ -88,8 +88,6 @@ const WaitingRoomPage = () => {
             }})
         };
       });
-
-      console.log("현재 로그인된 유저 확인" + store.loginUserInfo?.memberId)
       client.publish({
         destination: '/app/party/guest/' + numPartyId,
         body: JSON.stringify({partyId: numPartyId, memberId: store.loginUserInfo?.memberId})
@@ -104,11 +102,20 @@ const WaitingRoomPage = () => {
 
   const handleBackButtonClick = () => {
     if (client) {
+      // 게스트가 방을 나갈때 정원이 1명이었다면 웹소켓이 끊기기 전에 방 삭제 요청 미리 보냄
+      if (roomData && roomData.po <= 1) {
+        client.publish({
+          destination: `/app/party/delete/${partyId}`,
+          body: ''
+        });
+      }
+
       const numPartyId = Number(partyId)
       client.publish({
         destination: '/app/party/guest/delete',
         body: JSON.stringify({partyId: numPartyId, memberId: store.loginUserInfo?.memberId})
       });
+
     }
     navigate('/'); // 뒤로가기
   };
