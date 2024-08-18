@@ -60,7 +60,7 @@ function MainPage() {
   // }, [dailyQuests]);
 
 
-  function handleClick(e: React.MouseEvent<HTMLAnchorElement>, path: string) {
+  function handleClick(e: React.MouseEvent<HTMLElement>, path: string) {
     e.preventDefault(); // 기본 링크 동작 차단
     if (path.includes('/my-page/') && store.isLogin === false) {
       navigate('/login')
@@ -89,18 +89,18 @@ function MainPage() {
     <div className={`main-container ${nightMode ? 'night-mode' : ''}`}>
       <DailyQuote />
       <div className="top-right-links">
-        <a onClick={toggleNightMode} className="image-link">
-          <img src={sunsetIcon} alt="" />
+        <div onClick={toggleNightMode} className="image-link">
+          <img src={sunsetIcon} alt="sunset-mode" />
           <div className='top-mini-text'>석양</div>
-        </a>
-        <a href="/rank" onClick={(e) => handleClick(e, '/rank')} className="image-link">
+        </div>
+        <div onClick={(e) => handleClick(e, '/rank')} className="image-link">
           <img src={rankIcon} alt="랭크 조회 페이지" />
           <div className='top-mini-text'>랭킹</div>
-        </a>
-        <a onClick={(e) => handleClick(e, '/my-page/' + store.loginUserInfo?.memberId)} className="image-link" >
+        </div>
+        <div onClick={(e) => handleClick(e, '/my-page/' + store.loginUserInfo?.memberId)} className="image-link" >
           <img src={myPageIcon} alt="마이페이지" />
           <div className='top-mini-text'>마이</div>
-        </a>
+        </div>
       </div>
 
       <div className="jeju-image-container">
