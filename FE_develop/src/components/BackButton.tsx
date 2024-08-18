@@ -12,9 +12,9 @@ const BackButton = () => {
 
   return (
     <div>
-      <a onClick={goBack} className="btn-go-back">
-        <img src={BackArrow} alt="" />
-      </a>
+      <div onClick={goBack} className="btn-go-back">
+        <img src={BackArrow} alt="back" />
+      </div>
     </div>
   );
 };
