@@ -1,5 +1,19 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Allow: /
-Disallow:
+Disallow: /login
+Disallow: /my-page/*
+Disallow: /my-page/*/profile-edit
+Disallow: /my-page/*/Explog
+Disallow: /jeju-edu
+Disallow: /jeju-edu/play-page/*
+Disallow: /jeju-edu/result
+Disallow: /jeju-play/create
+Disallow: /jeju-test/test-result/*/*/*
+Disallow: /jeju-play/gameover/*
+Disallow: /jeju-play/other/*
+Disallow: /jeju-play/speed/*
+Disallow: /jeju-play/speed/*/result
+Disallow: /jeju-play/other/*/result
+Disallow: /jeju-play/*/wait
+
 Sitemap: https://www.saturituri.com/sitemap.xml
