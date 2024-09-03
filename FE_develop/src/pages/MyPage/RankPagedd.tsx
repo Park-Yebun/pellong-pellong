@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 import BackButton from '../../components/BackButton';
 import RankIcon from '../../components/RankIcon';
 import ranks from '../../data/ranks';
+import { RankMeta } from '../../metatag';
 
 // 랭크 객체의 타입 정의
 interface Rank {
@@ -34,6 +35,7 @@ const RankPage: React.FC = () => {
 
   return (
     <div>
+      <RankMeta/>
       <BackButton />
       <div>랭크 페이지</div>
       <div>현재 경험치: {experience}</div>

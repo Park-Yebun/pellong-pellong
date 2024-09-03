@@ -5,6 +5,7 @@ import BackButton from '../../components/BackButton';
 import close from '../../assets/JejuPlay/close.png'
 import useStore from '../../store';
 import ReactApexChart from "react-apexcharts";
+import { RankMeta } from '../../metatag';
 
 interface User {
   memberId: number;
@@ -199,6 +200,7 @@ const UserRanking: React.FC = () => {
 
   return (
     <div className="RK-user-ranking-container">
+      <RankMeta/>
       <BackButton />
       <div className='RK-ranking-title'>랭킹 조회</div>
       <div className="RK-user-grid">

@@ -7,6 +7,7 @@ import lock from '../../assets/JejuPlay/lock.png'
 import occupancy from '../../assets/JejuPlay/occupancy.png'
 import close from '../../assets/JejuPlay/close.png'
 import './PlayMainPage.css'
+import { JejuPlayMeta } from '../../metatag';
 
 const PlayMainPage = () => {
   const [roomData, setRoomData] = useState<any[]>([]);
@@ -81,6 +82,7 @@ const PlayMainPage = () => {
 
   return (
     <div className='play-main-container'>
+      <JejuPlayMeta/>
       <BackButton />
       <div className='play title'>플레이</div>
         <div className='play-btn-container'>
