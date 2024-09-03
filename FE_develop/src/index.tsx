@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route  } from 'react-router-dom';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+import { HelmetProvider } from 'react-helmet-async' 
 
 // // Kakao SDK 초기화
 // window.Kakao.init(e0fa5b77eeb09774b4790016ba7d94f5);
@@ -16,24 +17,12 @@ import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
     <BrowserRouter>
+    <HelmetProvider>
       <Routes>
         <Route path="*" element={ <App /> }>
         </Route>
       </Routes>
+      </HelmetProvider>
     </BrowserRouter>
 )
 reportWebVitals();
-
-// // ReactDOM.render(
-// // <React.StrictMode>
-// //     <BrowserRouter>
-// //       <Routes>
-// //         <Route path="*" element={ <App /> }>
-// //         </Route>
-// //       </Routes>
-// //     </BrowserRouter>
-// //   </React.StrictMode>,
-// //   document.getElementById('root')
-// // );
-
-// serviceWorkerRegistration.register();

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { FaExchangeAlt } from 'react-icons/fa';
 import background from '../assets/translate-background.png';
 import BackButton from '../components/BackButton';
+import { JejuAiMeta } from '../metatag';
 
 // Container 스타일 컴포넌트
 const Container = styled.div`
@@ -167,6 +168,7 @@ const TranslatePage: React.FC = () => {
 
   return (
     <Container>
+      <JejuAiMeta/>
       <BackButtonContainer>
         <BackButton />
       </BackButtonContainer>

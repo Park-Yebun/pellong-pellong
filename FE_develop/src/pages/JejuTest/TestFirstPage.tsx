@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom';
 import BackButton from '../../components/BackButton';
 import Exam from '../../assets/exam.png';
 import './TestFirstPage.css'; // CSS 파일 임포트
+import { JejuTestMeta } from '../../metatag';
 
 const TestFirstPage = () => {
   return (
     <div className="test-first-container">
+      <JejuTestMeta/>
       <BackButton />
       <div className="test-title">사투리 모의고사</div>
       <img className="examImage" src={Exam} alt="Exam image" />

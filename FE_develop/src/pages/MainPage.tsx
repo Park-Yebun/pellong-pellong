@@ -17,6 +17,7 @@ import cloudTrans from '../assets/cloud-trans.png';
 import DailyQuote from '../components/MainPage/DailyQuote';
 import success from '../assets/Success.png';
 import fail from '../assets/fail.png';
+import { MainMeta } from '../metatag';
 
 
 interface DailyQuest {
@@ -87,6 +88,7 @@ function MainPage() {
 
   return (
     <div className={`main-container ${nightMode ? 'night-mode' : ''}`}>
+      <MainMeta/>
       <DailyQuote />
       <div className="top-right-links">
         <div onClick={toggleNightMode} className="image-link">
