@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useErrorBoundary } from "react-error-boundary";
 import useStore from '../../store';
 import speedquiz from '../../assets/JejuPlay/speedquiz.png'
 import otherquiz from '../../assets/JejuPlay/otherquiz.png'
@@ -20,11 +21,14 @@ import {
   Slider,
   Switch
 } from './CreateWaitingRoom.styled'
+import axios from 'axios';
+import { error } from 'console';
 
 const CreateWaitingRoom = () => {
   const navigate = useNavigate();
   const store = useStore();
   const location = useLocation();
+  const { showBoundary } = useErrorBoundary();
   const [isPublic, setIsPublic] = useState<boolean>(true);
   const [kind, setKind] = useState<number>(location.state?.kind);
   const [selectedCapacity, setSelectedCapacity] = useState<number>(kind === 1 ? 4 : 2);
@@ -45,24 +49,20 @@ const CreateWaitingRoom = () => {
       isPublic: isPublic,
     }
 
-    try {
-      const response = await fetch(`http://localhost:8080/party/create/${store.loginUserInfo?.memberId}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(bodyData)
-      });
-      console.log(response);
-      const data = await response.json();
-      if (response.ok) {
-        navigate(`/jeju-play/${data.partyId}/wait`);
-      } else {
-        console.log("방은 한번만 만들수 있음")
+    console.log('바디데이터',bodyData);
+
+    axios.post(`http://localhost:8080/party/create/${store.loginUserInfo?.memberId}`, bodyData,
+    {
+      headers: {
+        "Content-Type": "application/json",
       }
-    } catch (error) {
-      console.log(error);
-    }
+    })
+    .then((response) => {
+      navigate(`/jeju-play/${response.data.partyId}/wait`);
+    })
+    .catch((error) => {
+      showBoundary(error);
+    })
   };
 
   return (

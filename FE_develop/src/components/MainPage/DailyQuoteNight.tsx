@@ -1,7 +1,9 @@
 import React, { useEffect, useState} from 'react';
-
+import { useErrorBoundary } from "react-error-boundary";
 
 import './DailyQuoteNight.css';
+import { error } from 'console';
+import axios from 'axios';
 
 interface Props {
     jejuProverbId: number;
@@ -14,6 +16,8 @@ export const DailyQuote = () => {
     const [ pbS, setPbS] = useState<string | null>(null);
     const [ pbJ, setPbJ] = useState<string | null>(null);
     const [isHidden, setIsHidden] = useState<boolean>(true);
+    const { showBoundary } = useErrorBoundary();
+
     const handleMouseOver = () => {
         setIsHidden(false);
         // console.log("마우스 오버!!")
@@ -30,29 +34,14 @@ export const DailyQuote = () => {
         // console.log("클릭!!")
     }
     useEffect(() => {
-        // console.log("페치데이터 동작!!")
-
-
-
-        const fetchDailyQuote = async () => {
-            try {
-                const response = await fetch('https://www.saturituri.com/api/jeju-proverb', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-                const dailyQuote: Props  = await response.json();
-                // console.log("제주", dailyQuote.pbJeju);
-                // console.log("표준", dailyQuote.pbStandard);
-                setPbJ(dailyQuote.pbJeju);
-                setPbS(dailyQuote.pbStandard);
-                // console.log("데이터 로드 완료", dailyQuote);
-            } catch (error) {
-                // console.log("데이터 로드 실패", error)
-            }
-        }
-        fetchDailyQuote();
+        axios.get('https://www.saturituri.com/api/jeju-proverb')
+        .then((response) => {
+            setPbJ(response.data.pbJeju);
+            setPbS(response.data.pbStandard);
+        })
+        .catch((error) => {
+            showBoundary(error);
+        })
     }, []);
     return (
         <>

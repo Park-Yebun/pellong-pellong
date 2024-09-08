@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import { useErrorBoundary } from "react-error-boundary";
 import useStore from '../store';
 import styled from "styled-components";
 import background from '../assets/login-background.png';
 import google from '../assets/login-google.png';
 import kakao from '../assets/login-kakao.png';
+import axios from 'axios';
+import { error } from 'console';
 
 export const Container = styled.div`
   display: flex;
@@ -52,34 +55,30 @@ const SocialLoginPage = () => {
   const [searchParams] = useSearchParams();
   const store = useStore();
   const navigate = useNavigate();
+  const { showBoundary } = useErrorBoundary();
   const accessToken = searchParams.get('access_token');
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (accessToken) {
-        const decoded = jwtDecode(accessToken) as JwtPayload;
-        localStorage.setItem('accessToken', accessToken);
-        store.setLoginUserInfo(decoded);
+    if (accessToken) {
+      const decoded = jwtDecode(accessToken) as JwtPayload;
+      localStorage.setItem('accessToken', accessToken);
+      store.setLoginUserInfo(decoded);
 
-        try {
-          const response = await fetch('http://localhost:8080/members/info', {
-            method: 'GET',
-            headers: {
-              'Authorization': 'Bearer ' + accessToken,
-              'Content-Type': 'application/json;charset=UTF-8',
-            },
-            credentials: 'include',
-          });
-          const userInfo = await response.json();
-          store.setLoginUserInfo(userInfo)
-          // console.log("로그인 데이터 저장 완료", userInfo)
-          navigate('/')
-        } catch (error) {
-          // console.log(error)
-        };
-      };
+      axios.get('http://localhost:8080/members/info', {
+        headers: {
+          'Authorization': 'Bearer ' + accessToken,
+          'Content-Type': 'application/json;charset=UTF-8',
+        },
+        withCredentials: true,
+      })
+      .then((response) => {
+        store.setLoginUserInfo(response.data);
+        navigate('/');
+      })
+      .catch((error) => {
+        showBoundary(error);
+      });
     }
-    fetchData();
   }, [accessToken]);
   
   return (

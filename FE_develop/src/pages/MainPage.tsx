@@ -19,7 +19,6 @@ import success from '../assets/Success.png';
 import fail from '../assets/fail.png';
 import { MainMeta } from '../metatag';
 
-
 interface DailyQuest {
   dailyQuestId: number;
   dailyExp: number;
@@ -85,6 +84,8 @@ function MainPage() {
   function toggleNightMode() {
     setNightMode(!nightMode); // 야경 모드 토글
   }
+
+  
 
   return (
     <div className={`main-container ${nightMode ? 'night-mode' : ''}`}>

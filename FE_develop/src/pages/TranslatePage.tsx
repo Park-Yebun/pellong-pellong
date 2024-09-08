@@ -4,6 +4,9 @@ import { FaExchangeAlt } from 'react-icons/fa';
 import background from '../assets/translate-background.png';
 import BackButton from '../components/BackButton';
 import { JejuAiMeta } from '../metatag';
+import { useErrorBoundary } from "react-error-boundary";
+import axios from 'axios';
+import { error } from 'console';
 
 // Container 스타일 컴포넌트
 const Container = styled.div`
@@ -94,37 +97,31 @@ const IconButton = styled.div`
   color: #333;
 `;
 
-// API 요청 함수
-const fetchTranslation = async (text: string, direction: 'to_jeju' | 'to_standard'): Promise<string> => {
-  try {
-    const response = await fetch('https://www.saturituri.com/translate', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        input_text: text,
-        direction: direction,
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-
-    const data = await response.json();
-    return data.translated_text;
-  } catch (error) {
-    console.error('Error fetching translation:', error);
-    return '번역 실패';
-  }
-};
-
 const TranslatePage: React.FC = () => {
   const [standardText, setStandardText] = useState<string>('');
   const [jejuText, setJejuText] = useState<string>('');
   const [isStandardToJeju, setIsStandardToJeju] = useState<boolean>(true);
   const [viewBoolean, setViewBoolean] = useState<boolean>(false);
+  const { showBoundary } = useErrorBoundary();
+
+  // API 요청 함수
+const fetchTranslation = async (text: string, direction: 'to_jeju' | 'to_standard'): Promise<string> => {
+  try {
+    const response = await axios.post('https://www.saturituri.com/translate', {
+      input_text: text,
+      direction: direction,
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    return response.data.translated_text;
+  } catch (error) {
+    showBoundary(error);
+    return '번역 실패';
+  }
+};
 
   // 표준어 입력 핸들러
   const handleStandardChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

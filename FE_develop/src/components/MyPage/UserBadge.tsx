@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import './UserBadge.css';
 import useStore from '../../store';
+import { useErrorBoundary } from "react-error-boundary";
+import axios from 'axios';
+import { error } from 'console';
 
 interface Badge {
   id: number;
@@ -23,38 +26,34 @@ const BadgeComponent: React.FC<{ badge: Badge; onClick: (badge: Badge) => void; 
   );
 };
 
-const updateRepresentativeBadge = async (memberId: number, badgeId: number) => {
-  try {
-    const response = await fetch(`https://www.saturituri.com/api/profiles/${memberId}/badges/${badgeId}`, {
-      method: 'PATCH',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        isRepresentative: true
-      })
-    });
-
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-
-    const data = await response.json();
-    // console.log('Representative badge updated successfully', data);
-  } catch (error) {
-    // console.error('Error updating representative badge:', error);
-  }
-};
-
 const UserBadge: React.FC<UserBadgeProps> = ({ badges }) => {
   const store = useStore();
   const [selectedBadge, setSelectedBadge] = useState<Badge | null>(null);
   const [updatedBadges, setUpdatedBadges] = useState<Badge[]>(badges.map(badge => ({ ...badge, isRepresentative: badge.isRepresentative ?? false })));
+  const { showBoundary } = useErrorBoundary();
+
 
   const handleBadgeClick = (badge: Badge) => {
     setSelectedBadge(badge);
     // console.log('Selected Badge:', badge);
+  };
+
+  const updateRepresentativeBadge = async (memberId: number, badgeId: number) => {
+    axios.patch(`https://www.saturituri.com/api/profiles/${memberId}/badges/${badgeId}`,
+      {
+        isRepresentative: true,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+    .then((response) => {
+      console.log(response.data)
+    })
+    .catch((error) => {
+      showBoundary(error);
+    })
   };
 
   const handleSetRepresentativeBadge = async () => {

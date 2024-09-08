@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 import SocialLoginPage from './pages/SocialLogin';
 import MainPage from './pages/MainPage';
 import MyPageMain from './pages/MyPage/MyPage';
@@ -72,7 +72,8 @@ function App() {
         {/* test */}
         <Route path="/test" element={<Test />} />
       </Routes>
-      </AuthProvider>
+      <Outlet />
+    </AuthProvider>
   );
 }
 

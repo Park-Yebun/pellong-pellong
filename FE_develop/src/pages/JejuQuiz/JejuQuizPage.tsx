@@ -1,33 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useErrorBoundary } from "react-error-boundary";
 import axios from "axios";
 
 import QuizType1 from "./QuizType1";
 import QuizType2 from "./QuizType2";
 import QuizType3 from "./QuizType3";
+import { error } from "console";
 
 const LevelPlayScreen: React.FC = () => {
   const { level } = useParams<{ level: string }>();
   // console.log("챕터", level)
   const parsedChapterNo = parseInt(level ?? "1", 10); // 문자열을 숫자로 변환
   const navigate = useNavigate(); // useNavigate 훅 사용
+  const { showBoundary } = useErrorBoundary();
 
   const [questions, setQuestions] = useState<any[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [score, setScore] = useState<number>(0);
 
   useEffect(() => {
-    const fetchQuestions = async () => {
-      try {
-        const response = await axios.get(`https://www.saturituri.com/api/quiz/${parsedChapterNo}`);
-        const data = response.data;
-        setQuestions(data);
-      } catch (error) {
-        console.error("Error fetching questions:", error);
-      }
-    };
-  
-    fetchQuestions();
+    axios.get(`https://www.saturituri.com/api/quiz/${parsedChapterNo}`)
+    .then((response) => {
+      const data = response.data;
+      setQuestions(data);
+    })
+    .catch((error) => {
+      showBoundary(error);
+      console.error("Error fetching questions:", error);
+    })
   }, [parsedChapterNo]);
 
   const handleNextQuestion = () => {

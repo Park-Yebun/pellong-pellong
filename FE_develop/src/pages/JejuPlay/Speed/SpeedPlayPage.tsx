@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
-import profileImg from '../../../assets/JejuPlay/profile.png'
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useErrorBoundary } from "react-error-boundary";
 import useStore from '../../../store';
 import useWebsocket from '../../../contexts/useWebsocket';
 import {
@@ -23,6 +23,8 @@ import {
 import SockJS from 'sockjs-client';
 import {Stomp, Frame} from '@stomp/stompjs';
 import { userInfo } from 'os';
+import axios from 'axios';
+import { error } from 'console';
 
 interface UserInfo {
   guestId: number;
@@ -39,6 +41,7 @@ interface EnhancedUserInfo extends UserInfo {
 
 const SpeedPlayPage = () => {
   const { connected, connect, disconnect, client } = useWebsocket();
+  const { showBoundary } = useErrorBoundary();
   const [count, setCount] = useState(10);
   const [quizList, setQuizList] = useState<any[]>([]);
   const [quiz, setQuiz] = useState<any|null>(null);
@@ -95,14 +98,14 @@ useEffect(() => {
 
 // 방 삭제 함수
 const deleteRoom = async () => {
-  try {
-    await fetch(`http://localhost:8080/api/room/${partyId}`, {
-      method: 'DELETE'
-    });
+  axios.delete(`http://localhost:8080/api/room/${partyId}`)
+  .then((response) => {
     navigate('/home'); // 삭제 후 홈으로 리다이렉트
-  } catch (error) {
+  })
+  .catch((error) => {
+    showBoundary(error);
     console.error('Failed to delete room:', error);
-  }
+  })
 };
 
 // isDone이 true이거나 count가 0이면 quiz 데이터 및 관련변수 초기화(다음 레벨)
@@ -176,30 +179,27 @@ useEffect(() => {
 }, [connected]);
 
 useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const response = await fetch('http://localhost:8080/dialect/speed/quiz', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      });
-      const data = await response.json();
-      if (data.length > 0) {
-        // 무작위 퀴즈 선택
-        const randomIndex = Math.floor(Math.random() * data.length);
-        const selectedQuiz = data[randomIndex];
-        setQuiz(selectedQuiz);
-
-        // 선택된 퀴즈를 제외한 나머지 퀴즈를 quizList 상태에 저장
-        const newQuizList = data.filter((_:any, index:number) => index !== randomIndex);
-        setQuizList(newQuizList);
-      }
-    } catch (error) {
-      console.error('Data load failed:', error);
+  axios.get('http://localhost:8080/dialect/speed/quiz', {
+    headers: {
+      'Content-Type': 'application/json',
     }
-  };
-  fetchData();
+  })
+  .then((response) => {
+    if (response.data.length > 0) {
+      // 무작위 퀴즈 선택
+      const randomIndex = Math.floor(Math.random() * response.data.length);
+      const selectedQuiz = response.data[randomIndex];
+      setQuiz(selectedQuiz);
+
+      // 선택된 퀴즈를 제외한 나머지 퀴즈를 quizList 상태에 저장
+      const newQuizList = response.data.filter((_:any, index:number) => index !== randomIndex);
+      setQuizList(newQuizList);
+    }
+  })
+  .catch((error) => {
+    showBoundary(error);
+    console.error('Data load failed:', error);
+  })
 }, []);
 
 // 퀴즈 들어올때마다 셔플

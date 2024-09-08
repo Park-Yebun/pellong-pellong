@@ -1,11 +1,14 @@
 // RankPage.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useErrorBoundary } from "react-error-boundary";
 import './RankPage.css';
 import BackButton from '../../components/BackButton';
 import close from '../../assets/JejuPlay/close.png'
 import useStore from '../../store';
 import ReactApexChart from "react-apexcharts";
 import { RankMeta } from '../../metatag';
+import axios from 'axios';
+import { error } from 'console';
 
 interface User {
   memberId: number;
@@ -38,6 +41,7 @@ const sortAndRankUsers = (users: User[]): User[] => {
 
 const UserRanking: React.FC = () => {
   const store = useStore();
+  const { showBoundary } = useErrorBoundary();
   const [users, setUsers] = useState<User[]>([]);
   const [passwordModalOpen, setPasswordModalOpen] = useState<boolean>(false); // 이 부분을 함수 컴포넌트 내부로 이동
   const [selectedUser, setSelectedUser] = useState<User | null>(null); // 클릭된 유저 정보를 상태로 관리
@@ -158,15 +162,14 @@ const UserRanking: React.FC = () => {
   const handleUserClick = async (user: User) => {
     setSelectedUser(user); // 클릭된 유저 정보 설정
     setPasswordModalOpen(true); // 모달 열기
-    try {  
-      const response = await fetch(`https://www.saturituri.com/api/exp/${store.loginUserInfo?.memberId}/${user.memberId}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-  
-      const userData = await response.json();
+
+    axios.get(`https://www.saturituri.com/api/exp/${store.loginUserInfo?.memberId}/${user.memberId}`, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then((response) => {
+      const userData = response.data
       // console.log("찍혀라", userData)
 
       // 유저의 dailyExpDTOList에서 날짜와 경험치 추출
@@ -178,8 +181,6 @@ const UserRanking: React.FC = () => {
       const expArray2 = data2.map((item: { dailyExp: number }) => item.dailyExp);
       // data2가 현재 클릭한 유저
 
-      // console.log("데이터1",expArray1)
-      // console.log("데이터2",expArray2)
       // 차트 데이터 업데이트
       setChartSeries([
         {
@@ -191,9 +192,10 @@ const UserRanking: React.FC = () => {
           data: expArray1
         }
       ]);
-    } catch (error) {
-      // console.log("유저 정보 로드 실패", error)
-    }
+    })
+    .catch((error) => {
+      showBoundary(error);
+    })
   };
 
   
