@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useErrorBoundary } from "react-error-boundary";
 import useWebsocket from '../../../contexts/useWebsocket';
 
 import first from "../../../assets/JejuPlay/1st.png"
@@ -17,6 +17,8 @@ import {
   Nickname,
   BackBtn
 } from './OtherPlayResultPage.styled'
+import axios from 'axios';
+import { error } from 'console';
 
 
 interface UserInfo {
@@ -36,6 +38,7 @@ const OtherPlayResultPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { partyId } = useParams();
+  const { showBoundary } = useErrorBoundary();
   
   // 유저 관련 변수들
   const gameResult = location.state?.gameResult;
@@ -79,27 +82,24 @@ const OtherPlayResultPage = () => {
 
   // 경험치 적립
   useEffect(() => {
-    const EarnExp = async () => {
-      try {
-        const result = sortedPlayers.map((player, index) => {
-          return {
-            playerId: player.guestId,
-            playerExp: index === 0 ? 20 : 5
-          };
-        });
-        const response = await fetch('http://localhost:8080/exp/speed-game', {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(result)
-        });
-        console.log("경험치 적립 성공", response)
-      } catch (error) {
-        console.log("경험치 적립 실패", error)
-      }
-    }
-    EarnExp();
+      const result = sortedPlayers.map((player, index) => {
+        return {
+          playerId: player.guestId,
+          playerExp: index === 0 ? 20 : 5
+        };
+      });
+
+      axios.patch('http://localhost:8080/exp/speed-game', result, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then((response) => {
+        console.log("경험치 적립 성공", response.data)
+      })
+      .catch((error) => {
+        showBoundary(error);
+      })
   }, [sortedPlayers]);
 
   const handleBackButtonClick = () => {

@@ -1,5 +1,6 @@
 import React, { useMemo, useEffect } from 'react';
 import { Link, useLocation, useParams, useNavigate } from 'react-router-dom';
+import { useErrorBoundary } from "react-error-boundary";
 import trophy from '../../assets/JejuPlay/Trophy Cup.png'
 import lose from '../../assets/JejuPlay/lose.png'
 import useWebsocket from '../../contexts/useWebsocket';
@@ -15,6 +16,8 @@ import {
   Trophy,
   Winner,
  } from './GameOverPage.styled'
+import axios from 'axios';
+import { error } from 'console';
 
  interface UserInfo {
   guestId: number;
@@ -30,6 +33,7 @@ interface EnhancedUserInfo extends UserInfo {
 }
 
 const GameOverPage = () => {
+  const { showBoundary } = useErrorBoundary();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -73,26 +77,26 @@ const GameOverPage = () => {
     const EarnExp = async () => {
       if (client) {
         if (sortedPlayers.length >= 2) {
-          try {
-            const result = [{
-              playerId: sortedPlayers[0].guestId,
-              playerExp: 15
-            }]
-            const response = await fetch('http://localhost:8080/exp/speed-game', {
-              method: 'PATCH',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(result)
-            });
-            console.log("경험치 적립 성공", response)
+          const result = [{
+            playerId: sortedPlayers[0].guestId,
+            playerExp: 15
+          }]
+
+          axios.patch('http://localhost:8080/exp/speed-game', result, {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+          .then((response) => {
+            console.log("경험치 적립 성공", response.data)
             client.publish({
               destination: `/app/party/delete/${partyId}`,
               body: ''
             });
-          } catch (error) {
-            console.log("경험치 적립 실패", error)
-          }
+          })
+          .catch((error) => {
+            showBoundary(error);
+          })
         } else {
           console.log("게임오버")
           client.publish({

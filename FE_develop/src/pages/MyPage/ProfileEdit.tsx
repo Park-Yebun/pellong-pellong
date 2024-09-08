@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams} from 'react-router-dom';
+import { useErrorBoundary } from "react-error-boundary";
 import '../../components/MyPage/UserProfile.css';
 import useStore from '../../store';
 
@@ -20,6 +21,8 @@ import {
   Logout,
   NicknameBox
 } from './MyPage.styled'
+import axios from 'axios';
+import { error } from 'console';
  
 interface User {
   email: string;
@@ -35,6 +38,7 @@ const ProfileEdit: React.FC = () => {
   const store = useStore();
   const memberId = useParams();
   const navigate = useNavigate();
+  const { showBoundary } = useErrorBoundary();
   const [userData, setUserData] = useState<User|null>(null);
 
   // badges 배열과 해당 상태를 업데이트할 함수 선언
@@ -68,41 +72,29 @@ const ProfileEdit: React.FC = () => {
 
   useEffect(() => {
     // console.log("페치데이터 동작!!")
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://www.saturituri.com/api/profiles/' + store.loginUserInfo?.memberId, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-        // console.log(response)
-        const data = await response.json();
-        setUserData(data);
-
-        // 사용자가 획득한 뱃지의 ID 목록
-        const acquiredBadgeIds = data.badgeArray.map((badge: { badgeId: number; acquired: boolean; }) => badge.badgeId);
-  
-        
-        // badges 배열을 복사하여 업데이트
-        const updatedBadges = badges.map(badge => ({
-        ...badge,
-        isAcquired: acquiredBadgeIds.includes(badge.id) // 해당 뱃지 ID가 획득한 뱃지 ID 목록에 포함되어 있는지 확인
-        }));        
-
-        // 업데이트된 뱃지 정보를 상태에 반영
-        setBadges(updatedBadges);
-
-
-
-        // console.log("뭐", acquiredBadgeIds)
-        // console.log("데이터 로드 완료", response);
-        // console.log(data);
-      } catch (error) {
-        // console.log("데이터 로드 실패", error)
+    axios.get('https://www.saturituri.com/api/profiles/' + store.loginUserInfo?.memberId, {
+      headers: {
+        'Content-Type': 'application/json'
       }
-    }
-    fetchData()
+    })
+    .then((response) => {
+      setUserData(response.data);
+      // 사용자가 획득한 뱃지의 ID 목록
+      const acquiredBadgeIds = response.data.badgeArray.map((badge: { badgeId: number; acquired: boolean; }) => badge.badgeId);
+
+      
+      // badges 배열을 복사하여 업데이트
+      const updatedBadges = badges.map(badge => ({
+      ...badge,
+      isAcquired: acquiredBadgeIds.includes(badge.id) // 해당 뱃지 ID가 획득한 뱃지 ID 목록에 포함되어 있는지 확인
+      }));        
+
+      // 업데이트된 뱃지 정보를 상태에 반영
+      setBadges(updatedBadges);
+    })
+    .catch((error) => {
+      showBoundary(error);
+    })
   },[]);
 
   return (

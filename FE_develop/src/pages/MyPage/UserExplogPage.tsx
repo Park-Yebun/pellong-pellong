@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useErrorBoundary } from "react-error-boundary";
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
@@ -11,6 +12,7 @@ interface Experience {
 }
 
 const ExperienceLog: React.FC = () => {
+  const { showBoundary } = useErrorBoundary();
   const { memberId } = useParams<{ memberId: string }>();
   const [experienceLog, setExperienceLog] = useState<Experience[]>([]);
 
@@ -24,6 +26,7 @@ const ExperienceLog: React.FC = () => {
         }));
         setExperienceLog(formattedData);
       } catch (error) {
+        showBoundary(error);
         console.error('Error fetching experience log:', error);
       }
     };

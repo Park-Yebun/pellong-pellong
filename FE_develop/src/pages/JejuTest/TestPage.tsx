@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import useStore from '../../store';
 import { Link, useNavigate } from 'react-router-dom'; // Link 컴포넌트를 import 합니다.
+import { useErrorBoundary } from "react-error-boundary";
 import './TestPage.css'; // CSS 파일을 import 합니다.
+import axios from 'axios';
+import { error } from 'console';
 
 declare global {
   interface Window {
@@ -19,6 +22,7 @@ interface Question {
 }
 
 const QuizApp: React.FC = () => {
+  const { showBoundary } = useErrorBoundary();
   const store = useStore();
   const questions: Question[] = [
     {
@@ -201,18 +205,18 @@ const QuizApp: React.FC = () => {
         // console.log(testnum); // testnum에 저장된 숫자를 출력합니다.
 
         const fetchData = async () => {
-          try {
-            const response = await fetch('https://www.saturituri.com/api/exp/test-sharing/' + store.loginUserInfo?.memberId, {
-              method: 'PATCH',
-              headers: {
-                'Content-Type': 'application/json'
-              }
-            });
-            // 데이터에 숫자 잘들어옴
-            // console.log('성공');
-          } catch (error) {
+          axios.patch('https://www.saturituri.com/api/exp/test-sharing/' + store.loginUserInfo?.memberId, {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+          .then((response) => {
+            console.log('성공', response.data);
+          })
+          .catch((error) => {
+            showBoundary(error);
             // console.log("실패", error)
-          }
+          })
         }
         fetchData();
 
@@ -242,6 +246,7 @@ const QuizApp: React.FC = () => {
           ]
         });
     } catch (error) {
+      showBoundary(error);
       // console.log(error);
     }
 

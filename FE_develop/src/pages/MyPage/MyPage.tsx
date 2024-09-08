@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams} from 'react-router-dom';
+import { useErrorBoundary } from "react-error-boundary";
 import '../../components/MyPage/UserProfile.css';
 import useStore from '../../store';
 import './MyPage.css'
@@ -26,6 +27,8 @@ import {
   ModalContent, // 모달 내용 스타일 추가
   CloseButton // 모달 닫기 버튼 스타일 추가
 } from './MyPage.styled'
+import axios from 'axios';
+import { error } from 'console';
  
 interface User {
   email: string;
@@ -41,6 +44,7 @@ const MyPage: React.FC = () => {
   const store = useStore();
   const memberId = useParams();
   const navigate = useNavigate();
+  const { showBoundary } = useErrorBoundary();
   const [userData, setUserData] = useState<User|null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
 
@@ -85,41 +89,30 @@ const MyPage: React.FC = () => {
 
   useEffect(() => {
     // console.log("페치데이터 동작!!")
-    const fetchData = async () => {
-      try {
-        const response = await fetch('http://localhost:8080/profiles/' + store.loginUserInfo?.memberId, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-        // console.log(response)
-        const data = await response.json();
-        setUserData(data);
+    axios.get('http://localhost:8080/profiles/' + store.loginUserInfo?.memberId, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then((response) => {
+      setUserData(response.data);
 
-        // 사용자가 획득한 뱃지의 ID 목록
-        const acquiredBadgeIds = data.badgeArray.map((badge: { badgeId: number; acquired: boolean; }) => badge.badgeId);
+      // 사용자가 획득한 뱃지의 ID 목록
+      const acquiredBadgeIds = response.data.badgeArray.map((badge: { badgeId: number; acquired: boolean; }) => badge.badgeId);
   
         
-        // badges 배열을 복사하여 업데이트
-        const updatedBadges = badges.map(badge => ({
-        ...badge,
-        isAcquired: acquiredBadgeIds.includes(badge.id) // 해당 뱃지 ID가 획득한 뱃지 ID 목록에 포함되어 있는지 확인
-        }));        
+      // badges 배열을 복사하여 업데이트
+      const updatedBadges = badges.map(badge => ({
+      ...badge,
+      isAcquired: acquiredBadgeIds.includes(badge.id) // 해당 뱃지 ID가 획득한 뱃지 ID 목록에 포함되어 있는지 확인
+      }));        
 
-        // 업데이트된 뱃지 정보를 상태에 반영
-        setBadges(updatedBadges);
-
-
-
-        // console.log("뭐", acquiredBadgeIds)
-        // console.log("데이터 로드 완료", response);
-        // console.log(data);
-      } catch (error) {
-        // console.log("데이터 로드 실패", error)
-      }
-    }
-    fetchData()
+      // 업데이트된 뱃지 정보를 상태에 반영
+      setBadges(updatedBadges);
+    })
+    .catch((error) => {
+      showBoundary(error);
+    })
   },[]);
 
 

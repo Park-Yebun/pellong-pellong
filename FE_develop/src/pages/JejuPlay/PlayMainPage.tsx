@@ -8,6 +8,8 @@ import occupancy from '../../assets/JejuPlay/occupancy.png'
 import close from '../../assets/JejuPlay/close.png'
 import './PlayMainPage.css'
 import { JejuPlayMeta } from '../../metatag';
+import { useErrorBoundary } from "react-error-boundary";
+import axios from 'axios';
 
 const PlayMainPage = () => {
   const [roomData, setRoomData] = useState<any[]>([]);
@@ -16,6 +18,7 @@ const PlayMainPage = () => {
   const [isWrong, setIsWrong] = useState<boolean>(false);
   const passwordRef = useRef<HTMLInputElement|null>(null);
   const navigate = useNavigate();
+  const { showBoundary } = useErrorBoundary();
 
   interface Room {
     partyId: number;
@@ -54,23 +57,13 @@ const PlayMainPage = () => {
   }
   
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('http://localhost:8080/party', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          // credentials: 'include'
-        });
-        const data = await response.json();
-        setRoomData(data);
-        console.log('데이터 로드 성공')
-      } catch (error) {
-        console.log('데이터 로드 실패', error) 
-      }
-    }
-    fetchData()
+    axios.get('http://localhost:8080/party')
+    .then((response) => {
+      setRoomData(response.data);
+    })
+    .catch((error) => {
+      showBoundary(error);
+    });
   }, []);
 
   const createRoom = (partyKind:number) => {
@@ -96,7 +89,7 @@ const PlayMainPage = () => {
             </div>
         </div>
         <div className='waitroom title'>대기방</div>
-        {roomData.map((room:Room, index:number) => 
+        {roomData?.map((room:Room, index:number) => 
           <div key={index} className='waitiroom-container' onClick={() => handleClick(room)}
           style={{display:'flex', justifyContent:'space-between', alignItems:'center', margin:'1.19rem'}}>
             <img className='profile' src={room.memberProfileImg} alt="profile" />
