@@ -1,6 +1,9 @@
-import React, { useState, useRef } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useErrorBoundary } from "react-error-boundary";
+import { useState, useRef } from 'react';
+import axios, { AxiosError } from 'axios';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { ErrorBoundary, useErrorBoundary, FallbackProps } from "react-error-boundary";
+import { ToastContainer, toast, Bounce } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 import useStore from '../../store';
 import speedquiz from '../../assets/JejuPlay/speedquiz.png'
 import otherquiz from '../../assets/JejuPlay/otherquiz.png'
@@ -21,7 +24,6 @@ import {
   Slider,
   Switch
 } from './CreateWaitingRoom.styled'
-import axios from 'axios';
 import { error } from 'console';
 
 const CreateWaitingRoom = () => {
@@ -46,13 +48,10 @@ const CreateWaitingRoom = () => {
       kind: kind,
       po: 0,
       to: selectedCapacity,
-      isPublic: isPublic,
-    }
-
-    console.log('바디데이터',bodyData);
-
-    axios.post(`http://localhost:8080/party/create/${store.loginUserInfo?.memberId}`, bodyData,
-    {
+      isPublic: null,
+    };
+  
+    axios.post(`http://localhost:8080/party/create/${store.loginUserInfo?.memberId}`, bodyData, {
       headers: {
         "Content-Type": "application/json",
       }
@@ -61,7 +60,7 @@ const CreateWaitingRoom = () => {
       navigate(`/jeju-play/${response.data.partyId}/wait`);
     })
     .catch((error) => {
-      showBoundary(error);
+      toast.error('요청에 실패했습니다.');
     })
   };
 
@@ -95,6 +94,7 @@ const CreateWaitingRoom = () => {
             </OptionGroup>
         </CreateBox>
         <CreateBtn onClick={() => createRoom()}>만들기</CreateBtn>
+        <ToastContainer/>
     </Container>
   );
 };

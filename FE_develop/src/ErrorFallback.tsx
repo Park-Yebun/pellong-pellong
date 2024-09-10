@@ -76,8 +76,6 @@ const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
   const getErrorCode = (error: AxiosError<{ code: number; message: string }>) => {
     const serverErrorCode = error?.response?.data?.code ?? '';
     const httpErrorCode = error?.response?.status ?? '';
-    console.log('server error: ', serverErrorCode);
-    console.log('http error: ', httpErrorCode);
     if (serverErrorCode in ERROR_CODE) {
       return ERROR_CODE[serverErrorCode as keyof typeof ERROR_CODE];
     }
