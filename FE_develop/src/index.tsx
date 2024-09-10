@@ -26,8 +26,7 @@ export const queryClient = new QueryClient({
     queries: {
       throwOnError: true,
     },
-  },
-})
+}});
 
 root.render(
     <QueryClientProvider client={queryClient}>
