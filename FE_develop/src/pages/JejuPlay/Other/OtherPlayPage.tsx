@@ -22,6 +22,7 @@ import {
   StageText,
   Alert,
   PlayerBox,
+  Players,
   Player,
   Life,
   LifeBox,
@@ -270,7 +271,13 @@ useEffect(() => {
       )} */}
       <PlayerBox>
         {players.map((player) => (
-          <Player key={player.guestId}>
+          <Players key={player.guestId}>
+            <AnswerBox>
+                <MandarinBadge src={mardarin} alt='mandarin'></MandarinBadge>
+                <Answer ref={answerRef} placeholder='제목을 입력하세요.' 
+                onKeyUp={(e) => {if(e.key === 'Enter') {checkAnswer(answerRef.current?.value, player)}}}></Answer>
+            </AnswerBox>
+            <Player>
               <Alert>{player.alert}</Alert>
               <ProfileImg src={player.profileImg} alt="profile"></ProfileImg>
               <Nickname>골개비</Nickname>
@@ -282,12 +289,8 @@ useEffect(() => {
                     <Life key={index} src={deLifeImg} alt="delife"></Life>
                 ))}
               </LifeBox>
-              <AnswerBox>
-                <MandarinBadge src={mardarin} alt='mandarin'></MandarinBadge>
-                <Answer ref={answerRef} placeholder='제목을 입력하세요.' 
-                onKeyUp={(e) => {if(e.key === 'Enter') {checkAnswer(answerRef.current?.value, player)}}}></Answer>
-            </AnswerBox>
-          </Player>
+            </Player>
+          </Players>
         ))}
         </PlayerBox>
     </Container>

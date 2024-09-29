@@ -3,7 +3,6 @@ import './UserBadge.css';
 import useStore from '../../store';
 import { useErrorBoundary } from "react-error-boundary";
 import axios from 'axios';
-import { error } from 'console';
 
 interface Badge {
   id: number;
@@ -39,7 +38,7 @@ const UserBadge: React.FC<UserBadgeProps> = ({ badges }) => {
   };
 
   const updateRepresentativeBadge = async (memberId: number, badgeId: number) => {
-    axios.patch(`https://www.saturituri.com/api/profiles/${memberId}/badges/${badgeId}`,
+    axios.patch(`http://localhost:8080/profiles/${memberId}/badges/${badgeId}`,
       {
         isRepresentative: true,
       },

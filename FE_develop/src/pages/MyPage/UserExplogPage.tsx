@@ -19,7 +19,7 @@ const ExperienceLog: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get<Experience[]>(`https://www.saturituri.com/api/profiles/explog/${memberId}`);
+        const response = await axios.get<Experience[]>(`http://localhost:8080/profiles/explog/${memberId}`);
         const formattedData = response.data.map((log) => ({
           ...log,
           expAt: new Date(log.expAt).toLocaleString('ko-KR'),
