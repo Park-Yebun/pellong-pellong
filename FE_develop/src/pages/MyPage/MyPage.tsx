@@ -28,7 +28,6 @@ import {
   CloseButton // 모달 닫기 버튼 스타일 추가
 } from './MyPage.styled'
 import axios from 'axios';
-import { error } from 'console';
  
 interface User {
   email: string;
@@ -51,7 +50,7 @@ const MyPage: React.FC = () => {
 
   // badges 배열과 해당 상태를 업데이트할 함수 선언
   const [badges, setBadges] = useState([
-    { id: 1, title: "팰롱팰롱", description: "✨팰롱팰롱에 혼저옵서예✨", imageUrl: "../../assets/badges/01pellongpellong.png", isAcquired: false },
+    { id: 1, title: "펠롱펠롱", description: "✨펠롱펠롱에 혼저옵서예✨", imageUrl: "../../assets/badges/01pellongpellong.png", isAcquired: false },
     { id: 2, title: "퀘스트 탐험가", description: "데일리 퀘스트를 10개 이상 완료함", imageUrl: "../../assets/badges/02dailyquest.png", isAcquired: false },
     { id: 3, title: "종달새 학습자", description: "오전 5시 - 오전 9시 사이에 퀴즈 10개 완료함", imageUrl: "../../assets/badges/03earlybird.png", isAcquired: false },
     { id: 4, title: "올빼미 학습자", description: "오후 9시 - 오전 5시 사이에 퀴즈 10개 완료함", imageUrl: "../../assets/badges/04owl.png", isAcquired: false },

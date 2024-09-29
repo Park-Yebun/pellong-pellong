@@ -122,9 +122,6 @@ export const Alert = styled.div`
 export const PlayerBox = styled.div`
     width: 270px;
     height: 135px;
-    display: flex;
-    justify-content: space-between;
-    position: relative;
 `
 export const LifeBox = styled.div``
 export const Life = styled.img`
@@ -132,10 +129,16 @@ export const Life = styled.img`
     height: 19.545px;
     margin-right: 5px;
 `
-export const Player= styled.div`
-    position: absolute;
-    left: 0;
-    bottom: 0;
+export const Players= styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`
+
+export const Player = styled.div`
+    margin-top: 100px;
+    position: relative;
 `
 
 export const ProfileImg = styled.img`

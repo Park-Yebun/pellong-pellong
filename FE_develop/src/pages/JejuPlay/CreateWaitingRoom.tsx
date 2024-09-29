@@ -48,7 +48,7 @@ const CreateWaitingRoom = () => {
       kind: kind,
       po: 0,
       to: selectedCapacity,
-      isPublic: null,
+      isPublic: isPublic,
     };
   
     axios.post(`http://localhost:8080/party/create/${store.loginUserInfo?.memberId}`, bodyData, {

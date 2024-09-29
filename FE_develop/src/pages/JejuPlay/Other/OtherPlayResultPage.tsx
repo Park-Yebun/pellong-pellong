@@ -116,7 +116,6 @@ const OtherPlayResultPage = () => {
       <Result>게임 결과</Result>
       <PlayerBox>
         {sortedPlayers.length > 0 && (
-          <>
           <Player>
             <Trophy src={first}></Trophy>
             <ProfileBox>
@@ -125,15 +124,6 @@ const OtherPlayResultPage = () => {
               <Nickname>{sortedPlayers[0].nickname}</Nickname>
             </ProfileBox>
           </Player>
-          <Player>
-          <Trophy src={first}></Trophy>
-          <ProfileBox>
-            <ExpBadge>+ 20exp</ExpBadge>
-            <ProfileImg src={sortedPlayers[0].profileImg}></ProfileImg>
-            <Nickname>{sortedPlayers[0].nickname}</Nickname>
-          </ProfileBox>
-        </Player>
-        </>
         )}
         {sortedPlayers.length > 1 && (
           <Player>
